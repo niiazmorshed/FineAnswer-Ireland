@@ -1,0 +1,48 @@
+/* ============================================================
+   FineAnswer Ireland — Design System Reference
+   NOTE: The actual :root tokens are defined in index.css.
+   This file is kept as documentation reference only.
+   Import individual component CSS files directly, not this file.
+   ============================================================
+
+   COLOR PALETTE
+   ─────────────────────────────────────────────────────────────
+   Primary Green:       #00693E  →  var(--color-primary)
+   Primary Dark:        #004D2C  →  var(--color-primary-dark)
+   Primary Light:       #E6F4ED  →  var(--color-primary-light)
+   Accent Gold:         #F5A623  →  var(--color-gold)
+   Accent Gold Hover:   #D4891A  →  var(--color-gold-hover)
+   Text Primary:        #1A1A1A  →  var(--color-text-primary)
+   Text Secondary:      #555555  →  var(--color-text-secondary)
+   Text Muted:          #888888  →  var(--color-text-muted)
+   Background White:    #FFFFFF  →  var(--color-bg-white)
+   Background Light:    #F8F9FA  →  var(--color-bg-light)
+   Border Color:        #E0E0E0  →  var(--color-border)
+
+   TYPOGRAPHY
+   ─────────────────────────────────────────────────────────────
+   Font: Inter (Google Fonts)
+   h1: 3rem / 700   →  var(--text-h1)
+   h2: 2.25rem / 700→  var(--text-h2)
+   h3: 1.5rem / 600 →  var(--text-h3)
+   h4: 1.25rem / 600→  var(--text-h4)
+   body: 1rem / 1.6 →  var(--text-body)
+   small: 0.875rem  →  var(--text-small)
+
+   SPACING
+   ─────────────────────────────────────────────────────────────
+   Section padding desktop: 80px  →  var(--section-padding)
+   Section padding mobile:  48px  →  var(--section-padding-mobile)
+
+   RADIUS
+   ─────────────────────────────────────────────────────────────
+   Cards:    8px   →  var(--radius-card)
+   Buttons:  4px   →  var(--radius-btn)
+   Pills:    50px  →  var(--radius-pill)
+
+   SHADOWS
+   ─────────────────────────────────────────────────────────────
+   Card:       0 2px 12px rgba(0,0,0,0.08)          →  var(--shadow-card)
+   Card hover: 0 8px 24px rgba(0,105,62,0.15)       →  var(--shadow-card-hover)
+   Navbar:     0 2px 8px rgba(0,0,0,0.1)            →  var(--shadow-nav)
+*/

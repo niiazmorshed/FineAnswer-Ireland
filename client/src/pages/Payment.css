@@ -64,7 +64,7 @@
 }
 
 .payment-option.selected {
-  border-color: #0369a1;
+  border-color: var(--color-primary);
   background: #e0f2fe;
   box-shadow: 0 10px 24px rgba(37, 99, 235, 0.18);
 }
@@ -124,7 +124,7 @@
 .payment-btn {
   margin-top: 16px;
   padding: 12px 24px;
-  background: #0369a1;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 10px;
@@ -134,7 +134,7 @@
 }
 
 .payment-btn:hover {
-  background: #0284c7;
+  background: var(--color-primary);
 }
 
 .payment-error {
@@ -149,7 +149,7 @@
 }
 
 .payment-hint a {
-  color: #0369a1;
+  color: var(--color-primary);
   text-decoration: none;
 }
 

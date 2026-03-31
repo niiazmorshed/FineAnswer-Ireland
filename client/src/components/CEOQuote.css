@@ -2,8 +2,8 @@
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 60px 20px;
-  background: #f7f9fc;
+  padding: 80px 20px;
+  background: var(--color-bg-light, #F8F9FA);
 }
 
 .ceo-card {
@@ -53,14 +53,15 @@
 .ceo-quote-text {
   font-size: 17px;
   line-height: 28px;
-  color: #555;
+  color: var(--color-text-secondary, #555);
   max-width: 750px;
   margin: 0 auto 28px;
   text-align: left;
-  background: #f9fbff;
-  border: 1px solid #e7edf7;
-  border-radius: 14px;
+  background: var(--color-primary-light, #E6F4ED);
+  border: 1px solid rgba(0,105,62,0.12);
+  border-radius: var(--radius-card, 8px);
   padding: 24px 22px;
+  border-left: 3px solid var(--color-primary, #00693E);
 }
 
 .ceo-quote-text p {

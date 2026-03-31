@@ -349,7 +349,7 @@ nav a:hover::after {
 .specialization h2 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  color: #004aad;
+  color: var(--color-primary);
 }
 
 .specialization p {
@@ -456,7 +456,7 @@ nav a:hover::after {
 
 /* FOOTER */
 footer {
-  background: #002b5c;
+  background: var(--color-primary-dark);
   color: #fff;
   text-align: center;
   padding: 2rem 0;
@@ -620,7 +620,7 @@ footer {
 }
 
 .modern-btn {
-  background: #292f66;
+  background: var(--color-primary-dark);
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -631,14 +631,14 @@ footer {
 }
 
 .modern-btn:hover {
-  background: #1f2554;
+  background: var(--color-primary-dark);
   transform: translateY(-2px);
 }
 
 .modern-btn-alt {
   background: #fff;
-  color: #292f66;
-  border: 1px solid #292f66;
+  color: var(--color-primary-dark);
+  border: 1px solid var(--color-primary-dark);
 }
 
 .modern-btn-alt:hover {
@@ -665,7 +665,7 @@ footer {
 .map-section h2 {
   font-size: 2rem;
   margin-bottom: 25px;
-  color: #003366;
+  color: var(--color-primary-dark);
   font-weight: 600;
 }
 
@@ -802,7 +802,7 @@ footer {
 
 .contact-item h4 {
   margin: 0;
-  color: #003366;
+  color: var(--color-primary-dark);
 }
 
 .contact-item p {
@@ -818,7 +818,7 @@ footer {
 .social-links p {
   font-weight: 500;
   margin-bottom: 10px;
-  color: #003366;
+  color: var(--color-primary-dark);
 }
 
 .social-links a {

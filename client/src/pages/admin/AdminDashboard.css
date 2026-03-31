@@ -56,7 +56,7 @@
 
 .admin-dashboard__link {
   text-decoration: none;
-  background: #5b6bbf;
+  background: var(--color-primary);
   color: #fff;
   padding: 10px 18px;
   border-radius: 10px;
@@ -67,7 +67,7 @@
 }
 
 .admin-dashboard__link:hover {
-  background: #4a5aaf;
+  background: var(--color-primary);
   box-shadow: 0 4px 12px rgba(91, 107, 191, 0.3);
   transform: translateY(-1px);
 }
@@ -115,7 +115,7 @@
   top: 0;
   bottom: 0;
   width: 4px;
-  background: #5b6bbf;
+  background: var(--color-primary);
   border-radius: 4px 0 0 4px;
 }
 
@@ -184,13 +184,13 @@
 .admin-dashboard__panelHeader a {
   font-size: 13px;
   font-weight: 600;
-  color: #5b6bbf;
+  color: var(--color-primary);
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .admin-dashboard__panelHeader a:hover {
-  color: #4a5aaf;
+  color: var(--color-primary);
   text-decoration: underline;
 }
 
@@ -277,8 +277,8 @@
 
 .admin-dashboard__quickBtn:hover {
   background: #f1f5f9;
-  border-color: #5b6bbf;
-  color: #5b6bbf;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
   transform: translateX(4px);
 }
 

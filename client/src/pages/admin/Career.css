@@ -131,8 +131,8 @@
 
 /* Admin Career Page */
 .admin-career-page {
-  --career-primary: #5b6bbf;
-  --career-primary-dark: #4a5aaf;
+  --career-primary: var(--color-primary);
+  --career-primary-dark: var(--color-primary);
   --career-bg-soft: #f8fafc;
   --career-bg-tint: #f1f4ff;
   --career-border: #e2e8f0;
@@ -259,7 +259,7 @@
 .ireland-link-icon {
   flex-shrink: 0;
   font-size: 0.95rem;
-  color: var(--career-primary, #5b6bbf);
+  color: var(--career-primary, var(--color-primary));
   opacity: 0.9;
 }
 
@@ -784,7 +784,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 16px;
-  color: var(--career-primary, #5b6bbf);
+  color: var(--career-primary, var(--color-primary));
   font-weight: 600;
   text-decoration: none;
 }
@@ -870,7 +870,7 @@
   border-radius: 10px;
   border: 1px solid #d7def9;
   background: var(--career-bg-tint, #f1f4ff);
-  color: var(--career-primary-dark, #4a5aaf);
+  color: var(--career-primary-dark, var(--color-primary));
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
@@ -931,7 +931,7 @@
   padding: 12px 20px;
   border-radius: 10px;
   border: none;
-  background: var(--career-primary, #5b6bbf);
+  background: var(--career-primary, var(--color-primary));
   color: #fff;
   font-size: 0.9rem;
   font-weight: 600;
@@ -939,7 +939,7 @@
 }
 
 .job-detail-form .career-submit-btn:hover:not(:disabled) {
-  background: var(--career-primary-dark, #4a5aaf);
+  background: var(--career-primary-dark, var(--color-primary));
 }
 
 .job-detail-form .career-submit-btn:disabled {
@@ -959,7 +959,7 @@
 }
 
 .job-detail-login-prompt a {
-  color: var(--career-primary, #5b6bbf);
+  color: var(--career-primary, var(--color-primary));
   font-weight: 600;
   text-decoration: none;
 }

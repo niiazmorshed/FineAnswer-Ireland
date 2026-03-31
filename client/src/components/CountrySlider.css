@@ -55,9 +55,9 @@
 /* BUTTON */
 .card-content button {
   padding: 10px 22px;
-  border: 2px solid #4f5fb3;
+  border: 2px solid var(--color-primary);
   background: transparent;
-  color: #4f5fb3;
+  color: var(--color-primary);
   font-size: 14px;
   border-radius: 8px;
   cursor: pointer;
@@ -71,7 +71,7 @@
 }
 
 .card-content button:hover {
-  background: #4f5fb3;
+  background: var(--color-primary);
   color: #fff;
 }
 

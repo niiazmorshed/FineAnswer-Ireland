@@ -1,5 +1,5 @@
 :root {
-  --primary: #4c5c9e;
+  --primary: var(--color-primary);
   --bg: #f0f5fa;
   --accent: #fa9e00;
   --white: #ffffff;
@@ -196,7 +196,7 @@ body {
 .user-details-card__title {
   margin: 0 0 14px;
   font-size: 1.05rem;
-  color: #0369a1;
+  color: var(--color-primary);
 }
 
 .user-details-grid {
@@ -260,7 +260,7 @@ body {
   border: none;
   border-radius: 10px;
   background: #ffffff;
-  color: var(--primary, #4c5c9e);
+  color: var(--primary, var(--color-primary));
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -281,7 +281,7 @@ body {
 .dashboard-topbar-burger:hover,
 .dashboard-topbar-collapse:hover {
   background: #eef2ff;
-  color: #3d4a7d;
+  color: var(--color-primary-dark);
   box-shadow: 0 2px 8px rgba(76, 92, 158, 0.2);
 }
 
@@ -293,7 +293,7 @@ body {
 
 .dashboard-topbar-burger:focus-visible,
 .dashboard-topbar-collapse:focus-visible {
-  outline: 2px solid var(--primary, #4c5c9e);
+  outline: 2px solid var(--primary, var(--color-primary));
   outline-offset: 2px;
 }
 
@@ -418,7 +418,7 @@ body {
   border-radius: 8px;
   border: none;
   background: #ffffff;
-  color: var(--primary, #4c5c9e);
+  color: var(--primary, var(--color-primary));
   /* Hide collapse toggle button when sidebar is extended */
   display: none;
   align-items: center;
@@ -462,7 +462,7 @@ body {
 
 .dashboard-sidebar-toggle:hover {
   background: #eef2ff;
-  color: #3d4a7d;
+  color: var(--color-primary-dark);
   box-shadow: 0 2px 8px rgba(76, 92, 158, 0.2);
   transform: scale(1.02);
 }
@@ -473,7 +473,7 @@ body {
 }
 
 .dashboard-sidebar-toggle:focus-visible {
-  outline: 2px solid var(--primary, #4c5c9e);
+  outline: 2px solid var(--primary, var(--color-primary));
   outline-offset: 2px;
 }
 

@@ -8,6 +8,7 @@ import PartnerLogos from "./components/PartnerLogos";
 import Services from "./components/Services";
 import SuccessStories from "./components/SuccessStories";
 import Navbar3 from "./components/navbar3";
+import Footer from "./components/Footer";
 import useFadeIn from "./hooks/useFadeIn";
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
@@ -207,6 +208,12 @@ export default function LandingPage() {
 
         {/* Main Content */}
         <div className="hero-content-wrapper">
+          {/* Pill badge */}
+          <div className="hero-badge">
+            <span>✦</span>
+            FineAnswer Ireland
+          </div>
+
           <h1 className="hero-title">
             Guiding you to <span>World-Class Education</span>
           </h1>
@@ -485,9 +492,7 @@ export default function LandingPage() {
       </div>
 
       {/* FOOTER */}
-      <footer>
-        <p>© 2025 FineAnswer Study Abroad Consultancy. All rights reserved.</p>
-      </footer>
+      <Footer />
 
       {showPopup && !loading && !user && (
         <div className="popup-overlay">

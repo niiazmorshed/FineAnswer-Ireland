@@ -85,7 +85,7 @@
 
 .user-search-input:focus {
   outline: none;
-  border-color: #5b6bbf;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(91, 107, 191, 0.1);
   background: #fff;
 }
@@ -158,7 +158,7 @@
   padding: 2px 8px;
   border-radius: 999px;
   background: #e0f2fe;
-  color: #0369a1;
+  color: var(--color-primary);
 }
 
 .user-list-tag.subtle {
@@ -230,12 +230,12 @@
 }
 
 .btn-save {
-  background: #5b6bbf;
+  background: var(--color-primary);
   color: #fff;
 }
 
 .btn-save:hover:not(:disabled) {
-  background: #4a5aaf;
+  background: var(--color-primary);
 }
 
 .btn-save:disabled {
@@ -264,7 +264,7 @@
   height: 24px;
   line-height: 24px;
   text-align: center;
-  background: #5b6bbf;
+  background: var(--color-primary);
   color: #fff;
   border-radius: 50%;
   font-size: 12px;
@@ -347,7 +347,7 @@
 
 .btn-edit-item {
   background: #e0e7ff;
-  color: #5b6bbf;
+  color: var(--color-primary);
 }
 
 .btn-edit-item:hover {
@@ -403,7 +403,7 @@
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #5b6bbf;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 2px rgba(91, 107, 191, 0.1);
 }
 
@@ -451,7 +451,7 @@
 
 .btn-add-option {
   background: #e0e7ff;
-  color: #5b6bbf;
+  color: var(--color-primary);
   border: none;
   border-radius: 6px;
   padding: 8px 12px;

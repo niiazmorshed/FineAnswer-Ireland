@@ -92,7 +92,7 @@
 }
 
 .key-points h2 {
-  color: #004aad;
+  color: var(--color-primary);
   font-size: 2rem;
   margin-bottom: 30px;
 }
@@ -127,7 +127,7 @@
 .keypoints h2 {
   font-size: 2rem;
   margin-bottom: 30px;
-  color: #004aad;
+  color: var(--color-primary);
 }
 
 .points-grid {
@@ -148,7 +148,7 @@
 }
 
 .apply-btn {
-  background: #004aad;
+  background: var(--color-primary);
   color: white;
   border: none;
   padding: 12px 25px;
@@ -170,7 +170,7 @@
 
 .study-details h2 {
   font-size: 2rem;
-  color: #004aad;
+  color: var(--color-primary);
   margin-bottom: 15px;
 }
 

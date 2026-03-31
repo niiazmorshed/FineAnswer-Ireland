@@ -1,12 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import { AuthContext } from "../pages/Provider/ContextProvider";
+import TopUtilityBar from "./TopUtilityBar";
 import "../css/navbar3.css";
 import logo from "../images/logo.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const [imgError, setImgError] = useState(false);
   const { user, isAdmin, loading } = useContext(AuthContext);
 
@@ -18,6 +20,22 @@ export default function Navbar() {
     setImgError(false);
   }, [user?.picture, user?.photoURL]);
 
+  // Add shadow when scrolled
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Close mobile menu on route change / resize
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth > 900) setMenuOpen(false);
+    };
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const getInitials = () => {
     if (user?.name) {
       return user.name
@@ -27,9 +45,7 @@ export default function Navbar() {
         .toUpperCase()
         .slice(0, 2);
     }
-    if (user?.email) {
-      return user.email[0].toUpperCase();
-    }
+    if (user?.email) return user.email[0].toUpperCase();
     return "?";
   };
 
@@ -38,81 +54,84 @@ export default function Navbar() {
     navigate(isAdmin ? "/admin/dashboard" : "/dashboard");
   };
 
-  return (
-    <header
-      className="minimal-navbar"
-    >
-      <div className="nav-inner">
-        <div
-          className="nav-logo"
-          onClick={() => {
-            navigate("/");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        >
-          <img src={logo} alt="Logo" />
-        </div>
+  const closeMenu = () => setMenuOpen(false);
 
-        <nav className={`nav-menu ${menuOpen ? "open" : ""}`}>
-          <NavLink
-            to="/"
+  return (
+    <>
+      <TopUtilityBar />
+
+      <header className={`minimal-navbar${scrolled ? " scrolled" : ""}`}>
+        <div className="nav-inner">
+          {/* Logo */}
+          <div
+            className="nav-logo"
             onClick={() => {
-              setMenuOpen(false);
+              navigate("/");
               window.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
-            Home
-          </NavLink>
-          <a href="/#about" onClick={() => setMenuOpen(false)}>About</a>
-          <a href="/#services" onClick={() => setMenuOpen(false)}>Services</a>
-          <a href="/#countries" onClick={() => setMenuOpen(false)}>Countries</a>
-          <a href="/#contact" onClick={() => setMenuOpen(false)}>Contact</a>
-          <NavLink to="/career" onClick={() => setMenuOpen(false)}>Career</NavLink>
-          <NavLink to="/blog" onClick={() => setMenuOpen(false)}>Blog</NavLink>
-          
-          {showProfileArea ? (
-            <button
-              className="nav-profile-btn"
-              onClick={handleProfileClick}
-              title={user ? `Go to ${isAdmin ? "Admin" : "User"} Dashboard` : "Loading..."}
-              disabled={loading}
-            >
-              {loading ? (
-                <span className="nav-profile-loading"></span>
-              ) : showImage ? (
-                <img
-                  src={profileImageUrl}
-                  alt={user.name || "Profile"}
-                  className="nav-profile-img"
-                  referrerPolicy="no-referrer"
-                  onError={() => setImgError(true)}
-                />
-              ) : (
-                <span className="nav-profile-initials">{getInitials()}</span>
-              )}
-            </button>
-          ) : (
-            <button
-              className="nav-btn"
-              onClick={() => {
-                setMenuOpen(false);
-                navigate("/register");
-              }}
-            >
-              Join Now
-            </button>
-          )}
-        </nav>
+            <img src={logo} alt="FineAnswer Ireland" />
+          </div>
 
-        <div
-          className="hamburger"
-          onClick={() => setMenuOpen(!menuOpen)}
-        >
-          <span></span>
-          <span></span>
-          <span></span>
+          {/* Desktop Nav */}
+          <nav className={`nav-menu ${menuOpen ? "open" : ""}`}>
+            <NavLink to="/" end onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+              Home
+            </NavLink>
+            <a href="/#about"    onClick={closeMenu}>About</a>
+            <a href="/#services" onClick={closeMenu}>Services</a>
+            <a href="/#countries" onClick={closeMenu}>Countries</a>
+            <a href="/#contact"  onClick={closeMenu}>Contact</a>
+            <NavLink to="/career" onClick={closeMenu}>Career</NavLink>
+            <NavLink to="/blog"   onClick={closeMenu}>Blog</NavLink>
+
+            {showProfileArea ? (
+              <button
+                className="nav-profile-btn"
+                onClick={handleProfileClick}
+                title={user ? `Go to ${isAdmin ? "Admin" : "User"} Dashboard` : "Loading..."}
+                disabled={loading}
+              >
+                {loading ? (
+                  <span className="nav-profile-loading" />
+                ) : showImage ? (
+                  <img
+                    src={profileImageUrl}
+                    alt={user.name || "Profile"}
+                    className="nav-profile-img"
+                    referrerPolicy="no-referrer"
+                    onError={() => setImgError(true)}
+                  />
+                ) : (
+                  <span className="nav-profile-initials">{getInitials()}</span>
+                )}
+              </button>
+            ) : (
+              <button
+                className="nav-btn"
+                onClick={() => {
+                  closeMenu();
+                  navigate("/register");
+                }}
+              >
+                Apply Now
+              </button>
+            )}
+          </nav>
+
+          {/* Hamburger */}
+          <div
+            className="hamburger"
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+          >
+            <span />
+            <span />
+            <span />
+          </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }

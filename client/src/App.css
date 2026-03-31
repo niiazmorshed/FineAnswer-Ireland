@@ -1,13 +1,8 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
+/* App-level layout resets — tokens live in index.css / theme.css */
 html, body, #root {
   width: 100%;
   height: 100%;
-  overflow-x: hidden; /* remove unwanted horizontal scrollbar */
-  background-color: #ffffff;
-  color: #213547;
+  overflow-x: hidden;
+  background-color: var(--color-bg-white);
+  color: var(--color-text-primary);
 }

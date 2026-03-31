@@ -28,7 +28,7 @@
   align-items: center;
   gap: 8px;
   padding: 10px 20px;
-  background: #5b6bbf;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -39,7 +39,7 @@
 }
 
 .btn-create:hover {
-  background: #4a5aaf;
+  background: var(--color-primary);
 }
 
 .error-banner {
@@ -163,7 +163,7 @@
 
 .admin-story-program {
   margin: 0 0 12px 0;
-  color: #5b6bbf;
+  color: var(--color-primary);
   font-weight: 600;
   font-size: 14px;
   padding: 6px 12px;

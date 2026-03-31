@@ -59,7 +59,7 @@
 
 .document-card-header svg {
   font-size: 1.5rem;
-  color: #4c5c9e;
+  color: var(--color-primary);
 }
 
 .document-card-header h3 {
@@ -87,7 +87,7 @@
 
 .documents-view-btn {
   padding: 8px 14px;
-  background: #4c5c9e;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -99,7 +99,7 @@
 }
 
 .documents-view-btn:hover {
-  background: #3d4a8a;
+  background: var(--color-primary-dark);
 }
 
 .documents-delete-btn {
@@ -186,16 +186,16 @@
 }
 
 .document-link {
-  color: #4c5c9e;
+  color: var(--color-primary);
   text-decoration: none;
   font-size: 0.9rem;
   padding: 4px 10px;
-  border: 1px solid #4c5c9e;
+  border: 1px solid var(--color-primary);
   border-radius: 6px;
 }
 
 .document-link:hover {
-  background: #4c5c9e;
+  background: var(--color-primary);
   color: #fff;
 }
 
@@ -214,9 +214,9 @@
 .doc-btn {
   padding: 6px 12px;
   border-radius: 6px;
-  border: 1px solid #4c5c9e;
+  border: 1px solid var(--color-primary);
   background: #fff;
-  color: #4c5c9e;
+  color: var(--color-primary);
   font-size: 0.85rem;
   cursor: pointer;
   display: inline-flex;
@@ -225,7 +225,7 @@
 }
 
 .doc-btn:hover:not(:disabled) {
-  background: #4c5c9e;
+  background: var(--color-primary);
   color: #fff;
 }
 
@@ -298,7 +298,7 @@
 .documents-submit-feedback {
   align-self: flex-start;
   padding: 8px 16px;
-  background: #4c5c9e;
+  background: var(--color-primary);
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -307,7 +307,7 @@
 }
 
 .documents-submit-feedback:hover:not(:disabled) {
-  background: #3d4a8a;
+  background: var(--color-primary-dark);
 }
 
 .documents-submit-feedback:disabled {

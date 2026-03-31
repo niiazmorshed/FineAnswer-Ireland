@@ -99,7 +99,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #5b6bbf;
+  border-color: var(--color-primary);
   box-shadow: 0 0 0 3px rgba(91, 107, 191, 0.1);
 }
 
@@ -139,8 +139,8 @@
 }
 
 .file-label:hover {
-  border-color: #5b6bbf;
-  color: #5b6bbf;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
   background: #f3f4f6;
 }
 
@@ -190,12 +190,12 @@
 }
 
 .btn-submit {
-  background: #5b6bbf;
+  background: var(--color-primary);
   color: #fff;
 }
 
 .btn-submit:hover:not(:disabled) {
-  background: #4a5aaf;
+  background: var(--color-primary);
 }
 
 .btn-submit:disabled {

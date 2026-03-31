@@ -1,8 +1,8 @@
 /* WRAPPER */
 .contact-wrapper {
   width: 100%;
-  padding: 60px 0;
-  background: #f9fafb;
+  padding: 80px 0;
+  background: var(--color-bg-light, #F8F9FA);
   display: flex;
   justify-content: center;
 }
@@ -21,7 +21,7 @@
 }
 
 .contact-tag {
-  color: #13253F;
+  color: var(--color-primary, #00693E);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -56,7 +56,7 @@
 .contact-phone-icon {
   flex-shrink: 0;
   margin-top: 2px;
-  color: #0369a1;
+  color: var(--color-primary, #00693E);
   font-size: 1rem;
 }
 
@@ -122,9 +122,9 @@
 }
 
 .social-icons span:hover {
-  background: #FFDA32;
+  background: var(--color-primary, #00693E);
   color: white;
-  border-color: #FFDA32;
+  border-color: var(--color-primary, #00693E);
 }
 
 /* RIGHT FORM CARD */
@@ -168,23 +168,25 @@
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: #FFDA32;
+  border-color: var(--color-primary, #00693E);
   background: white;
-  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+  box-shadow: 0 0 0 3px rgba(0,105,62,0.12);
 }
 
 /* SEND BUTTON */
 .send-btn {
   width: 100%;
-  background: #FFDA32;
+  background: var(--color-primary, #00693E);
   color: white;
   padding: 13px;
   border: none;
-  border-radius: 10px;
-  font-size: 17px;
+  border-radius: var(--radius-btn, 4px);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: var(--font-sans);
   cursor: pointer;
   margin-top: 5px;
-  transition: 0.3s;
+  transition: background 0.2s, transform 0.2s;
 }
 .contact-form select,
 .contact-form input,
@@ -206,7 +208,8 @@
 }
 
 .send-btn:hover {
-  background: #FFDA32;
+  background: var(--color-primary-dark, #004D2C);
+  transform: translateY(-1px);
 }
 
 /* RESPONSIVE */

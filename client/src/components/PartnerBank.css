@@ -27,7 +27,7 @@
 }
 
 .partner-badge {
-  color: #4f5fb3;
+  color: var(--color-primary);
   font-weight: 700;
   letter-spacing: 2px;
   font-size: 0.8rem;
@@ -43,7 +43,7 @@
 }
 
 .partner-title span {
-  color: #4f5fb3;
+  color: var(--color-primary);
 }
 
 .partner-description {
@@ -66,7 +66,7 @@
 .p-stat strong {
   display: block;
   font-size: 1.6rem;
-  color: #4f5fb3;
+  color: var(--color-primary);
 }
 
 /* ===============================
@@ -111,7 +111,7 @@
 
 .bank-bubble:hover {
   transform: scale(1.1);
-  border-color: #4f5fb3;
+  border-color: var(--color-primary);
   box-shadow: 0 20px 40px rgba(79, 95, 179, 0.25);
   z-index: 10;
 }

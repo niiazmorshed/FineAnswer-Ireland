@@ -36,7 +36,7 @@
   width: 60px;
   height: 3px;
   margin: 10px auto 0;
-  background: linear-gradient(90deg, #4f46e5, #06b6d4);
+  background: linear-gradient(90deg, var(--color-primary, #00693E), var(--color-gold, #F5A623));
   border-radius: 2px;
   opacity: 0;
   animation: fadeSlideUp 1.5s ease-out forwards;
@@ -44,8 +44,8 @@
 }
 
 .partners-section {
-  padding: 60px 0;
-  background-color: #f9fafb;
+  padding: 80px 0;
+  background-color: var(--color-bg-light, #F8F9FA);
   overflow: hidden;
 }
 

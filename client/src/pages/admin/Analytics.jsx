@@ -17,7 +17,7 @@ import {
 import { API_BASE_URL } from "../../config/api";
 import "./Analytics.css";
 
-const COLORS = ["#38bdf8", "#0284c7", "#0369a1", "#0ea5e9", "#7dd3fc", "#bae6fd"];
+const COLORS = ["var(--color-primary-light)", "var(--color-primary)", "var(--color-primary)", "#0ea5e9", "var(--color-primary-light)", "#bae6fd"];
 
 export default function Analytics() {
   const [students, setStudents] = useState([]);
@@ -229,7 +229,7 @@ export default function Analytics() {
               <Line
                 type="monotone"
                 dataKey="students"
-                stroke="#38bdf8"
+                stroke="var(--color-primary-light)"
                 strokeWidth={2}
                 name="New Students"
               />
@@ -275,7 +275,7 @@ export default function Analytics() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="value" fill="#0284c7" />
+              <Bar dataKey="value" fill="var(--color-primary)" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -318,7 +318,7 @@ export default function Analytics() {
               <XAxis dataKey="name" />
               <YAxis />
               <Tooltip />
-              <Bar dataKey="value" fill="#0369a1" />
+              <Bar dataKey="value" fill="var(--color-primary)" />
             </BarChart>
           </ResponsiveContainer>
         </div>
