@@ -1,58 +1,47 @@
-/* Caption container */
-.partners-caption {
-  text-align: center;
-  margin-bottom: 40px;
+/* ── Partner Logos Section ─────────────────────────────────── */
+.partners-section {
+  padding: var(--section-padding, 80px) 0;
+  background-color: var(--color-bg-light, #F8F9FA);
   overflow: hidden;
 }
+@media (max-width: 768px) {
+  .partners-section { padding: var(--section-padding-mobile, 48px) 0; }
+}
 
-/* Animated caption */
+.partners-caption {
+  text-align: center;
+  margin-bottom: 36px;
+}
+
 .animated-caption {
-  font-size: 30px;
-  font-weight: 700;
-  color: #1f2937;
+  font-size: var(--text-h2, 2.25rem);
+  font-weight: var(--weight-bold, 700);
+  color: var(--color-text-primary, #1A1A1A);
   opacity: 0;
-  transform: translateY(20px);
-  animation: fadeSlideUp 1.5s ease-out forwards;
+  transform: translateY(16px);
+  animation: fadeSlideUp 1s ease-out forwards;
 }
 
 @keyframes fadeSlideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  50% {
-    opacity: 0.6;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animated-caption::after {
   content: "";
   display: block;
-  width: 60px;
+  width: 52px;
   height: 3px;
-  margin: 10px auto 0;
+  margin: 12px auto 0;
   background: linear-gradient(90deg, var(--color-primary, #00693E), var(--color-gold, #F5A623));
   border-radius: 2px;
   opacity: 0;
-  animation: fadeSlideUp 1.5s ease-out forwards;
-  animation-delay: 0.5s;
-}
-
-.partners-section {
-  padding: 80px 0;
-  background-color: var(--color-bg-light, #F8F9FA);
-  overflow: hidden;
+  animation: fadeSlideUp 1s ease-out 0.4s forwards;
 }
 
 .logos-container {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 24px;
 }
 
 .partner-logo-row {
@@ -61,31 +50,34 @@
   user-select: none;
 }
 
-.partner-marquee {
-  overflow: hidden;
-  user-select: none;
-}
+.partner-marquee { overflow: hidden; user-select: none; }
+.partner-marquee .logo-card { margin-right: 24px; }
 
-/* Spacing between logo cards (react-fast-marquee duplicates content; margin keeps gap consistent) */
-.partner-marquee .logo-card {
-  margin-right: 30px;
-}
-
-/* The Card Style */
 .logo-card {
-  background: white;
-  padding: 20px 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  background: var(--color-bg-white, #fff);
+  padding: 18px 36px;
+  border-radius: var(--radius-card, 8px);
+  box-shadow: var(--shadow-card, 0 2px 12px rgba(0,0,0,0.08));
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 200px;
+  min-width: 180px;
   flex-shrink: 0;
+  transition: box-shadow 0.3s ease;
+}
+.logo-card:hover {
+  box-shadow: var(--shadow-card-hover, 0 8px 24px rgba(0,105,62,0.15));
 }
 
 .logo-card img {
-  height: 45px;
+  height: 42px;
   width: auto;
   object-fit: contain;
+  filter: grayscale(100%);
+  opacity: 0.7;
+  transition: filter 0.35s ease, opacity 0.35s ease;
+}
+.logo-card:hover img {
+  filter: grayscale(0%);
+  opacity: 1;
 }
