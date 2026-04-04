@@ -23,7 +23,6 @@ import ContactSection from "./components/ContactSection";
 import PartnerBank from "./components/PartnerBank";
 import CEOQuote from "./components/CEOQuote";
 
-import useFadeIn from "./hooks/useFadeIn";
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
 import "./LandingPage.css";
@@ -36,26 +35,9 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
 
-  // fade-in refs
-  const [searchRef2, searchVisible] = useFadeIn();
-  const [logosRef, logosVisible] = useFadeIn();
-  const [subjectRef, subjectVisible] = useFadeIn();
-  const [servicesRef, servicesVisible] = useFadeIn();
-  const [quickRef, quickVisible] = useFadeIn();
-  const [coursesRef, coursesVisible] = useFadeIn();
-  const [storiesRef, storiesVisible] = useFadeIn();
-  const [faqRef, faqVisible] = useFadeIn();
-  const [eventsRef, eventsVisible] = useFadeIn();
-  
-  const [packagesRef, packagesVisible] = useFadeIn();
-  const [ceoRef, ceoVisible] = useFadeIn();
-  const [contactRef, contactVisible] = useFadeIn();
-
-  // hero slideshow
   const images = [uni1, uni2, uni3, uni4];
   const [currentImage, setCurrentImage] = useState(0);
 
-  // search state
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedIntake, setSelectedIntake] = useState("");
@@ -95,7 +77,6 @@ export default function LandingPage() {
     navigate(`/search-results?${params.toString()}`);
   };
 
-  // close dropdown on outside click
   useEffect(() => {
     const handler = (e) => {
       if (searchRef.current && !searchRef.current.contains(e.target))
@@ -105,7 +86,6 @@ export default function LandingPage() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // hash scroll
   useEffect(() => {
     const onHash = () => {
       const hash = window.location.hash.slice(1);
@@ -120,13 +100,11 @@ export default function LandingPage() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  // hero image slider
   useEffect(() => {
     const id = setInterval(() => setCurrentImage((p) => (p + 1) % images.length), 5000);
     return () => clearInterval(id);
   }, [images.length]);
 
-  // popup
   const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     if (loading || user) return;
@@ -143,7 +121,7 @@ export default function LandingPage() {
     <div className="LandingPage">
       <Navbar3 />
 
-      {/* ───────────── 1. HERO ───────────── */}
+      {/* 1. HERO */}
       <section className="hero-section-new">
         <div className="hero-background">
           {images.map((img, i) => (
@@ -172,7 +150,6 @@ export default function LandingPage() {
             View Our Course Search Engine →
           </button>
 
-          {/* Stat cards */}
           <div className="hero-stat-cards">
             <div className="hero-stat-card">
               <span className="hero-stat-icon"><FaGraduationCap /></span>
@@ -199,162 +176,142 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* ───────────── 2. COURSE SEARCH ENGINE ───────────── */}
-      <div ref={searchRef2} className={`fade-section ${searchVisible ? "show" : ""}`}>
-        <section className="search-engine-section" id="search">
-          <div className="search-engine-inner">
-            <div className="search-engine-header">
-              <span className="section-badge">FineAnswer Ireland</span>
-              <h2>Course Search Engine</h2>
-              <p>Find your ideal program in Ireland</p>
-            </div>
+      {/* 2. COURSE SEARCH ENGINE */}
+      <section className="search-engine-section" id="search">
+        <div className="search-engine-inner">
+          <div className="search-engine-header">
+            <span className="section-badge">FineAnswer Ireland</span>
+            <h2>Course Search Engine</h2>
+            <p>Find your ideal program in Ireland</p>
+          </div>
 
-            <div className="hero-search-wrapper-new" ref={searchRef}>
-              <div className="hero-search-box-new">
-                <div className="search-item-wrap">
-                  <div className="search-item-new">
-                    <span className="search-label">Country</span>
-                    <span className="search-value">{COUNTRY}</span>
-                  </div>
+          <div className="hero-search-wrapper-new" ref={searchRef}>
+            <div className="hero-search-box-new">
+              <div className="search-item-wrap">
+                <div className="search-item-new">
+                  <span className="search-label">Country</span>
+                  <span className="search-value">{COUNTRY}</span>
                 </div>
-                <div className="divider" />
-
-                <div className={`search-item-wrap ${activeDropdown === "level" ? "dropdown-open" : ""}`}>
-                  <button type="button" className="search-item-new" onClick={() => toggleDropdown("level")}>
-                    <span className="search-label">Level</span>
-                    <span className={`search-value${!selectedLevel ? " search-value--placeholder" : ""}`}>
-                      {LEVELS.find((l) => l.value === selectedLevel)?.label || "Select Level"}
-                      <span className="search-chevron">▼</span>
-                    </span>
-                  </button>
-                  {activeDropdown === "level" && (
-                    <div className="search-dropdown">
-                      {LEVELS.map((l) => (
-                        <button key={l.value} type="button" className="search-dropdown-item"
-                          onClick={() => { setSelectedLevel(l.value); setActiveDropdown(null); }}>
-                          {l.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="divider" />
-
-                <div className={`search-item-wrap search-item-wrap--category ${activeDropdown === "category" ? "dropdown-open" : ""}`}>
-                  <button type="button" className="search-item-new" onClick={() => toggleDropdown("category")}>
-                    <span className="search-label">Category</span>
-                    <span className={`search-value${!selectedCategory ? " search-value--placeholder" : ""}`}>
-                      {CATEGORIES.find((c) => c.value === selectedCategory)?.label || "All Categories"}
-                      <span className="search-chevron">▼</span>
-                    </span>
-                  </button>
-                  {activeDropdown === "category" && (
-                    <div className="search-dropdown">
-                      {CATEGORIES.map((c) => (
-                        <button key={c.value} type="button" className="search-dropdown-item"
-                          onClick={() => { setSelectedCategory(c.value); setActiveDropdown(null); }}>
-                          {c.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-                <div className="divider" />
-
-                <div className={`search-item-wrap ${activeDropdown === "intake" ? "dropdown-open" : ""}`}>
-                  <button type="button" className="search-item-new" onClick={() => toggleDropdown("intake")}>
-                    <span className="search-label">Intake</span>
-                    <span className={`search-value${!selectedIntake ? " search-value--placeholder" : ""}`}>
-                      {INTAKES.find((i) => i.value === selectedIntake)?.label || "Select Intake"}
-                      <span className="search-chevron">▼</span>
-                    </span>
-                  </button>
-                  {activeDropdown === "intake" && (
-                    <div className="search-dropdown">
-                      {INTAKES.map((i) => (
-                        <button key={i.value} type="button" className="search-dropdown-item"
-                          onClick={() => { setSelectedIntake(i.value); setActiveDropdown(null); }}>
-                          {i.label}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </div>
-
-                <button className="search-btn-new" onClick={handleSearch}>Search</button>
               </div>
+              <div className="divider" />
+
+              <div className={`search-item-wrap ${activeDropdown === "level" ? "dropdown-open" : ""}`}>
+                <button type="button" className="search-item-new" onClick={() => toggleDropdown("level")}>
+                  <span className="search-label">Level</span>
+                  <span className={`search-value${!selectedLevel ? " search-value--placeholder" : ""}`}>
+                    {LEVELS.find((l) => l.value === selectedLevel)?.label || "Select Level"}
+                    <span className="search-chevron">▼</span>
+                  </span>
+                </button>
+                {activeDropdown === "level" && (
+                  <div className="search-dropdown">
+                    {LEVELS.map((l) => (
+                      <button key={l.value} type="button" className="search-dropdown-item"
+                        onClick={() => { setSelectedLevel(l.value); setActiveDropdown(null); }}>
+                        {l.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="divider" />
+
+              <div className={`search-item-wrap search-item-wrap--category ${activeDropdown === "category" ? "dropdown-open" : ""}`}>
+                <button type="button" className="search-item-new" onClick={() => toggleDropdown("category")}>
+                  <span className="search-label">Category</span>
+                  <span className={`search-value${!selectedCategory ? " search-value--placeholder" : ""}`}>
+                    {CATEGORIES.find((c) => c.value === selectedCategory)?.label || "All Categories"}
+                    <span className="search-chevron">▼</span>
+                  </span>
+                </button>
+                {activeDropdown === "category" && (
+                  <div className="search-dropdown">
+                    {CATEGORIES.map((c) => (
+                      <button key={c.value} type="button" className="search-dropdown-item"
+                        onClick={() => { setSelectedCategory(c.value); setActiveDropdown(null); }}>
+                        {c.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              <div className="divider" />
+
+              <div className={`search-item-wrap ${activeDropdown === "intake" ? "dropdown-open" : ""}`}>
+                <button type="button" className="search-item-new" onClick={() => toggleDropdown("intake")}>
+                  <span className="search-label">Intake</span>
+                  <span className={`search-value${!selectedIntake ? " search-value--placeholder" : ""}`}>
+                    {INTAKES.find((i) => i.value === selectedIntake)?.label || "Select Intake"}
+                    <span className="search-chevron">▼</span>
+                  </span>
+                </button>
+                {activeDropdown === "intake" && (
+                  <div className="search-dropdown">
+                    {INTAKES.map((i) => (
+                      <button key={i.value} type="button" className="search-dropdown-item"
+                        onClick={() => { setSelectedIntake(i.value); setActiveDropdown(null); }}>
+                        {i.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <button className="search-btn-new" onClick={handleSearch}>Search</button>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
 
-      {/* ───────────── 3. PARTNER INSTITUTES ───────────── */}
-      <div ref={logosRef} className={`fade-section ${logosVisible ? "show" : ""}`}>
-        <PartnerLogos />
-      </div>
+      {/* 3. PARTNER INSTITUTES */}
+      <PartnerLogos />
 
-      {/* ───────────── 4. BROWSE BY SUBJECT ───────────── */}
-      <div ref={subjectRef} className={`fade-section ${subjectVisible ? "show" : ""}`}>
-        <BrowseBySubject />
-      </div>
+      {/* 4. BROWSE BY SUBJECT */}
+      <BrowseBySubject />
 
-      {/* ───────────── 5. SCHOLARSHIP CTA ───────────── */}
+      {/* 5. SCHOLARSHIP CTA */}
       <ScholarshipCTA />
 
-      {/* ───────────── 6. SERVICES WE OFFER ───────────── */}
-      <div ref={servicesRef} className={`fade-section ${servicesVisible ? "show" : ""}`}>
+      {/* 6. SERVICES WE OFFER */}
+      <div id="services">
         <Services />
       </div>
 
-      {/* ───────────── 7. QUICK LINKS ───────────── */}
-      <div ref={quickRef} className={`fade-section ${quickVisible ? "show" : ""}`}>
-        <QuickLinks />
-      </div>
+      {/* 7. QUICK LINKS */}
+      <QuickLinks />
 
-      {/* ───────────── 8. FEATURED COURSES ───────────── */}
-      <div ref={coursesRef} className={`fade-section ${coursesVisible ? "show" : ""}`}>
-        <FeaturedCourses />
-      </div>
+      {/* 8. FEATURED COURSES */}
+      <FeaturedCourses />
 
-      {/* ───────────── 9. SUCCESS STORIES ───────────── */}
-      <div ref={storiesRef} className={`fade-section ${storiesVisible ? "show" : ""}`}>
-        <SuccessStories />
-      </div>
+      {/* 9. SUCCESS STORIES */}
+      <SuccessStories />
 
-      {/* ───────────── 10. FAQ ───────────── */}
-      <div ref={faqRef} className={`fade-section ${faqVisible ? "show" : ""}`}>
-        <FAQSection />
-      </div>
+      {/* 10. FAQ */}
+      <FAQSection />
 
-      {/* ───────────── 11. ENQUIRY CTA BANNER ───────────── */}
+      {/* 11. ENQUIRY CTA BANNER */}
       <EnquiryCTA />
 
-      {/* ───────────── 12. EVENTS ───────────── */}
-      <div ref={eventsRef} className={`fade-section ${eventsVisible ? "show" : ""}`}>
-        <EventsSection />
-      </div>
+      {/* 12. EVENTS */}
+      <EventsSection />
 
-      {/* ───────────── 13. PACKAGES ───────────── */}
-      <div id="packages" ref={packagesRef} className={`fade-section ${packagesVisible ? "show" : ""}`}>
+      {/* 13. PACKAGES */}
+      <div id="packages">
         <PackagesSection />
       </div>
 
-      {/* ───────────── 15. PARTNER BANKS ───────────── */}
-      <div className={`fade-section ${logosVisible ? "show" : ""}`}>
-        <PartnerBank />
-      </div>
+      {/* 14. PARTNER BANKS */}
+      <PartnerBank />
 
-      {/* ───────────── 16. CEO QUOTE ───────────── */}
-      <div ref={ceoRef} className={`fade-section ${ceoVisible ? "show" : ""}`}>
-        <CEOQuote />
-      </div>
+      {/* 15. CEO QUOTE */}
+      <CEOQuote />
 
-      {/* ───────────── 17. CONTACT FORM ───────────── */}
-      <div id="contact" ref={contactRef} className={`fade-section ${contactVisible ? "show" : ""}`}>
+      {/* 16. CONTACT FORM */}
+      <div id="contact">
         <ContactSection />
       </div>
 
-      {/* ───────────── FOOTER ───────────── */}
+      {/* FOOTER */}
       <Footer />
 
       {/* POPUP */}

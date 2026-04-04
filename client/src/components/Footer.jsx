@@ -22,12 +22,11 @@ const quickLinks = [
 ];
 
 const studyLinks = [
-  { label: "Study in Ireland",   to: "/ireland" },
-  { label: "Study in UK",        to: "/uk" },
-  { label: "Study in Australia", to: "/australia" },
-  { label: "Search Courses",     to: "/search-results" },
-  { label: "English Proficiency",to: "/dashboard/english-proficiency" },
-  { label: "Document Checklist", to: "/dashboard/documentchecklist" },
+  { label: "Study in Ireland",    to: "/ireland" },
+  { label: "Search Courses",      to: "/search-results" },
+  { label: "English Proficiency", to: "/dashboard/english-proficiency" },
+  { label: "Document Checklist",  to: "/dashboard/documentchecklist" },
+  { label: "Scholarships",        to: "/search-results?country=Ireland" },
 ];
 
 const socialLinks = [

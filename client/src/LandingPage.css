@@ -26,7 +26,7 @@
 
 .hero-overlay {
   position: absolute; inset: 0; z-index: 2; pointer-events: none;
-  background: linear-gradient(135deg, rgba(0,41,24,0.78) 0%, rgba(0,0,0,0.48) 100%);
+  background: linear-gradient(160deg, rgba(0,55,32,0.62) 0%, rgba(0,77,44,0.45) 40%, rgba(0,0,0,0.32) 100%);
 }
 
 .hero-content-wrapper {
@@ -76,8 +76,13 @@
 .hero-stat-card {
   display: flex; align-items: flex-start; gap: 14px;
   padding: 20px 18px; border-radius: var(--radius-card);
-  background: rgba(255,255,255,0.1); backdrop-filter: blur(12px);
-  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.12); backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.22);
+  transition: background 0.25s, transform 0.25s;
+}
+.hero-stat-card:hover {
+  background: rgba(255,255,255,0.18);
+  transform: translateY(-2px);
 }
 .hero-stat-icon {
   width: 40px; height: 40px; border-radius: 50%;
@@ -292,18 +297,3 @@ footer { background: #1A1A1A; color: rgba(255,255,255,0.75); text-align: center;
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes slideUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
-/* =========================================================
-   FADE-IN ANIMATION
-========================================================= */
-.fade-section {
-  opacity: 0; transform: translateY(36px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-  position: relative;
-}
-.fade-section.show { opacity: 1; transform: translateY(0); }
-
-/* Search section wrapper must allow dropdown to overflow */
-.fade-section:has(.search-engine-section) {
-  overflow: visible;
-  z-index: 20;
-}

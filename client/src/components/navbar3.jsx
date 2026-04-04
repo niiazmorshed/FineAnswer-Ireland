@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import { FaUser } from "react-icons/fa";
 import { AuthContext } from "../pages/Provider/ContextProvider";
 import TopUtilityBar from "./TopUtilityBar";
 import "../css/navbar3.css";
@@ -20,14 +21,12 @@ export default function Navbar() {
     setImgError(false);
   }, [user?.picture, user?.photoURL]);
 
-  // Add shadow when scrolled
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close mobile menu on route change / resize
   useEffect(() => {
     const onResize = () => {
       if (window.innerWidth > 900) setMenuOpen(false);
@@ -49,6 +48,8 @@ export default function Navbar() {
     return "?";
   };
 
+  const firstName = user?.name?.split(" ")[0] || user?.email?.split("@")[0] || "User";
+
   const handleProfileClick = () => {
     setMenuOpen(false);
     navigate(isAdmin ? "/admin/dashboard" : "/dashboard");
@@ -62,7 +63,6 @@ export default function Navbar() {
 
       <header className={`minimal-navbar${scrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
-          {/* Logo */}
           <div
             className="nav-logo"
             onClick={() => {
@@ -73,7 +73,6 @@ export default function Navbar() {
             <img src={logo} alt="FineAnswer Ireland" />
           </div>
 
-          {/* Desktop Nav */}
           <nav className={`nav-menu ${menuOpen ? "open" : ""}`}>
             <NavLink to="/" end onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
               Home
@@ -87,23 +86,33 @@ export default function Navbar() {
 
             {showProfileArea ? (
               <button
-                className="nav-profile-btn"
+                className="nav-dashboard-btn"
                 onClick={handleProfileClick}
-                title={user ? `Go to ${isAdmin ? "Admin" : "User"} Dashboard` : "Loading..."}
                 disabled={loading}
               >
                 {loading ? (
                   <span className="nav-profile-loading" />
-                ) : showImage ? (
-                  <img
-                    src={profileImageUrl}
-                    alt={user.name || "Profile"}
-                    className="nav-profile-img"
-                    referrerPolicy="no-referrer"
-                    onError={() => setImgError(true)}
-                  />
                 ) : (
-                  <span className="nav-profile-initials">{getInitials()}</span>
+                  <>
+                    <span className="nav-dashboard-avatar">
+                      {showImage ? (
+                        <img
+                          src={profileImageUrl}
+                          alt={user.name || "Profile"}
+                          referrerPolicy="no-referrer"
+                          onError={() => setImgError(true)}
+                        />
+                      ) : (
+                        <span className="nav-dashboard-initials">{getInitials()}</span>
+                      )}
+                    </span>
+                    <span className="nav-dashboard-text">
+                      <span className="nav-dashboard-name">{firstName}</span>
+                      <span className="nav-dashboard-label">
+                        {isAdmin ? "Admin Panel" : "My Dashboard"}
+                      </span>
+                    </span>
+                  </>
                 )}
               </button>
             ) : (
@@ -119,7 +128,6 @@ export default function Navbar() {
             )}
           </nav>
 
-          {/* Hamburger */}
           <div
             className="hamburger"
             onClick={() => setMenuOpen(!menuOpen)}
