@@ -19,19 +19,21 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary, #00693E);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
-  border-radius: 8px;
+  border-radius: 6px;
   font-weight: 600;
   cursor: pointer;
+  font-family: var(--font-sans);
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .add-video-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: var(--color-primary-dark, #004D2C);
+  box-shadow: 0 4px 12px rgba(0, 105, 62, 0.3);
 }
 
 .video-grid {
@@ -168,7 +170,7 @@
 
 .video-loading .spinner {
   font-size: 3rem;
-  color: #667eea;
+  color: var(--color-primary, #00693E);
   animation: spin 1s linear infinite;
 }
 
@@ -284,7 +286,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: var(--color-primary, #00693E);
 }
 
 .form-hint {
@@ -312,13 +314,14 @@
 }
 
 .submit-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: var(--color-primary, #00693E);
   color: white;
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+  background: var(--color-primary-dark, #004D2C);
+  box-shadow: 0 4px 12px rgba(0, 105, 62, 0.3);
 }
 
 .submit-btn:disabled {

@@ -80,7 +80,7 @@ export default function Navbar() {
             </NavLink>
             <a href="/#about"    onClick={closeMenu}>About</a>
             <a href="/#services" onClick={closeMenu}>Services</a>
-            <a href="/#countries" onClick={closeMenu}>Countries</a>
+            <a href="/#packages" onClick={closeMenu}>Packages</a>
             <a href="/#contact"  onClick={closeMenu}>Contact</a>
             <NavLink to="/career" onClick={closeMenu}>Career</NavLink>
             <NavLink to="/blog"   onClick={closeMenu}>Blog</NavLink>

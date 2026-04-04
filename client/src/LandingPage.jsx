@@ -20,7 +20,6 @@ import EnquiryCTA from "./components/EnquiryCTA";
 import EventsSection from "./components/EventsSection";
 import PackagesSection from "./components/PackagesSection";
 import ContactSection from "./components/ContactSection";
-import CountrySlider from "./components/CountrySlider";
 import PartnerBank from "./components/PartnerBank";
 import CEOQuote from "./components/CEOQuote";
 
@@ -47,7 +46,7 @@ export default function LandingPage() {
   const [storiesRef, storiesVisible] = useFadeIn();
   const [faqRef, faqVisible] = useFadeIn();
   const [eventsRef, eventsVisible] = useFadeIn();
-  const [countryRef, countryVisible] = useFadeIn();
+  
   const [packagesRef, packagesVisible] = useFadeIn();
   const [ceoRef, ceoVisible] = useFadeIn();
   const [contactRef, contactVisible] = useFadeIn();
@@ -335,12 +334,7 @@ export default function LandingPage() {
         <EventsSection />
       </div>
 
-      {/* ───────────── 13. COUNTRIES ───────────── */}
-      <div id="countries" ref={countryRef} className={`fade-section ${countryVisible ? "show" : ""}`}>
-        <CountrySlider />
-      </div>
-
-      {/* ───────────── 14. PACKAGES ───────────── */}
+      {/* ───────────── 13. PACKAGES ───────────── */}
       <div id="packages" ref={packagesRef} className={`fade-section ${packagesVisible ? "show" : ""}`}>
         <PackagesSection />
       </div>

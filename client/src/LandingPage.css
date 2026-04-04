@@ -108,12 +108,14 @@
 ========================================================= */
 .search-engine-section {
   padding: var(--section-padding) 0; background: var(--color-bg-white);
+  position: relative; z-index: 20; overflow: visible;
 }
 @media (max-width: 768px) {
   .search-engine-section { padding: var(--section-padding-mobile) 0; }
 }
 .search-engine-inner {
   max-width: 1120px; margin: 0 auto; padding: 0 24px;
+  position: relative; overflow: visible;
 }
 .search-engine-header {
   text-align: center; margin-bottom: 32px;
@@ -296,5 +298,12 @@ footer { background: #1A1A1A; color: rgba(255,255,255,0.75); text-align: center;
 .fade-section {
   opacity: 0; transform: translateY(36px);
   transition: opacity 0.7s ease, transform 0.7s ease;
+  position: relative;
 }
 .fade-section.show { opacity: 1; transform: translateY(0); }
+
+/* Search section wrapper must allow dropdown to overflow */
+.fade-section:has(.search-engine-section) {
+  overflow: visible;
+  z-index: 20;
+}

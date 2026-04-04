@@ -1,8 +1,9 @@
+/* ── User Sidebar — FineAnswer Ireland Theme ─────────────── */
 .sidebar {
   width: 260px;
   height: 100vh;
   background: #ffffff;
-  border-right: 1px solid #eef1f6;
+  border-right: 1px solid var(--color-border, #E0E0E0);
   padding: 18px;
   display: block;
   overflow: visible;
@@ -25,14 +26,16 @@
   align-items: center;
   justify-content: center;
   gap: 13px;
-  margin-bottom: 30px;
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-border, #E0E0E0);
 }
 
 .logo-icon {
   width: 42px;
   height: 42px;
-  border-radius: 12px;
-  background: var(--color-primary);
+  border-radius: 10px;
+  background: var(--color-primary, #00693E);
   color: #fff;
   display: flex;
   align-items: center;
@@ -43,104 +46,107 @@
   margin: 0;
   font-size: 16px;
   font-weight: 600;
+  color: var(--color-text-primary, #1A1A1A);
 }
 
 .sidebar-logo span {
   font-size: 12px;
-  color: #8a8fa3;
+  color: var(--color-text-muted, #888);
 }
 
 /* Navigation */
 .sidebar-nav {
   flex: 1;
+  overflow-y: auto;
 }
 
 .sidebar-nav a {
   display: flex;
   align-items: center;
-  gap: 15px;
-  padding: 16px 14px;
-  border-radius: 12px;
-  color: #2d2d2d;
-  font-size: 14px;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: var(--color-text-secondary, #555);
+  font-size: 0.9rem;
+  font-weight: 500;
   text-decoration: none;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
   cursor: pointer;
-  transition: all 0.25s ease;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.sidebar-nav a svg {
+  font-size: 1rem;
+  flex-shrink: 0;
+  width: 18px;
 }
 
 .sidebar-nav a:hover {
-  background-color: #f1f4ff;
-  color: var(--color-primary);
+  background-color: var(--color-primary-light, #E6F4ED);
+  color: var(--color-primary, #00693E);
+  border-color: transparent;
 }
 
 .sidebar-nav a.active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary, #00693E);
   color: #ffffff;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 105, 62, 0.2);
 }
+
 .sidebar-nav a span {
-  margin-left: 10px;  /* 👈 extra spacing after icon */
+  margin-left: 0;
 }
 
 /* CTA Card */
 .sidebar-cta {
-  background: #f6f9ff;
-  border-radius: 14px;
+  background: var(--color-primary-light, #E6F4ED);
+  border-radius: 10px;
   padding: 16px;
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
+  border: 1px solid rgba(0, 105, 62, 0.1);
 }
 
-.cta-icon {
-  font-size: 22px;
-  margin-bottom: 6px;
-}
-
-.cta-title {
-  font-weight: 600;
-  margin: 4px 0;
-}
-
-.cta-sub {
-  font-size: 12px;
-  color: #6b7280;
-  margin-bottom: 10px;
-}
+.cta-icon { font-size: 22px; margin-bottom: 6px; }
+.cta-title { font-weight: 600; margin: 4px 0; color: var(--color-text-primary); }
+.cta-sub { font-size: 12px; color: var(--color-text-muted); margin-bottom: 10px; }
 
 .sidebar-cta button {
   width: 100%;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 6px;
   border: none;
-  background: var(--color-primary);
+  background: var(--color-primary, #00693E);
   color: #fff;
-  font-weight: 500;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.25s;
+  transition: background 0.2s;
+  font-family: var(--font-sans);
 }
-
 .sidebar-cta button:hover {
-  background: #4756a6;
+  background: var(--color-primary-dark, #004D2C);
 }
 
 /* Logout */
 .logout-btn {
   background: transparent;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--color-border, #E0E0E0);
   margin-top: auto;
   padding: 12px 16px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
   justify-content: center;
-  transition: 0.25s;
-  color: #2d2d2d;
-  font-size: 14px;
+  transition: all 0.2s;
+  color: var(--color-text-secondary, #555);
+  font-size: 0.9rem;
   font-weight: 500;
   width: 100%;
+  font-family: var(--font-sans);
 }
 
 .logout-btn:hover {
@@ -150,5 +156,5 @@
 }
 
 .logout-btn svg {
-  font-size: 16px;
+  font-size: 15px;
 }

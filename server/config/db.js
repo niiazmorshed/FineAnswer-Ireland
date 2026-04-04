@@ -1,12 +1,13 @@
 const { MongoClient, ServerApiVersion } = require("mongodb");
 
-const dbUser = (process.env.DB_USER || "").trim();
-const dbPassword = (process.env.DB_PASSWORD || "").trim();
-const defaultHost = "cluster1.pvs4l8x.mongodb.net";
+const uri = (process.env.MONGODB_URI || "").trim();
 
-const uri =
-  (process.env.MONGODB_URI || "").trim() ||
-  `mongodb+srv://${encodeURIComponent(dbUser)}:${encodeURIComponent(dbPassword)}@${defaultHost}/?appName=Cluster1`;
+if (!uri) {
+  throw new Error(
+    "MONGODB_URI is not set in server/.env\n" +
+    "→ Go to Atlas → your cluster → Connect → Drivers → copy the connection string → paste it as MONGODB_URI=",
+  );
+}
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -16,7 +17,6 @@ const client = new MongoClient(uri, {
   },
 });
 
-// All collection references (populated in connectDB)
 const collections = {
   users: null,
   successStory: null,
@@ -33,32 +33,27 @@ const connectWithRetry = async (attempts = 5, baseDelay = 1000) => {
   for (let i = 0; i < attempts; i++) {
     try {
       await client.connect();
-      console.log("Connected to MongoDB");
+      console.log("MongoDB connected successfully");
       return;
     } catch (err) {
-      console.error(
-        `MongoDB connection attempt ${i + 1} failed:`,
-        err && err.message,
-      );
+      console.error(`MongoDB connection attempt ${i + 1} failed:`, err?.message);
       if (i === attempts - 1) throw err;
-      const wait = baseDelay * Math.pow(2, i);
-      await new Promise((r) => setTimeout(r, wait));
+      await new Promise((r) => setTimeout(r, baseDelay * Math.pow(2, i)));
     }
   }
 };
 
 const connectDB = async () => {
-  // Set reliable DNS servers to avoid transient SRV lookup failures
   const dns = require("dns");
   try {
     dns.setServers(["8.8.8.8", "1.1.1.1"]);
   } catch (e) {
-    console.warn("Failed to set DNS servers (continuing):", e && e.message);
+    console.warn("Failed to set DNS servers (continuing):", e?.message);
   }
 
   await connectWithRetry();
 
-  const db = client.db("FineAnswer");
+  const db = client.db("FineAnswerIreland");
   collections.users              = db.collection("usersCollection");
   collections.successStory       = db.collection("successStory");
   collections.blog               = db.collection("blog");
