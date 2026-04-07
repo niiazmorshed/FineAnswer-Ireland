@@ -2,8 +2,6 @@ import React, { useEffect, useContext } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import ReadMoreInfo from "./pages/ReadMoreInfo";
-import AustraliaPage from "./AustraliaPage";
-import UKPage from "./UKPage";
 import IrelandPage from "./IrelandPage";
 
 import Login from "./LoginPage";
@@ -72,9 +70,10 @@ function AppRoutes() {
       <Route path="/read-more-info" element={<ReadMoreInfo />} />
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
-      <Route path="/australia" element={<AustraliaPage />} />
-      <Route path="/uk" element={<UKPage />} />
       <Route path="/ireland" element={<IrelandPage />} />
+      {/* /australia and /uk redirect to home — pages removed */}
+      <Route path="/australia" element={<Navigate to="/" replace />} />
+      <Route path="/uk" element={<Navigate to="/" replace />} />
       <Route path="/blog" element={<PublicBlog />} />
       <Route path="/blog/:id" element={<BlogDetail />} />
       <Route path="/success-story/:id" element={<SuccessStoryDetail />} />

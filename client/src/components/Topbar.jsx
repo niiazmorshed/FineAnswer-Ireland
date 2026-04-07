@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { FaBars, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useContext, useState } from "react";
+import { FaBars } from "react-icons/fa";
 import { AuthContext } from "../pages/Provider/ContextProvider";
 
 export default function Topbar({
@@ -8,6 +8,10 @@ export default function Topbar({
   onToggleMobileSidebar,
 }) {
   const { user } = useContext(AuthContext);
+  const [imgError, setImgError] = useState(false);
+
+  const profileImageUrl = user?.picture || user?.photoURL;
+  const showImage = profileImageUrl && !imgError;
 
   const initials = (() => {
     if (user?.name) {
@@ -39,7 +43,19 @@ export default function Topbar({
       <div className="topbar-right">
         <span className="notification">🔔</span>
         <div className="user">
-          <span className="avatar">{initials}</span>
+          <span className="avatar">
+            {showImage ? (
+              <img
+                src={profileImageUrl}
+                alt={user?.name || "Profile"}
+                referrerPolicy="no-referrer"
+                onError={() => setImgError(true)}
+                style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }}
+              />
+            ) : (
+              initials
+            )}
+          </span>
           <span>{user?.name || user?.email?.split("@")?.[0] || "User"}</span>
         </div>
       </div>

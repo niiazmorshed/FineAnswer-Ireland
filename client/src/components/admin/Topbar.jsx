@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 import { AuthContext } from "../../pages/Provider/ContextProvider";
 
@@ -7,19 +7,21 @@ export default function Topbar({
   onToggleMobileSidebar,
 }) {
   const { user } = useContext(AuthContext);
+  const [imgError, setImgError] = useState(false);
+
+  const profileImageUrl = user?.picture || user?.photoURL;
+  const showImage = profileImageUrl && !imgError;
 
   const getUserInitials = () => {
     if (user?.name) {
       return user.name
         .split(" ")
-        .map((n) => n[0]) 
+        .map((n) => n[0])
         .join("")
         .toUpperCase()
         .slice(0, 2);
     }
-    if (user?.email) {
-      return user.email[0].toUpperCase();
-    }
+    if (user?.email) return user.email[0].toUpperCase();
     return "AU";
   };
 
@@ -40,7 +42,19 @@ export default function Topbar({
 
       <div className="topbar-right">
         <div className="admin-user">
-          <div className="admin-user__avatar">{getUserInitials()}</div>
+          <div className="admin-user__avatar">
+            {showImage ? (
+              <img
+                src={profileImageUrl}
+                alt={user?.name || "Profile"}
+                referrerPolicy="no-referrer"
+                onError={() => setImgError(true)}
+                style={{ width: "100%", height: "100%", borderRadius: "50%", objectFit: "cover" }}
+              />
+            ) : (
+              getUserInitials()
+            )}
+          </div>
           <div className="admin-user__info">
             <span className="admin-user__name">
               {user?.name || "Admin User"}
