@@ -21,7 +21,7 @@
 }
 
 .contact-tag {
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 1px;
@@ -56,7 +56,7 @@
 .contact-phone-icon {
   flex-shrink: 0;
   margin-top: 2px;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   font-size: 1rem;
 }
 
@@ -122,9 +122,9 @@
 }
 
 .social-icons span:hover {
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: white;
-  border-color: var(--color-primary, #00693E);
+  border-color: var(--color-primary, #00875a);
 }
 
 /* RIGHT FORM CARD */
@@ -168,15 +168,15 @@
 
 .contact-form input:focus,
 .contact-form textarea:focus {
-  border-color: var(--color-primary, #00693E);
+  border-color: var(--color-primary, #00875a);
   background: white;
-  box-shadow: 0 0 0 3px rgba(0,105,62,0.12);
+  box-shadow: 0 0 0 3px rgba(0,135,90,0.12);
 }
 
 /* SEND BUTTON */
 .send-btn {
   width: 100%;
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: white;
   padding: 13px;
   border: none;
@@ -208,7 +208,7 @@
 }
 
 .send-btn:hover {
-  background: var(--color-primary-dark, #004D2C);
+  background: var(--color-primary-dark, #0a5c4d);
   transform: translateY(-1px);
 }
 

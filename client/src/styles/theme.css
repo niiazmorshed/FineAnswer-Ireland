@@ -7,9 +7,9 @@
 
    COLOR PALETTE
    ─────────────────────────────────────────────────────────────
-   Primary Green:       #00693E  →  var(--color-primary)
-   Primary Dark:        #004D2C  →  var(--color-primary-dark)
-   Primary Light:       #E6F4ED  →  var(--color-primary-light)
+   Primary Green:       #00875a  →  var(--color-primary)
+   Primary Dark:        #0a5c4d  →  var(--color-primary-dark)
+   Primary Light:       #e6f7f0  →  var(--color-primary-light)
    Accent Gold:         #F5A623  →  var(--color-gold)
    Accent Gold Hover:   #D4891A  →  var(--color-gold-hover)
    Text Primary:        #1A1A1A  →  var(--color-text-primary)
@@ -43,6 +43,6 @@
    SHADOWS
    ─────────────────────────────────────────────────────────────
    Card:       0 2px 12px rgba(0,0,0,0.08)          →  var(--shadow-card)
-   Card hover: 0 8px 24px rgba(0,105,62,0.15)       →  var(--shadow-card-hover)
+   Card hover: 0 8px 24px rgba(0,135,90,0.15)       →  var(--shadow-card-hover)
    Navbar:     0 2px 8px rgba(0,0,0,0.1)            →  var(--shadow-nav)
 */

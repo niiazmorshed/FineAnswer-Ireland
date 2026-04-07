@@ -209,8 +209,8 @@ export default function Footer() {
           transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
         }
         .footer-social-icon:hover {
-          background: var(--color-primary, #00693E);
-          border-color: var(--color-primary, #00693E);
+          background: var(--color-primary, #00875a);
+          border-color: var(--color-primary, #00875a);
           color: #fff;
           transform: translateY(-2px);
         }
@@ -265,11 +265,11 @@ export default function Footer() {
           transition: border-color 0.2s;
         }
         .footer-email-input::placeholder { color: rgba(255,255,255,0.35); }
-        .footer-email-input:focus { border-color: var(--color-primary, #00693E); }
+        .footer-email-input:focus { border-color: var(--color-primary, #00875a); }
 
         .footer-subscribe-btn {
           padding: 11px 20px;
-          background: var(--color-primary, #00693E);
+          background: var(--color-primary, #00875a);
           color: #fff;
           border: none;
           border-radius: var(--radius-btn, 4px);
@@ -280,7 +280,7 @@ export default function Footer() {
           transition: background 0.2s;
           width: 100%;
         }
-        .footer-subscribe-btn:hover { background: var(--color-primary-dark, #004D2C); }
+        .footer-subscribe-btn:hover { background: var(--color-primary-dark, #0a5c4d); }
 
         .footer-apply-btn {
           display: inline-block;

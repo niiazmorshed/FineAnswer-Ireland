@@ -133,14 +133,14 @@ export default function DashboardHome() {
 
         /* ── Loading ──────────────────────────── */
         .dash-loading { display: flex; justify-content: center; padding: 60px 0; }
-        .dash-spinner { width: 36px; height: 36px; border: 3px solid var(--color-border, #E0E0E0); border-top-color: var(--color-primary, #00693E); border-radius: 50%; animation: dashSpin 0.7s linear infinite; }
+        .dash-spinner { width: 36px; height: 36px; border: 3px solid var(--color-border, #E0E0E0); border-top-color: var(--color-primary, #00875a); border-radius: 50%; animation: dashSpin 0.7s linear infinite; }
         @keyframes dashSpin { to { transform: rotate(360deg); } }
 
         /* ── Welcome banner ───────────────────── */
         .dash-welcome {
           display: flex; align-items: center; justify-content: space-between; gap: 20px;
           padding: 24px 28px; border-radius: 12px;
-          background: linear-gradient(135deg, var(--color-primary, #00693E) 0%, var(--color-primary-dark, #004D2C) 100%);
+          background: linear-gradient(135deg, var(--color-primary, #00875a) 0%, var(--color-primary-dark, #0a5c4d) 100%);
           color: #fff;
         }
         .dash-welcome__left { display: flex; align-items: center; gap: 16px; }
@@ -180,16 +180,16 @@ export default function DashboardHome() {
           box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         .dash-quick-card:hover {
-          border-color: var(--color-primary, #00693E);
-          box-shadow: 0 4px 16px rgba(0,105,62,0.1);
+          border-color: var(--color-primary, #00875a);
+          box-shadow: 0 4px 16px rgba(0,135,90,0.1);
           transform: translateY(-2px);
         }
-        .dash-quick-card:hover .dash-quick-icon { background: var(--color-primary, #00693E); color: #fff; }
+        .dash-quick-card:hover .dash-quick-icon { background: var(--color-primary, #00875a); color: #fff; }
         .dash-quick-card:hover .dash-quick-arrow { color: var(--color-primary); transform: translateX(3px); }
 
         .dash-quick-icon {
           width: 36px; height: 36px; border-radius: 8px;
-          background: var(--color-primary-light, #E6F4ED); color: var(--color-primary, #00693E);
+          background: var(--color-primary-light, #e6f7f0); color: var(--color-primary, #00875a);
           display: flex; align-items: center; justify-content: center;
           font-size: 0.9rem; flex-shrink: 0; transition: all 0.2s;
         }
@@ -226,7 +226,7 @@ export default function DashboardHome() {
         .dash-view-profile-link {
           display: inline-flex; align-items: center; gap: 6px;
           margin-top: 18px; font-size: 0.8125rem; font-weight: 600;
-          color: var(--color-primary, #00693E); text-decoration: none; transition: gap 0.2s;
+          color: var(--color-primary, #00875a); text-decoration: none; transition: gap 0.2s;
         }
         .dash-view-profile-link:hover { gap: 10px; }
 

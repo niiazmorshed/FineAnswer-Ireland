@@ -54,12 +54,12 @@
   cursor: default;
 }
 .service-card:hover {
-  box-shadow: var(--shadow-card-hover, 0 8px 24px rgba(0,105,62,0.15));
+  box-shadow: var(--shadow-card-hover, 0 8px 24px rgba(0,135,90,0.15));
   transform: translateY(-4px);
-  border-color: var(--color-primary, #00693E);
+  border-color: var(--color-primary, #00875a);
 }
 .service-card:hover .service-icon {
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: #fff;
 }
 
@@ -67,8 +67,8 @@
   width: 52px;
   height: 52px;
   border-radius: 50%;
-  background: var(--color-primary-light, #E6F4ED);
-  color: var(--color-primary, #00693E);
+  background: var(--color-primary-light, #e6f7f0);
+  color: var(--color-primary, #00875a);
   display: flex;
   align-items: center;
   justify-content: center;

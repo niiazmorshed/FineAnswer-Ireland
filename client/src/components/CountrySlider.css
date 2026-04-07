@@ -34,8 +34,8 @@
 }
 .country-card:hover {
   transform: translateY(-6px);
-  box-shadow: var(--shadow-card-hover, 0 8px 24px rgba(0,105,62,0.15));
-  border-color: var(--color-primary, #00693E);
+  box-shadow: var(--shadow-card-hover, 0 8px 24px rgba(0,135,90,0.15));
+  border-color: var(--color-primary, #00875a);
 }
 .country-card:hover img {
   transform: scale(1.04);
@@ -67,9 +67,9 @@
 
 .card-content button {
   padding: 9px 20px;
-  border: 2px solid var(--color-primary, #00693E);
+  border: 2px solid var(--color-primary, #00875a);
   background: transparent;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   font-size: 0.875rem;
   font-weight: 600;
   font-family: var(--font-sans);
@@ -78,7 +78,7 @@
   transition: all 0.2s;
 }
 .card-content button:hover {
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: #fff;
 }
 

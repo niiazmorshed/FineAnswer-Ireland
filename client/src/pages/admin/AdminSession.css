@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -32,8 +32,8 @@
 
 .add-video-btn:hover {
   transform: translateY(-2px);
-  background: var(--color-primary-dark, #004D2C);
-  box-shadow: 0 4px 12px rgba(0, 105, 62, 0.3);
+  background: var(--color-primary-dark, #0a5c4d);
+  box-shadow: 0 4px 12px rgba(0, 135, 90, 0.3);
 }
 
 .video-grid {
@@ -170,7 +170,7 @@
 
 .video-loading .spinner {
   font-size: 3rem;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   animation: spin 1s linear infinite;
 }
 
@@ -286,7 +286,7 @@
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--color-primary, #00693E);
+  border-color: var(--color-primary, #00875a);
 }
 
 .form-hint {
@@ -314,14 +314,14 @@
 }
 
 .submit-btn {
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: white;
 }
 
 .submit-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  background: var(--color-primary-dark, #004D2C);
-  box-shadow: 0 4px 12px rgba(0, 105, 62, 0.3);
+  background: var(--color-primary-dark, #0a5c4d);
+  box-shadow: 0 4px 12px rgba(0, 135, 90, 0.3);
 }
 
 .submit-btn:disabled {

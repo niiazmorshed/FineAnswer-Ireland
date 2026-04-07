@@ -126,7 +126,7 @@
   margin: 0 0 14px;
   font-size: 1rem;
   font-weight: 600;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
 }
 
 .user-details-grid {
@@ -167,7 +167,7 @@
   height: 56px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid var(--color-primary-light, #E6F4ED);
+  border: 2px solid var(--color-primary-light, #e6f7f0);
 }
 
 /* ── Topbar ────────────────────────────────────────────────── */
@@ -195,7 +195,7 @@
   border: 1px solid var(--color-border, #E0E0E0);
   border-radius: 8px;
   background: #ffffff;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -215,9 +215,9 @@
 
 .dashboard-topbar-burger:hover,
 .dashboard-topbar-collapse:hover {
-  background: var(--color-primary-light, #E6F4ED);
-  color: var(--color-primary-dark, #004D2C);
-  border-color: var(--color-primary, #00693E);
+  background: var(--color-primary-light, #e6f7f0);
+  color: var(--color-primary-dark, #0a5c4d);
+  border-color: var(--color-primary, #00875a);
 }
 
 .dashboard-topbar-burger:active,
@@ -227,7 +227,7 @@
 
 .dashboard-topbar-burger:focus-visible,
 .dashboard-topbar-collapse:focus-visible {
-  outline: 2px solid var(--color-primary, #00693E);
+  outline: 2px solid var(--color-primary, #00875a);
   outline-offset: 2px;
 }
 
@@ -252,8 +252,8 @@
 }
 .topbar input:focus {
   outline: none;
-  border-color: var(--color-primary, #00693E);
-  box-shadow: 0 0 0 3px rgba(0, 105, 62, 0.1);
+  border-color: var(--color-primary, #00875a);
+  box-shadow: 0 0 0 3px rgba(0, 135, 90, 0.1);
 }
 
 .topbar-right {
@@ -285,7 +285,7 @@
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: #fff;
   display: flex;
   align-items: center;
@@ -307,11 +307,11 @@
   border-radius: 8px;
   border: 1px solid var(--color-border, #E0E0E0);
   background: #ffffff;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   display: none;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 1px 3px rgba(0, 105, 62, 0.1);
+  box-shadow: 0 1px 3px rgba(0, 135, 90, 0.1);
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
@@ -329,7 +329,7 @@
   min-height: 28px;
   border: 1px solid var(--color-border, #E0E0E0);
   transform: translateY(-50%);
-  box-shadow: 0 2px 8px rgba(0, 105, 62, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 135, 90, 0.15);
 }
 
 .dashboard-layout.is-sidebar-collapsed .sidebar .dashboard-sidebar-toggle:hover {
@@ -343,14 +343,14 @@
 }
 
 .dashboard-sidebar-toggle:hover {
-  background: var(--color-primary-light, #E6F4ED);
-  color: var(--color-primary-dark, #004D2C);
-  box-shadow: 0 2px 8px rgba(0, 105, 62, 0.15);
+  background: var(--color-primary-light, #e6f7f0);
+  color: var(--color-primary-dark, #0a5c4d);
+  box-shadow: 0 2px 8px rgba(0, 135, 90, 0.15);
   transform: scale(1.02);
 }
 
 .dashboard-sidebar-toggle:focus-visible {
-  outline: 2px solid var(--color-primary, #00693E);
+  outline: 2px solid var(--color-primary, #00875a);
   outline-offset: 2px;
 }
 
@@ -387,11 +387,11 @@
   margin: auto;
 }
 .step.done .circle { background: #22c55e; }
-.step.active .circle { background: var(--color-primary, #00693E); }
+.step.active .circle { background: var(--color-primary, #00875a); }
 
 /* ── Eligibility card ──────────────────────────────────────── */
 .eligibility-card {
-  background: linear-gradient(135deg, var(--color-primary, #00693E) 0%, var(--color-primary-dark, #004D2C) 100%);
+  background: linear-gradient(135deg, var(--color-primary, #00875a) 0%, var(--color-primary-dark, #0a5c4d) 100%);
   color: white;
   padding: 24px;
   border-radius: 10px;
@@ -438,7 +438,7 @@
   width: 72px;
   height: 72px;
   margin: 0 auto 20px;
-  background: linear-gradient(135deg, var(--color-primary, #00693E), var(--color-primary-dark, #004D2C));
+  background: linear-gradient(135deg, var(--color-primary, #00875a), var(--color-primary-dark, #0a5c4d));
   color: white;
   border-radius: 50%;
   display: flex;
@@ -455,8 +455,8 @@
 
 .coming-soon-badge {
   display: inline-block;
-  background: var(--color-primary-light, #E6F4ED);
-  color: var(--color-primary, #00693E);
+  background: var(--color-primary-light, #e6f7f0);
+  color: var(--color-primary, #00875a);
   padding: 5px 14px;
   border-radius: 20px;
   font-size: 0.875rem;

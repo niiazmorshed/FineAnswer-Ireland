@@ -47,7 +47,7 @@ html, body, #root {
 
 .register-form h2 {
   font-size: 2rem;
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
   font-weight: 700;
   margin-bottom: 8px;
 }
@@ -76,8 +76,8 @@ html, body, #root {
 
 .input-group input:focus {
   background: white;
-  border-color: var(--color-primary, #00693E);
-  box-shadow: 0 0 0 3px rgba(0,105,62,0.12);
+  border-color: var(--color-primary, #00875a);
+  box-shadow: 0 0 0 3px rgba(0,135,90,0.12);
   color: #1e293b;
 }
 
@@ -92,18 +92,18 @@ html, body, #root {
   padding: 14px;
   border: none;
   border-radius: 10px;
-  background: var(--color-primary, #00693E);
+  background: var(--color-primary, #00875a);
   color: white;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(0,105,62,0.2);
+  box-shadow: 0 4px 12px rgba(0,135,90,0.2);
 }
 
 .register-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0,105,62,0.25);
-  background: var(--color-primary-dark, #004D2C);
+  box-shadow: 0 6px 16px rgba(0,135,90,0.25);
+  background: var(--color-primary-dark, #0a5c4d);
 }
 
 /* Google Button */
@@ -153,7 +153,7 @@ html, body, #root {
 }
 
 .login-link a:hover {
-  color: var(--color-primary, #00693E);
+  color: var(--color-primary, #00875a);
 }
 
 /* Right Section (Image & Quote) */

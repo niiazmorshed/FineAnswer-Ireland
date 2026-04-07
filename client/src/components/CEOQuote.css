@@ -57,11 +57,11 @@
   max-width: 750px;
   margin: 0 auto 28px;
   text-align: left;
-  background: var(--color-primary-light, #E6F4ED);
-  border: 1px solid rgba(0,105,62,0.12);
+  background: var(--color-primary-light, #e6f7f0);
+  border: 1px solid rgba(0,135,90,0.12);
   border-radius: var(--radius-card, 8px);
   padding: 24px 22px;
-  border-left: 3px solid var(--color-primary, #00693E);
+  border-left: 3px solid var(--color-primary, #00875a);
 }
 
 .ceo-quote-text p {

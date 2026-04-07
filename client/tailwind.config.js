@@ -8,9 +8,9 @@ export default {
     extend: {
       colors: {
         primary: {
-          DEFAULT: "#00693E",
-          dark: "#004D2C",
-          light: "#E6F4ED",
+          DEFAULT: "#00875a",
+          dark: "#0a5c4d",
+          light: "#e6f7f0",
         },
         gold: {
           DEFAULT: "#F5A623",
@@ -49,12 +49,12 @@ export default {
       },
       boxShadow: {
         "card": "0 2px 12px rgba(0,0,0,0.08)",
-        "card-hover": "0 8px 24px rgba(0,105,62,0.15)",
+        "card-hover": "0 8px 24px rgba(0,135,90,0.15)",
         "nav": "0 2px 8px rgba(0,0,0,0.1)",
       },
       backgroundImage: {
-        "cta-gradient": "linear-gradient(135deg, #00693E 0%, #004D2C 100%)",
-        "hero-gradient": "linear-gradient(135deg, #F8FDF9 0%, #FFFFFF 100%)",
+        "cta-gradient": "linear-gradient(135deg, #00875a 0%, #0a5c4d 100%)",
+        "hero-gradient": "linear-gradient(135deg, #f0faf5 0%, #FFFFFF 100%)",
       },
     },
   },
