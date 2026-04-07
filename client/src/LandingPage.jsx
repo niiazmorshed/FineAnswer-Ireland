@@ -22,6 +22,7 @@ import PackagesSection from "./components/PackagesSection";
 import ContactSection from "./components/ContactSection";
 import PartnerBank from "./components/PartnerBank";
 import CEOQuote from "./components/CEOQuote";
+import AboutUs from "./components/AboutUs";
 
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
@@ -176,7 +177,10 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 2. COURSE SEARCH ENGINE */}
+      {/* 2. ABOUT US */}
+      <AboutUs />
+
+      {/* 3. COURSE SEARCH ENGINE */}
       <section className="search-engine-section" id="search">
         <div className="search-engine-inner">
           <div className="search-engine-header">
