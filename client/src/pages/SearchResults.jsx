@@ -28,12 +28,12 @@ const INTAKES = [
 
 const COUNTRY = "Ireland";
 
-// Color map for level badges
+// Color map for level badges — teal/emerald palette
 const LEVEL_COLORS = {
-  "Master's (Postgraduate)":    { bg: "#ede9fe", text: "#6d28d9" },
-  "Bachelor's (Undergraduate)": { bg: "#dbeafe", text: "#1d4ed8" },
-  "Postgraduate Diploma":       { bg: "#fce7f3", text: "#be185d" },
-  "Higher Diploma":             { bg: "#d1fae5", text: "#065f46" },
+  "Master's (Postgraduate)":    { bg: "#e6f7f0", text: "#0a5c4d" },
+  "Bachelor's (Undergraduate)": { bg: "#d1fae5", text: "#065f46" },
+  "Postgraduate Diploma":       { bg: "#fef3c7", text: "#92400e" },
+  "Higher Diploma":             { bg: "#e0f2fe", text: "#0369a1" },
 };
 
 function getLevelLabel(value) {
