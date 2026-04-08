@@ -47,6 +47,45 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
+class AppErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error, errorInfo) {
+    console.error("[FineAnswer] Uncaught render error:", error, errorInfo);
+  }
+
+  render() {
+    if (!this.state.hasError) return this.props.children;
+
+    return (
+      <div style={{ padding: 24, fontFamily: "Inter, system-ui, sans-serif" }}>
+        <h2 style={{ marginBottom: 8 }}>Something went wrong</h2>
+        <p style={{ color: "rgba(15, 23, 42, 0.75)", marginBottom: 12 }}>
+          The app crashed while rendering. Open the browser console to see the exact error.
+        </p>
+        <pre
+          style={{
+            background: "rgba(2, 6, 23, 0.06)",
+            padding: 12,
+            borderRadius: 10,
+            overflow: "auto",
+            maxWidth: "100%",
+          }}
+        >
+          {String(this.state.error?.message || this.state.error || "Unknown error")}
+        </pre>
+      </div>
+    );
+  }
+}
+
 function AppRoutes() {
   const { user, isAdmin, loading } = useContext(AuthContext);
 
@@ -161,7 +200,9 @@ function AppRoutes() {
 export default function App() {
   return (
     <Router>
-      <AppRoutes />
+      <AppErrorBoundary>
+        <AppRoutes />
+      </AppErrorBoundary>
     </Router>
   );
 }

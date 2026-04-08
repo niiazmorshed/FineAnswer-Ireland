@@ -123,59 +123,63 @@ export default function LandingPage() {
       <Navbar3 />
 
       {/* 1. HERO */}
-      <section className="hero-section-new">
-        <div className="hero-background">
-          {images.map((img, i) => (
-            <div
-              key={i}
-              className={`hero-bg-slide ${i === currentImage ? "active" : ""}`}
-              style={{ backgroundImage: `url(${img})` }}
-            />
-          ))}
+      {/* 1. HERO */}
+<section className="hero-section-new">
+  <div className="hero-shell">
+    <div className="hero-left">
+      <div className="hero-badge">
+        ✦ BUILT FOR IRELAND-BOUND STUDENTS
+      </div>
+
+      <h1 className="hero-title">
+        We take care of your <br />
+        <span>Ireland Journey</span> step by step
+      </h1>
+
+      <p className="hero-subtitle">
+        Search courses, plan your application, and get visa-ready with a guided, 
+        modern experience designed to keep everything simple and trackable.
+      </p>
+
+      <div className="hero-actions">
+        <button 
+          className="hero-cta-primary" 
+          onClick={() => navigate("/search-results?country=Ireland")}
+        >
+          Get Started
+        </button>
+        <button className="hero-cta-secondary" onClick={() => navigate("/contact")}>
+          Book Consultation
+        </button>
+      </div>
+    </div>
+
+    <div className="hero-right">
+      <div className="hero-collage">
+        {/* The "Big" vertical image on the left/right */}
+        <div className="hero-card hero-card--big">
+          <div 
+            className="hero-card-media" 
+            style={{ backgroundImage: `url(${images[currentImage]})` }} 
+          />
         </div>
-        <div className="hero-overlay" />
 
-        <div className="hero-content-wrapper">
-          <div className="hero-badge"><span>✦</span> FineAnswer Ireland</div>
-
-          <h1 className="hero-title">
-            Your Gateway to<br /><span>Irish Education</span>
-          </h1>
-
-          <p className="hero-subtitle">
-            Discover thousands of courses, verify documents, and connect with
-            Irish educational institutions through our comprehensive platform.
-          </p>
-
-          <button className="hero-cta-primary" onClick={() => navigate("/search-results?country=Ireland")}>
-            View Our Course Search Engine →
-          </button>
-
-          <div className="hero-stat-cards">
-            <div className="hero-stat-card">
-              <span className="hero-stat-icon"><FaGraduationCap /></span>
-              <div>
-                <strong>3,000+ Courses</strong>
-                <p>Find your perfect program from Ireland's top institutions</p>
-              </div>
-            </div>
-            <div className="hero-stat-card">
-              <span className="hero-stat-icon"><FaUniversity /></span>
-              <div>
-                <strong>20+ Institutes</strong>
-                <p>Partnered with Ireland's leading educational providers</p>
-              </div>
-            </div>
-            <div className="hero-stat-card">
-              <span className="hero-stat-icon"><FaShieldAlt /></span>
-              <div>
-                <strong>Secure Verification</strong>
-                <p>Fast and secure document verification process</p>
-              </div>
-            </div>
-          </div>
+        {/* The two stacked images */}
+        <div className="hero-card">
+          <div className="hero-card-media" style={{ backgroundImage: `url(${images[1]})` }} />
         </div>
-      </section>
+        <div className="hero-card">
+          <div className="hero-card-media" style={{ backgroundImage: `url(${images[2]})` }} />
+        </div>
+
+        {/* The Floating Play Button like the second photo */}
+        <div className="hero-video-trigger">
+          <span style={{marginLeft: '4px'}}>▶</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
       {/* 2. ABOUT US */}
       <AboutUs />

@@ -94,8 +94,9 @@
 .nav-btn {
   margin-left: 16px;
   padding: 10px 22px;
-  background-color: var(--color-gold, #F5A623);
+  background-color: #ffda32;
   color: #ffffff !important;
+  text-shadow: 0 1px 0 rgba(10, 92, 77, 0.35);
   border: none;
   border-radius: var(--radius-btn, 4px);
   font-weight: 600;
@@ -108,8 +109,9 @@
 }
 
 .nav-btn:hover {
-  background-color: var(--color-gold-hover, #D4891A);
+  background-color: #ffd400;
   color: #ffffff !important;
+  text-shadow: 0 1px 0 rgba(10, 92, 77, 0.35);
   transform: translateY(-1px);
 }
 
