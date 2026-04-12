@@ -1,5 +1,5 @@
 const express = require("express");
-const axios = require("axios");
+const Stripe = require("stripe");
 const { ObjectId } = require("mongodb");
 const jwt = require("jsonwebtoken");
 const { collections } = require("../config/db");
@@ -7,116 +7,102 @@ const { asyncHandler, JWT_SECRET } = require("../middleware/auth");
 
 const router = express.Router();
 
-const SSLCOMMERZ_STORE_ID = process.env.SSLCOMMERZ_STORE_ID || "testbox";
-const SSLCOMMERZ_STORE_PASSWD =
-  process.env.SSLCOMMERZ_STORE_PASSWD || "qwerty";
+const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
-const BACKEND_URL =
-  process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
 
-// SSLCommerz environment:
-// - MODE=sandbox: always use sandbox gateway (safe for testing, even in production)
-// - MODE=live: use live gateway (requires approved live store + live credentials)
-// - default: sandbox in dev, live in production
-const isProduction = process.env.NODE_ENV === "production";
-const SSLCOMMERZ_MODE =
-  process.env.SSLCOMMERZ_MODE || (isProduction ? "live" : "sandbox");
-
-const SSLCOMMERZ_BASE_URL =
-  SSLCOMMERZ_MODE === "live"
-    ? "https://securepay.sslcommerz.com"
-    : "https://sandbox.sslcommerz.com";
-const SSLCOMMERZ_API_URL = `${SSLCOMMERZ_BASE_URL}/gwprocess/v4/api.php`;
-const SSLCOMMERZ_VALIDATOR_URL = `${SSLCOMMERZ_BASE_URL}/validator/api/validationserverAPI.php`;
-
-// Validate SSLCommerz IPN callback using Order Validation API
-const validateSSLCommerzIPN = async (tranId, valId) => {
-  if (!tranId || !valId) return false;
+// ── Helper: extract authenticated user ID from optional Bearer token ──────────
+const getUserIdFromToken = async (authHeader) => {
+  if (!authHeader?.startsWith("Bearer ") || !collections.users) return null;
   try {
-    const params = new URLSearchParams({
-      store_id: SSLCOMMERZ_STORE_ID,
-      store_passwd: SSLCOMMERZ_STORE_PASSWD,
-      val_id: valId,
-      format: "json",
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const user = await collections.users.findOne({
+      _id: new ObjectId(decoded.userId),
     });
-    const response = await axios.get(
-      `${SSLCOMMERZ_VALIDATOR_URL}?${params.toString()}`,
-    );
-    const data = response.data;
-    return (
-      data?.status === "VALID" &&
-      data?.tran_id === tranId &&
-      data?.risk_level === "0"
-    );
-  } catch (error) {
-    console.error("[Payment] IPN validation error:", error.message);
-    return false;
+    return user ? user._id.toString() : null;
+  } catch {
+    return null;
   }
 };
 
-// POST /api/create-payment - Initiate SSLCommerz payment
-// Authentication is optional (allows guest payments; linked to account when logged in)
+// ── Generate a unique transaction ID ─────────────────────────────────────────
+const makeTranId = () =>
+  "TXN" + Date.now() + Math.random().toString(36).slice(2, 8).toUpperCase();
+
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/create-payment
+// Creates a Stripe Checkout Session and saves a pending record to paymentCollection
+// amount must be in the smallest currency unit (cents for EUR)
+// ─────────────────────────────────────────────────────────────────────────────
 router.post(
   "/create-payment",
   asyncHandler(async (req, res) => {
     const {
       amount,
-      currency = "BDT",
+      currency = "EUR",
       cus_name,
       cus_email,
-      cus_phone,
-      userId,
       purpose,
+      userId,
     } = req.body;
 
-    if (!amount || amount < 10) {
+    // Stripe minimum is 50 cents
+    if (!amount || Number(amount) < 50) {
       return res.status(400).json({
         success: false,
-        message: "Amount is required (min 10 BDT)",
-      });
-    }
-    if (amount > 100000) {
-      return res.status(400).json({
-        success: false,
-        message: "Amount exceeds maximum limit (100,000 BDT)",
+        message: "Amount is required (minimum €0.50)",
       });
     }
 
-    // Try to identify logged-in user from optional auth token
-    let paidByUserId = userId || null;
-    const authHeader = req.headers["authorization"];
-    if (authHeader && authHeader.startsWith("Bearer ") && collections.users) {
-      try {
-        const token = authHeader.split(" ")[1];
-        const decoded = jwt.verify(token, JWT_SECRET);
-        const user = await collections.users.findOne({
-          _id: new ObjectId(decoded.userId),
-        });
-        if (user) paidByUserId = user._id.toString();
-      } catch {
-        // ignore invalid token; use body data only
-      }
-    }
+    const paidByUserId =
+      (await getUserIdFromToken(req.headers["authorization"])) ||
+      userId ||
+      null;
 
-    const tranId =
-      "TXN" +
-      Date.now() +
-      Math.random().toString(36).slice(2, 8).toUpperCase();
     const name = cus_name || "Customer";
-    const email = cus_email || "customer@example.com";
-    const phone = cus_phone || "01711111111";
+    const email = cus_email || undefined;
     const purposeLabel = purpose || "Study Abroad Application Fee";
+    const tranId = makeTranId();
+    const cur = String(currency).toLowerCase();
 
+    // Create Stripe Checkout Session (hosted payment page)
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: cur,
+            product_data: {
+              name: purposeLabel,
+              description: `FineAnswer Ireland — ${purposeLabel}`,
+            },
+            unit_amount: Number(amount), // already in smallest unit (cents)
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      customer_email: email,
+      success_url: `${FRONTEND_URL.replace(/\/$/, "")}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${FRONTEND_URL.replace(/\/$/, "")}/payment/cancel?session_id={CHECKOUT_SESSION_ID}`,
+      metadata: {
+        tranId,
+        userId: paidByUserId || "",
+        purpose: purposeLabel,
+        cus_name: name,
+      },
+    });
+
+    // Persist pending payment record
     const paymentDoc = {
       paymentId: tranId,
-      tran_id: tranId,
+      stripeSessionId: session.id,
       amount: Number(amount),
-      currency: String(currency).toUpperCase().slice(0, 3),
+      currency: String(currency).toUpperCase(),
       status: "pending",
       cus_name: name,
-      cus_email: email,
-      cus_phone: phone,
-      userId: paidByUserId || null,
+      cus_email: email || null,
+      userId: paidByUserId,
       purpose: purposeLabel,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -126,134 +112,141 @@ router.post(
       await collections.payment.insertOne(paymentDoc);
     }
 
-    const successUrl = `${BACKEND_URL.replace(/\/$/, "")}/api/payment/success`;
-    const failUrl = `${BACKEND_URL.replace(/\/$/, "")}/api/payment/fail`;
-    const cancelUrl = `${BACKEND_URL.replace(/\/$/, "")}/api/payment/cancel`;
+    return res.json({ success: true, url: session.url });
+  }),
+);
 
-    const params = new URLSearchParams({
-      store_id: SSLCOMMERZ_STORE_ID,
-      store_passwd: SSLCOMMERZ_STORE_PASSWD,
-      total_amount: String(Number(amount).toFixed(2)),
-      currency: String(currency).toUpperCase().slice(0, 3),
-      tran_id: tranId,
-      product_category: "education",
-      product_profile: "general",
-      product_name: purposeLabel,
-      success_url: successUrl,
-      fail_url: failUrl,
-      cancel_url: cancelUrl,
-      cus_name: name,
-      cus_email: email,
-      cus_add1: "Dhaka",
-      cus_add2: "Dhaka",
-      cus_city: "Dhaka",
-      cus_state: "Dhaka",
-      cus_postcode: "1000",
-      cus_country: "Bangladesh",
-      cus_phone: phone,
-      cus_fax: phone,
-      ship_name: name,
-      ship_add1: "Dhaka",
-      ship_add2: "Dhaka",
-      ship_city: "Dhaka",
-      ship_state: "Dhaka",
-      ship_postcode: "1000",
-      ship_country: "Bangladesh",
-      shipping_method: "NO",
-    });
+// ─────────────────────────────────────────────────────────────────────────────
+// GET /api/payment/verify?session_id=...
+// Called by PaymentSuccess page — verifies the Checkout Session with Stripe,
+// updates paymentCollection status, and returns payment details to the frontend
+// ─────────────────────────────────────────────────────────────────────────────
+router.get(
+  "/payment/verify",
+  asyncHandler(async (req, res) => {
+    const { session_id } = req.query;
+    if (!session_id) {
+      return res
+        .status(400)
+        .json({ success: false, message: "session_id is required" });
+    }
 
-    const response = await axios.post(SSLCOMMERZ_API_URL, params.toString(), {
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    });
+    const session = await stripe.checkout.sessions.retrieve(session_id);
 
-    const data = response.data;
-    if (data?.status === "SUCCESS" && data?.GatewayPageURL) {
+    if (session.payment_status === "paid") {
+      if (collections.payment) {
+        await collections.payment.updateOne(
+          { stripeSessionId: session_id },
+          {
+            $set: {
+              status: "success",
+              stripePaymentIntent: session.payment_intent,
+              updatedAt: new Date(),
+            },
+          },
+        );
+      }
+
       return res.json({
         success: true,
-        GatewayPageURL: data.GatewayPageURL,
-        sessionkey: data.sessionkey,
+        paymentStatus: "paid",
+        amount: session.amount_total,
+        currency: session.currency?.toUpperCase(),
+        customerEmail: session.customer_email,
+        purpose: session.metadata?.purpose,
+        cus_name: session.metadata?.cus_name,
+        paymentIntent: session.payment_intent,
       });
     }
 
-    return res.status(400).json({
+    return res.json({
       success: false,
-      message: data?.failedreason || "Payment init failed",
+      paymentStatus: session.payment_status,
+      message: "Payment is not yet confirmed.",
     });
   }),
 );
 
-// SSLCommerz POSTs to these URLs after payment — validate IPN, update DB, then redirect
-
-// POST /api/payment/success
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/payment/update-status
+// Called by PaymentCancel page to mark a session as cancelled in the DB
+// ─────────────────────────────────────────────────────────────────────────────
 router.post(
-  "/payment/success",
+  "/payment/update-status",
   asyncHandler(async (req, res) => {
-    const tranId = req.body?.tran_id;
-    const valId = req.body?.val_id;
-    const isValid = await validateSSLCommerzIPN(tranId, valId);
-
-    if (collections.payment && tranId) {
-      if (isValid) {
-        await collections.payment.updateOne(
-          { tran_id: tranId },
-          { $set: { status: "success", updatedAt: new Date(), val_id: valId } },
-        );
-      } else {
-        console.warn(
-          `[Payment] Invalid IPN for tran_id: ${tranId}, val_id: ${valId}`,
-        );
-      }
+    const { session_id, status } = req.body;
+    const allowed = ["cancelled", "failed"];
+    if (!session_id || !allowed.includes(status)) {
+      return res
+        .status(400)
+        .json({ success: false, message: "session_id and valid status required" });
     }
-    res.redirect(302, `${FRONTEND_URL.replace(/\/$/, "")}/payment/success`);
+    if (collections.payment) {
+      await collections.payment.updateOne(
+        { stripeSessionId: session_id },
+        { $set: { status, updatedAt: new Date() } },
+      );
+    }
+    return res.json({ success: true });
   }),
 );
 
-// POST /api/payment/fail
+// ─────────────────────────────────────────────────────────────────────────────
+// POST /api/stripe/webhook
+// Handles Stripe webhook events — reliable async confirmation
+// Requires STRIPE_WEBHOOK_SECRET in .env for signature verification.
+// NOTE: This route must receive the raw body — make sure to mount this router
+//       BEFORE express.json() in index.js, or use express.raw() per-route.
+// ─────────────────────────────────────────────────────────────────────────────
 router.post(
-  "/payment/fail",
-  asyncHandler(async (req, res) => {
-    const tranId = req.body?.tran_id;
-    const valId = req.body?.val_id;
-    const isValid = await validateSSLCommerzIPN(tranId, valId);
+  "/stripe/webhook",
+  express.raw({ type: "application/json" }),
+  (req, res) => {
+    const sig = req.headers["stripe-signature"];
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-    if (collections.payment && tranId) {
-      if (isValid) {
-        await collections.payment.updateOne(
-          { tran_id: tranId },
-          { $set: { status: "fail", updatedAt: new Date(), val_id: valId } },
-        );
-      } else {
-        console.warn(
-          `[Payment] Invalid IPN for tran_id: ${tranId}, val_id: ${valId}`,
-        );
+    let event;
+    try {
+      event = webhookSecret
+        ? stripe.webhooks.constructEvent(req.body, sig, webhookSecret)
+        : JSON.parse(req.body.toString());
+    } catch (err) {
+      console.error("[Stripe Webhook] Signature error:", err.message);
+      return res.status(400).send(`Webhook Error: ${err.message}`);
+    }
+
+    if (event.type === "checkout.session.completed") {
+      const session = event.data.object;
+      if (collections.payment) {
+        collections.payment
+          .updateOne(
+            { stripeSessionId: session.id },
+            {
+              $set: {
+                status: "success",
+                stripePaymentIntent: session.payment_intent,
+                updatedAt: new Date(),
+              },
+            },
+          )
+          .catch((e) => console.error("[Stripe Webhook] DB update error:", e));
       }
     }
-    res.redirect(302, `${FRONTEND_URL.replace(/\/$/, "")}/payment/fail`);
-  }),
-);
 
-// POST /api/payment/cancel
-router.post(
-  "/payment/cancel",
-  asyncHandler(async (req, res) => {
-    const tranId = req.body?.tran_id;
-    const valId = req.body?.val_id;
-    const isValid = await validateSSLCommerzIPN(tranId, valId);
-
-    if (collections.payment && tranId) {
-      if (isValid) {
-        await collections.payment.updateOne(
-          { tran_id: tranId },
-          { $set: { status: "cancel", updatedAt: new Date(), val_id: valId } },
-        );
-      } else {
-        console.warn(
-          `[Payment] Invalid IPN for tran_id: ${tranId}, val_id: ${valId}`,
-        );
+    if (event.type === "checkout.session.expired") {
+      const session = event.data.object;
+      if (collections.payment) {
+        collections.payment
+          .updateOne(
+            { stripeSessionId: session.id },
+            { $set: { status: "expired", updatedAt: new Date() } },
+          )
+          .catch(console.error);
       }
     }
-    res.redirect(302, `${FRONTEND_URL.replace(/\/$/, "")}/payment/cancel`);
-  }),
+
+    res.json({ received: true });
+  },
 );
 
 module.exports = router;

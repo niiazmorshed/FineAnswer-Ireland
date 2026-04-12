@@ -44,6 +44,8 @@ app.use(
 );
 // Preflight — handle OPTIONS for all routes
 app.options(/.*/, cors());
+// Stripe webhook must receive the raw body — mount BEFORE express.json()
+// The route itself uses express.raw() so only that endpoint bypasses json parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
