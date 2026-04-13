@@ -216,14 +216,15 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 3. PARTNER INSTITUTES */}
-      <PartnerLogos />
-
       {/* 4. BROWSE BY SUBJECT */}
       <BrowseBySubject />
 
-      {/* 5. SCHOLARSHIP CTA */}
-      <ScholarshipCTA />
+      {/* 3. PARTNER INSTITUTES */}
+      <PartnerLogos />
+
+      
+
+      
 
       {/* 6. SERVICES WE OFFER */}
       <div id="services">
@@ -263,6 +264,8 @@ export default function LandingPage() {
       <div id="contact">
         <ContactSection />
       </div>
+      {/* 5. SCHOLARSHIP CTA */}
+      <ScholarshipCTA />
 
       {/* FOOTER */}
       <Footer />

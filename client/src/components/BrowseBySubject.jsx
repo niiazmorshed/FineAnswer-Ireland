@@ -16,18 +16,42 @@ import {
 } from "react-icons/fa";
 
 const SUBJECTS = [
-  { icon: <FaCogs />, label: "Engineering", category: "Computing, IT & Engineering" },
-  { icon: <FaLaptopCode />, label: "Computing", category: "Computing, IT & Engineering" },
-  { icon: <FaBriefcase />, label: "Business", category: "Business, Management & Law" },
-  { icon: <FaBalanceScale />, label: "Law", category: "Business, Management & Law" },
-  { icon: <FaCalculator />, label: "Mathematics", category: "Others" },
-  { icon: <FaUsers />, label: "Social Sciences", category: "Social Sciences" },
-  { icon: <FaLanguage />, label: "English", category: "Education & Media" },
-  { icon: <FaPalette />, label: "Arts", category: "Others" },
-  { icon: <FaHeartbeat />, label: "Allied Health", category: "Life Sciences & Health" },
-  { icon: <FaLayerGroup />, label: "Foundation", category: "Others" },
-  { icon: <FaFileInvoiceDollar />, label: "Accounting", category: "Business, Management & Law" },
-  { icon: <FaFlask />, label: "Science", category: "Life Sciences & Health" },
+  {
+    icon: <FaCogs />,
+    label: "Engineering",
+    desc: "Programs in computing, IT, and engineering.",
+    category: "Computing, IT & Engineering",
+  },
+  {
+    icon: <FaLaptopCode />,
+    label: "Computing",
+    desc: "Software, data, cloud, and AI pathways.",
+    category: "Computing, IT & Engineering",
+  },
+  {
+    icon: <FaBriefcase />,
+    label: "Business",
+    desc: "Management, marketing, and entrepreneurship.",
+    category: "Business, Management & Law",
+  },
+  {
+    icon: <FaBalanceScale />,
+    label: "Law",
+    desc: "Business law and governance tracks.",
+    category: "Business, Management & Law",
+  },
+  {
+    icon: <FaHeartbeat />,
+    label: "Health",
+    desc: "Life sciences and allied health programs.",
+    category: "Life Sciences & Health",
+  },
+  {
+    icon: <FaUsers />,
+    label: "Social Science",
+    desc: "Humanities, policy, and social research.",
+    category: "Social Sciences",
+  },
 ];
 
 export default function BrowseBySubject() {
@@ -41,14 +65,10 @@ export default function BrowseBySubject() {
   };
 
   return (
-    <section className="bbs-section">
+    <section className="bbs-section" aria-label="Browse by Subject">
       <div className="bbs-inner">
         <div className="bbs-header">
-          <span className="section-badge">Explore</span>
           <h2 className="bbs-title">Browse by Subject</h2>
-          <p className="bbs-subtitle">
-            Find programs across Ireland&apos;s top institutions by field of study
-          </p>
         </div>
 
         <div className="bbs-grid">
@@ -59,24 +79,20 @@ export default function BrowseBySubject() {
               onClick={() => handleClick(s.category)}
               type="button"
             >
-              <span className="bbs-icon">{s.icon}</span>
-              <span className="bbs-label">{s.label}</span>
+              <span className="bbs-icon" aria-hidden="true">
+                {s.icon}
+              </span>
+              <div className="bbs-cardText">
+                <div className="bbs-label">{s.label}</div>
+                <div className="bbs-desc">{s.desc}</div>
+              </div>
             </button>
           ))}
         </div>
 
         <div className="bbs-actions">
-          <button
-            className="btn-outline"
-            onClick={() => navigate("/search-results?country=Ireland")}
-          >
-            Universities
-          </button>
-          <button
-            className="btn-outline"
-            onClick={() => navigate("/search-results?country=Ireland")}
-          >
-            Scholarships
+          <button className="bbs-more" type="button" onClick={() => navigate("/search-results?country=Ireland")}>
+            Explore more
           </button>
         </div>
       </div>
@@ -90,13 +106,13 @@ export default function BrowseBySubject() {
           .bbs-section { padding: var(--section-padding-mobile) 0; }
         }
         .bbs-inner {
-          max-width: 1280px;
+          max-width: 1120px;
           margin: 0 auto;
           padding: 0 24px;
         }
         .bbs-header {
           text-align: center;
-          margin-bottom: 40px;
+          margin-bottom: 28px;
         }
         .bbs-title {
           font-size: var(--text-h2);
@@ -104,65 +120,68 @@ export default function BrowseBySubject() {
           color: var(--color-text-primary);
           margin-bottom: 8px;
         }
-        .bbs-subtitle {
-          color: var(--color-text-secondary);
-          font-size: 1rem;
-          max-width: 480px;
-          margin: 0 auto;
-        }
         .bbs-grid {
           display: grid;
-          grid-template-columns: repeat(6, 1fr);
-          gap: 14px;
-          margin-bottom: 32px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+          margin-bottom: 24px;
         }
         @media (max-width: 1024px) {
-          .bbs-grid { grid-template-columns: repeat(4, 1fr); }
+          .bbs-grid { grid-template-columns: repeat(3, 1fr); }
         }
-        @media (max-width: 640px) {
-          .bbs-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        @media (max-width: 820px) {
+          .bbs-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 520px) {
+          .bbs-grid { grid-template-columns: 1fr; }
         }
         .bbs-card {
           display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          padding: 24px 12px;
-          background: var(--color-bg-white);
-          border: 1px solid var(--color-border);
-          border-radius: var(--radius-card);
+          align-items: flex-start;
+          gap: 14px;
+          padding: 22px 20px;
+          background: #fff;
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          border-radius: 18px;
           cursor: pointer;
           transition: all 0.25s ease;
           font-family: var(--font-sans);
-          box-shadow: var(--shadow-card);
+          box-shadow: 0 10px 28px rgba(15, 23, 42, 0.06);
+          text-align: left;
         }
         .bbs-card:hover {
-          border-color: var(--color-primary);
-          box-shadow: var(--shadow-card-hover);
-          transform: translateY(-3px);
+          border-color: rgba(73, 29, 110, 0.25);
+          box-shadow: 0 18px 44px rgba(15, 23, 42, 0.09);
+          transform: translateY(-2px);
         }
         .bbs-card:hover .bbs-icon {
-          background: var(--color-primary);
-          color: #fff;
+          background: rgba(73, 29, 110, 0.1);
+          color: #491d6e;
         }
         .bbs-icon {
           width: 48px;
           height: 48px;
-          border-radius: 50%;
-          background: var(--color-primary-light);
-          color: var(--color-primary);
+          border-radius: 14px;
+          background: rgba(73, 29, 110, 0.08);
+          color: #491d6e;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.15rem;
+          font-size: 1.2rem;
           transition: all 0.25s ease;
+          flex-shrink: 0;
         }
+        .bbs-cardText { min-width: 0; }
         .bbs-label {
+          font-size: 0.98rem;
+          font-weight: 700;
+          color: var(--color-text-primary, #0f172a);
+        }
+        .bbs-desc {
+          margin-top: 6px;
           font-size: 0.85rem;
-          font-weight: 600;
-          color: var(--color-text-primary);
-          text-align: center;
+          color: var(--color-text-secondary, #64748b);
+          line-height: 1.5;
         }
         .bbs-actions {
           display: flex;
@@ -170,9 +189,23 @@ export default function BrowseBySubject() {
           justify-content: center;
           flex-wrap: wrap;
         }
-        .bbs-actions .btn-outline {
-          padding: 10px 28px;
-          font-size: 0.9375rem;
+        .bbs-more {
+          border: 1px solid rgba(226, 232, 240, 0.9);
+          background: #fff;
+          border-radius: 999px;
+          padding: 12px 22px;
+          font-weight: 700;
+          color: #491d6e;
+          cursor: pointer;
+          transition: background 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+          font-family: var(--font-sans);
+          box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+        }
+        .bbs-more:hover {
+          background: #ffda32;
+          color: #0f172a;
+          transform: translateY(-1px);
+          border-color: rgba(255, 218, 50, 0.7);
         }
       `}</style>
     </section>
