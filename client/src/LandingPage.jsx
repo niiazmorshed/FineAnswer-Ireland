@@ -1,10 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  FaGraduationCap,
-  FaUniversity,
-  FaShieldAlt,
-} from "react-icons/fa";
 
 import Navbar3 from "./components/navbar3";
 import Footer from "./components/Footer";
@@ -23,21 +18,15 @@ import ContactSection from "./components/ContactSection";
 import PartnerBank from "./components/PartnerBank";
 import CEOQuote from "./components/CEOQuote";
 import AboutUs from "./components/AboutUs";
+import BentoHero from "./components/BentoHero";
 
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
 import "./LandingPage.css";
-import uni1 from "./assets/DCU.jpg";
-import uni4 from "./assets/Trinity1.jpg";
-import uni2 from "./assets/UL.jpg";
-import uni3 from "./assets/setu.jpg";
 
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
-
-  const images = [uni1, uni2, uni3, uni4];
-  const [currentImage, setCurrentImage] = useState(0);
 
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -101,11 +90,6 @@ export default function LandingPage() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
-  useEffect(() => {
-    const id = setInterval(() => setCurrentImage((p) => (p + 1) % images.length), 5000);
-    return () => clearInterval(id);
-  }, [images.length]);
-
   const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     if (loading || user) return;
@@ -122,64 +106,25 @@ export default function LandingPage() {
     <div className="LandingPage">
       <Navbar3 />
 
-      {/* 1. HERO */}
-      {/* 1. HERO */}
-<section className="hero-section-new">
-  <div className="hero-shell">
-    <div className="hero-left">
-      <div className="hero-badge">
-        ✦ BUILT FOR IRELAND-BOUND STUDENTS
-      </div>
-
-      <h1 className="hero-title">
-        We take care of your <br />
-        <span>Ireland Journey</span> step by step
-      </h1>
-
-      <p className="hero-subtitle">
-        Search courses, plan your application, and get visa-ready with a guided, 
-        modern experience designed to keep everything simple and trackable.
-      </p>
-
-      <div className="hero-actions">
-        <button 
-          className="hero-cta-primary" 
-          onClick={() => navigate("/search-results?country=Ireland")}
-        >
-          Get Started
-        </button>
-        <button className="hero-cta-secondary" onClick={() => navigate("/contact")}>
-          Book Consultation
-        </button>
-      </div>
-    </div>
-
-    <div className="hero-right">
-      <div className="hero-collage">
-        {/* The "Big" vertical image on the left/right */}
-        <div className="hero-card hero-card--big">
-          <div 
-            className="hero-card-media" 
-            style={{ backgroundImage: `url(${images[currentImage]})` }} 
-          />
-        </div>
-
-        {/* The two stacked images */}
-        <div className="hero-card">
-          <div className="hero-card-media" style={{ backgroundImage: `url(${images[1]})` }} />
-        </div>
-        <div className="hero-card">
-          <div className="hero-card-media" style={{ backgroundImage: `url(${images[2]})` }} />
-        </div>
-
-        {/* The Floating Play Button like the second photo */}
-        <div className="hero-video-trigger">
-          <span style={{marginLeft: '4px'}}>▶</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+      <BentoHero
+        ariaLabel="FineAnswer Ireland"
+        title={
+          <>
+            We take care of your <br />
+            Ireland Journey step by step
+          </>
+        }
+        subtitle="Search courses, plan your application, and get visa-ready with a guided, modern experience designed to keep everything simple and trackable."
+        ctaLabel="Get Started"
+        ctaTo="/search-results?country=Ireland"
+        heroSearchDefaults={{ location: "Ireland" }}
+        onHeroSearch={({ keyword, location }) => {
+          const params = new URLSearchParams();
+          params.set("country", location || "Ireland");
+          if (keyword) params.set("q", keyword);
+          navigate(`/search-results?${params.toString()}`);
+        }}
+      />
 
       {/* 2. ABOUT US */}
       <AboutUs />
