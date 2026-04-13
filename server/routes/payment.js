@@ -179,7 +179,10 @@ router.post(
     if (!session_id || !allowed.includes(status)) {
       return res
         .status(400)
-        .json({ success: false, message: "session_id and valid status required" });
+        .json({
+          success: false,
+          message: "session_id and valid status required",
+        });
     }
     if (collections.payment) {
       await collections.payment.updateOne(

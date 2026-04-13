@@ -5,18 +5,18 @@ const cors = require("cors");
 const { connectDB } = require("./config/db");
 
 // Route modules
-const programsRouter     = require("./routes/programs");
-const authRouter         = require("./routes/auth");
-const usersRouter        = require("./routes/users");
+const programsRouter = require("./routes/programs");
+const authRouter = require("./routes/auth");
+const usersRouter = require("./routes/users");
 const successStoriesRouter = require("./routes/successStories");
-const blogsRouter        = require("./routes/blogs");
-const videosRouter       = require("./routes/videos");
-const eventsRouter       = require("./routes/events");
-const jobsRouter         = require("./routes/jobs");
-const documentsRouter    = require("./routes/documents");
-const adminRouter        = require("./routes/admin");
-const paymentRouter      = require("./routes/payment");
-const messagesRouter     = require("./routes/messages");
+const blogsRouter = require("./routes/blogs");
+const videosRouter = require("./routes/videos");
+const eventsRouter = require("./routes/events");
+const jobsRouter = require("./routes/jobs");
+const documentsRouter = require("./routes/documents");
+const adminRouter = require("./routes/admin");
+const paymentRouter = require("./routes/payment");
+const messagesRouter = require("./routes/messages");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -62,19 +62,21 @@ app.use("/api/programs", programsRouter);
 // ── Connect DB then mount all DB-dependent routes ──────────────────────────
 const ready = connectDB()
   .then(() => {
-    app.use("/api/auth",            authRouter);
-    app.use("/api/users",           usersRouter);
+    app.use("/api/auth", authRouter);
+    app.use("/api/users", usersRouter);
     app.use("/api/success-stories", successStoriesRouter);
-    app.use("/api/blogs",           blogsRouter);
-    app.use("/api/videos",          videosRouter);
-    app.use("/api/events",          eventsRouter);
-    app.use("/api/jobs",            jobsRouter);
-    app.use("/api/documents",       documentsRouter);
-    app.use("/api/admin",           adminRouter);
-    app.use("/api",                 paymentRouter);   // /api/create-payment, /api/payment/*
-    app.use("/api/send-message",    messagesRouter);
+    app.use("/api/blogs", blogsRouter);
+    app.use("/api/videos", videosRouter);
+    app.use("/api/events", eventsRouter);
+    app.use("/api/jobs", jobsRouter);
+    app.use("/api/documents", documentsRouter);
+    app.use("/api/admin", adminRouter);
+    app.use("/api", paymentRouter); // /api/create-payment, /api/payment/*
+    app.use("/api/send-message", messagesRouter);
 
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    console.log(
+      "Pinged your deployment. You successfully connected to MongoDB!",
+    );
   })
   .catch((err) => {
     console.error(
