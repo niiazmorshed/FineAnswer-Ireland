@@ -10,10 +10,10 @@
    DESIGN SYSTEM TOKENS — FineAnswer Ireland
    ============================================================ */
 :root {
-  /* Primary — Teal / Emerald */
-  --color-primary:       #00875a;
-  --color-primary-dark:  #0a5c4d;
-  --color-primary-light: #e6f7f0;
+  /* Primary — reference product green */
+  --color-primary:       #64c850;
+  --color-primary-dark:  #52a63f;
+  --color-primary-light: #eef8ec;
 
   /* Accent Gold */
   --color-gold:          #F5A623;
@@ -21,8 +21,8 @@
 
   /* Text */
   --color-text-primary:   #1A1A1A;
-  --color-text-secondary: #555555;
-  --color-text-muted:     #888888;
+  --color-text-secondary: #64748b;
+  --color-text-muted:     #94a3b8;
 
   /* Backgrounds */
   --color-bg-white:  #FFFFFF;
@@ -51,8 +51,8 @@
   --section-padding-mobile: 48px;
 
   /* Border Radius */
-  --radius-card: 8px;
-  --radius-btn:  4px;
+  --radius-card: 16px;
+  --radius-btn:  999px;
   --radius-pill: 50px;
 
   /* Shadows */
