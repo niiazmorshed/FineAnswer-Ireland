@@ -19,6 +19,7 @@ import PartnerBank from "./components/PartnerBank";
 import CEOQuote from "./components/CEOQuote";
 import AboutUs from "./components/AboutUs";
 import BentoHero from "./components/BentoHero";
+import ParticlesBackground from "./components/ParticlesBackground";
 
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
@@ -90,6 +91,30 @@ export default function LandingPage() {
     return () => window.removeEventListener("hashchange", onHash);
   }, []);
 
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll(".scroll-reveal"));
+    if (!els.length) return;
+
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches) {
+      els.forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add("is-visible");
+          obs.unobserve(e.target);
+        });
+      },
+      { threshold: 0.16, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
   const [showPopup, setShowPopup] = useState(false);
   useEffect(() => {
     if (loading || user) return;
@@ -104,6 +129,7 @@ export default function LandingPage() {
 
   return (
     <div className="LandingPage">
+      <ParticlesBackground />
       <Navbar3 />
 
       <BentoHero
@@ -127,10 +153,12 @@ export default function LandingPage() {
       />
 
       {/* 2. ABOUT US */}
-      <AboutUs />
+      <div className="scroll-reveal">
+        <AboutUs />
+      </div>
 
       {/* 3. COURSE SEARCH ENGINE */}
-      <section className="search-engine-section" id="search">
+      <section className="search-engine-section scroll-reveal" id="search">
         <div className="search-engine-inner">
           <div className="search-engine-header">
             <span className="section-badge">FineAnswer Ireland</span>
@@ -217,10 +245,14 @@ export default function LandingPage() {
       </section>
 
       {/* 4. BROWSE BY SUBJECT */}
-      <BrowseBySubject />
+      <div className="scroll-reveal">
+        <BrowseBySubject />
+      </div>
 
       {/* 3. PARTNER INSTITUTES */}
-      <PartnerLogos />
+      <div className="scroll-reveal">
+        <PartnerLogos />
+      </div>
 
       
 
@@ -228,47 +260,73 @@ export default function LandingPage() {
 
       {/* 6. SERVICES WE OFFER */}
       <div id="services">
-        <Services />
+        <div className="scroll-reveal">
+          <Services />
+        </div>
       </div>
 
       {/* 7. QUICK LINKS */}
-      <QuickLinks />
+      <div className="scroll-reveal">
+        <QuickLinks />
+      </div>
 
       {/* 8. FEATURED COURSES */}
-      <FeaturedCourses />
+      <div className="scroll-reveal">
+        <FeaturedCourses />
+      </div>
 
       {/* 9. SUCCESS STORIES */}
-      <SuccessStories />
+      <div className="scroll-reveal">
+        <SuccessStories />
+      </div>
 
       {/* 10. FAQ */}
-      <FAQSection />
+      <div className="scroll-reveal">
+        <FAQSection />
+      </div>
 
       {/* 11. ENQUIRY CTA BANNER */}
-      <EnquiryCTA />
+      <div className="scroll-reveal">
+        <EnquiryCTA />
+      </div>
 
       {/* 12. EVENTS */}
-      <EventsSection />
+      <div className="scroll-reveal">
+        <EventsSection />
+      </div>
 
       {/* 13. PACKAGES */}
       <div id="packages">
-        <PackagesSection />
+        <div className="scroll-reveal">
+          <PackagesSection />
+        </div>
       </div>
 
       {/* 14. PARTNER BANKS */}
-      <PartnerBank />
+      <div className="scroll-reveal">
+        <PartnerBank />
+      </div>
 
       {/* 15. CEO QUOTE */}
-      <CEOQuote />
+      <div className="scroll-reveal">
+        <CEOQuote />
+      </div>
 
       {/* 16. CONTACT FORM */}
       <div id="contact">
-        <ContactSection />
+        <div className="scroll-reveal">
+          <ContactSection />
+        </div>
       </div>
       {/* 5. SCHOLARSHIP CTA */}
-      <ScholarshipCTA />
+      <div className="scroll-reveal">
+        <ScholarshipCTA />
+      </div>
 
       {/* FOOTER */}
-      <Footer />
+      <div className="scroll-reveal">
+        <Footer />
+      </div>
 
       {/* POPUP */}
       {showPopup && !loading && !user && (
