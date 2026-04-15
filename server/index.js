@@ -17,6 +17,7 @@ const documentsRouter = require("./routes/documents");
 const adminRouter = require("./routes/admin");
 const paymentRouter = require("./routes/payment");
 const messagesRouter = require("./routes/messages");
+const uploadRouter = require("./routes/upload");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -71,8 +72,9 @@ const ready = connectDB()
     app.use("/api/jobs", jobsRouter);
     app.use("/api/documents", documentsRouter);
     app.use("/api/admin", adminRouter);
-    app.use("/api", paymentRouter); // /api/create-payment, /api/payment/*
+    app.use("/api", paymentRouter);         // /api/create-payment, /api/payment/*
     app.use("/api/send-message", messagesRouter);
+    app.use("/api/upload", uploadRouter);   // /api/upload/presigned-url
 
     console.log(
       "Pinged your deployment. You successfully connected to MongoDB!",

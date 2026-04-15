@@ -5,7 +5,21 @@ const { asyncHandler, authenticateToken } = require("../middleware/auth");
 
 const router = express.Router();
 
-// GET /api/documents/proxy - Proxy Cloudinary PDFs (must be before /api/documents)
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const S3_BUCKET = process.env.AWS_BUCKET_NAME || process.env.AWS_S3_BUCKET || "";
+const AWS_REGION = process.env.AWS_REGION || "";
+
+// Accept S3 bucket URLs (and legacy Cloudinary URLs for any existing stored documents)
+const isAllowedDocumentUrl = (url) => {
+  if (S3_BUCKET && url.startsWith(`https://${S3_BUCKET}.s3.`)) return true;
+  if (AWS_REGION && url.includes(`.s3.${AWS_REGION}.amazonaws.com/`)) return true;
+  if (url.includes(".s3.amazonaws.com/") || (url.includes(".s3.") && url.includes(".amazonaws.com/"))) return true;
+  // Keep Cloudinary support for any documents already stored there
+  if (url.startsWith("https://res.cloudinary.com/")) return true;
+  return false;
+};
+
+// GET /api/documents/proxy - Proxy PDFs from S3 (must be before /api/documents)
 router.get(
   "/proxy",
   asyncHandler(async (req, res) => {
@@ -13,7 +27,7 @@ router.get(
     if (!url || typeof url !== "string") {
       return res.status(400).json({ success: false, message: "URL is required" });
     }
-    if (!url.startsWith("https://res.cloudinary.com/")) {
+    if (!isAllowedDocumentUrl(url)) {
       return res
         .status(400)
         .json({ success: false, message: "Invalid document URL" });

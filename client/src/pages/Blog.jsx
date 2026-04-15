@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
+import { resolveMediaUrl } from "../utils/resolveMediaUrl";
 import "../styles/Blog.css";
 
 export default function Blog() {
@@ -103,7 +104,7 @@ export default function Blog() {
                 <div className="blog-card-image">
                   {blog.image ? (
                     <img
-                      src={blog.image}
+                      src={resolveMediaUrl(blog.image)}
                       alt={blog.title}
                       loading="lazy"
                     />

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
+import { resolveMediaUrl } from "../utils/resolveMediaUrl";
 import "../styles/blogdetails.css";
 
 const renderRichContent = (content) => {
@@ -144,7 +145,7 @@ export default function BlogDetail() {
         {blog.image && (
           <div className="blog-detail-image-container">
             <img
-              src={blog.image}
+              src={resolveMediaUrl(blog.image)}
               alt={blog.title}
               className="blog-detail-image"
             />

@@ -9,7 +9,7 @@ import {
   FaEye,
 } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
-import { uploadDocumentToCloudinary } from "../utils/cloudinary";
+import { uploadDocumentToS3 } from "../utils/s3Upload";
 import "../css/documentChecklist.css";
 
 const documentFields = [
@@ -87,7 +87,7 @@ export default function DocumentChecklist() {
       }
       setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
     } catch (_err) {
-      // Fallback: open Cloudinary URL directly
+      // Fallback: open S3 URL directly
       if (action === "download") {
         const a = document.createElement("a");
         a.href = url;
@@ -146,7 +146,7 @@ export default function DocumentChecklist() {
 
     try {
       // Upload to Cloudinary
-      const url = await uploadDocumentToCloudinary(file);
+      const url = await uploadDocumentToS3(file);
 
       // Save/update in backend
       const token = localStorage.getItem("token");

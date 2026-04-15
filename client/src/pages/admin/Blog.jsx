@@ -10,7 +10,8 @@ import {
     FaUser,
 } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
-import { uploadImageToCloudinary } from "../../utils/cloudinary";
+import { uploadImageToS3 } from "../../utils/s3Upload";
+import { resolveMediaUrl } from "../../utils/resolveMediaUrl";
 import "./Blog.css";
 
 export default function Blog() {
@@ -165,7 +166,7 @@ export default function Blog() {
       if (imageFile) {
         setUploadStatus({ type: "uploading", message: "Uploading image..." });
         try {
-          imageUrl = await uploadImageToCloudinary(imageFile);
+          imageUrl = await uploadImageToS3(imageFile);
           setUploadStatus({ type: "success", message: "Image uploaded successfully!" });
         } catch (uploadError) {
           setUploadStatus({ type: "error", message: uploadError.message });
@@ -271,7 +272,7 @@ export default function Blog() {
             return (
               <div key={blogId} className="blog-card">
                 {blog.image ? (
-                  <img src={blog.image} alt={blog.title} className="blog-card-image" />
+                  <img src={resolveMediaUrl(blog.image)} alt={blog.title} className="blog-card-image" />
                 ) : (
                   <div className="blog-card-image" />
                 )}
@@ -391,7 +392,14 @@ export default function Blog() {
 
                   {imagePreview && (
                     <div className="image-preview">
-                      <img src={imagePreview} alt="Preview" />
+                      <img
+                        src={
+                          imagePreview.startsWith("blob:") || imagePreview.startsWith("data:")
+                            ? imagePreview
+                            : resolveMediaUrl(imagePreview)
+                        }
+                        alt="Preview"
+                      />
                       <button
                         type="button"
                         className="remove-image-btn"
