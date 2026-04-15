@@ -6,13 +6,13 @@ import "./PackagesSection.css";
 const PACKAGES = [
   {
     key: "basic",
-    badge: null,
+    eyebrow: "Starter",
     name: "Basic",
-    tag: "Free Forever",
-    price: "Free",
-    priceSubtext: null,
-    accent: "var(--color-text-secondary)",
-    cta: { label: "Get Started", type: "outline", action: "register" },
+    nameAccent: "",
+    tagline: "Free Forever",
+    priceDisplay: "Free",
+    priceUnit: null,
+    cta: { label: "Get Started", variant: "outline", action: "register" },
     features: [
       "Free profile eligibility check",
       "Course browsing & shortlisting tool",
@@ -23,16 +23,19 @@ const PACKAGES = [
       "Student community access",
       "Email support (48hr response)",
     ],
+    backTitle: "Best for",
+    backBody:
+      "Students who want to explore options and get started quickly with basic guidance and tools.",
   },
   {
     key: "gold",
-    badge: "Most Popular",
+    eyebrow: "Guided Support",
     name: "Gold",
-    tag: "Guided Support",
-    price: "Contact Us",
-    priceSubtext: "Custom pricing per student",
-    accent: "var(--color-gold)",
-    cta: { label: "Apply for Gold", type: "gold", action: "contact" },
+    nameAccent: "",
+    tagline: "Most Popular",
+    priceDisplay: "Contact Us",
+    priceUnit: "Custom pricing per student",
+    cta: { label: "Apply for Gold", variant: "primary", action: "contact" },
     features: [
       "Everything in Basic",
       "1-on-1 counseling (up to 3 sessions)",
@@ -46,16 +49,19 @@ const PACKAGES = [
       "Priority WhatsApp & email support",
       "Pre-departure information pack",
     ],
+    backTitle: "Includes",
+    backBody:
+      "Guided support, structured checklists, and priority support—ideal if you’re ready to start applying seriously.",
   },
   {
     key: "premium",
-    badge: "Full Service",
+    eyebrow: "Done For You",
     name: "Premium",
-    tag: "Done For You",
-    price: "Contact Us",
-    priceSubtext: "Full end-to-end service",
-    accent: "var(--color-primary)",
-    cta: { label: "Apply for Premium", type: "primary", action: "contact" },
+    nameAccent: "",
+    tagline: "Full Service",
+    priceDisplay: "Contact Us",
+    priceUnit: "Full end-to-end service",
+    cta: { label: "Apply for Premium", variant: "outline", action: "contact" },
     features: [
       "Everything in Gold",
       "Unlimited counseling sessions",
@@ -71,6 +77,9 @@ const PACKAGES = [
       "Post-arrival support for first 30 days",
       "Exclusive alumni network access",
     ],
+    backTitle: "Made for",
+    backBody:
+      "Applicants who want end-to-end support with a dedicated counselor and full visa + SOP handling.",
   },
 ];
 
@@ -96,62 +105,54 @@ export default function PackagesSection() {
         <div className="packages-header">
           <h2 className="packages-title">Choose Your Plan</h2>
           <p className="packages-subtitle">
-            Whether you&apos;re just exploring or ready to apply — we have a package
-            that fits your journey.
+            Transparent pricing and guided support — pick a plan that matches your Ireland journey.
           </p>
         </div>
 
         <div className="packages-grid">
           {PACKAGES.map((plan) => (
-            <div
-              key={plan.key}
-              className={`package-card ${plan.key === "gold" ? "package-card--featured" : ""} package-card--${plan.key}`}
-            >
-              {plan.badge ? (
-                <div className="package-badge" style={{ backgroundColor: plan.accent }}>
-                  {plan.badge}
-                </div>
-              ) : null}
+            <div key={plan.key} className={`plan-wrap ${plan.key === "gold" ? "plan-wrap--featured" : ""}`}>
+              {plan.badge ? <div className="plan-badge">{plan.badge}</div> : null}
 
-              <div className="package-top">
-                <div className="package-name" style={{ color: plan.accent }}>
+              <div className={`plan-card plan-card--${plan.key}`}>
+                <div className="plan-meta">
+                  <div className="plan-eyebrow">{plan.eyebrow}</div>
+                </div>
+
+                <div className="plan-name">
                   {plan.name}
+                  {plan.nameAccent ? <span className="plan-nameAccent">{plan.nameAccent}</span> : null}
                 </div>
-                <div className="package-tag">{plan.tag}</div>
-                <div className="package-price">{plan.price}</div>
-                {plan.priceSubtext ? (
-                  <div className="package-price-subtext">{plan.priceSubtext}</div>
-                ) : null}
+                <div className="plan-tagline">{plan.tagline}</div>
+
+                <div className="plan-ctaRow">
+                  <button
+                    type="button"
+                    className={`plan-cta ${plan.cta.variant === "primary" ? "plan-cta--primary" : "plan-cta--outline"}`}
+                    onClick={() => handleCta(plan.cta.action)}
+                  >
+                    {plan.cta.label}
+                  </button>
+
+                  <div className="plan-price">
+                    <span className="plan-priceValue">{plan.priceDisplay}</span>
+                    {plan.priceUnit ? <span className="plan-priceUnit">{plan.priceUnit}</span> : null}
+                  </div>
+                </div>
+
+                <div className="plan-divider" />
+
+                <ul className="plan-features" aria-label={`${plan.name} features`}>
+                  {plan.features.map((f) => (
+                    <li key={f} className="plan-feature">
+                      <span className="plan-check" aria-hidden="true">
+                        <FaCheck size={10} />
+                      </span>
+                      <span className="plan-featureText">{f}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
-
-              <div className="package-divider" />
-
-              <ul className="package-features">
-                {plan.features.map((f) => (
-                  <li key={f} className="package-feature">
-                    <span className="feature-check" aria-hidden="true">
-                      <FaCheck size={10} />
-                    </span>
-                    <span className="feature-text">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="package-spacer" />
-
-              <button
-                type="button"
-                className={`package-cta ${
-                  plan.cta.type === "outline"
-                    ? "package-cta--outline"
-                    : plan.cta.type === "gold"
-                      ? "package-cta--gold"
-                      : "package-cta--primary"
-                }`}
-                onClick={() => handleCta(plan.cta.action)}
-              >
-                {plan.cta.label}
-              </button>
             </div>
           ))}
         </div>
