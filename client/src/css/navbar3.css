@@ -24,6 +24,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
 }
 
 /* ===================== LOGO ===================== */
@@ -36,33 +37,37 @@
   height: 52px;
   width: auto;
   object-fit: contain;
+  display: block;
 }
 
 /* ===================== NAV MENU ===================== */
 .nav-menu {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
+  flex: 1;
+  justify-content: center;
 }
 
 .nav-menu a {
   display: inline-flex;
   align-items: center;
-  padding: 8px 14px;
+  padding: 8px 13px;
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   color: var(--color-text-primary, #1A1A1A);
   border-radius: 4px;
   position: relative;
   transition: color 0.2s ease, background-color 0.2s ease;
+  white-space: nowrap;
 }
 
 .nav-menu a::after {
   content: "";
   position: absolute;
-  left: 14px;
-  right: 14px;
+  left: 13px;
+  right: 13px;
   bottom: 4px;
   height: 2px;
   background: var(--color-primary, #00875a);
@@ -80,7 +85,6 @@
   transform: scaleX(1);
 }
 
-/* Active link */
 .nav-menu a.active {
   color: var(--color-primary, #00875a);
   font-weight: 600;
@@ -90,34 +94,42 @@
   transform: scaleX(1);
 }
 
+/* Mobile-only CTA inside menu */
+.nav-menu-mobile-cta {
+  display: none;
+}
+
+/* ===================== NAV RIGHT (desktop actions) ===================== */
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
 /* ===================== APPLY NOW BUTTON ===================== */
 .nav-btn {
-  margin-left: 16px;
   padding: 10px 22px;
-  background-color: #ffda32;
+  background-color: var(--color-accent, #F5A623);
   color: #ffffff !important;
-  text-shadow: 0 1px 0 rgba(10, 92, 77, 0.35);
   border: none;
   border-radius: var(--radius-btn, 4px);
   font-weight: 600;
-  font-size: 0.9375rem;
+  font-size: 0.9rem;
   font-family: var(--font-sans);
   cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  transition: background-color 0.2s ease, transform 0.15s ease;
   white-space: nowrap;
   text-decoration: none;
 }
 
 .nav-btn:hover {
-  background-color: #ffd400;
-  color: #ffffff !important;
-  text-shadow: 0 1px 0 rgba(10, 92, 77, 0.35);
+  background-color: var(--color-accent-hover, #D4891A);
   transform: translateY(-1px);
 }
 
 /* ===================== DASHBOARD BUTTON (logged-in users) ===================== */
 .nav-dashboard-btn {
-  margin-left: 12px;
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -229,15 +241,22 @@
   transition: background 0.3s ease;
 }
 
-/* ===================== MOBILE ===================== */
+/* ===================== MOBILE (≤ 900px) ===================== */
 @media (max-width: 900px) {
   .hamburger {
     display: flex;
   }
 
+  /* Hide desktop CTA/dashboard button, keep only hamburger */
+  .nav-right .nav-btn,
+  .nav-right .nav-dashboard-btn {
+    display: none;
+  }
+
+  /* Slide-down mobile nav */
   .nav-menu {
     position: absolute;
-    top: 71px;
+    top: 70px;
     left: 0;
     width: 100%;
     flex-direction: column;
@@ -270,16 +289,21 @@
     display: none;
   }
 
-  .nav-btn {
+  /* Show mobile CTA at bottom of open menu */
+  .nav-menu-mobile-cta {
+    display: block;
     margin: 12px 16px 0;
+  }
+
+  .nav-menu-mobile-cta .nav-btn {
+    width: 100%;
     text-align: center;
     display: block;
     padding: 12px 22px;
   }
 
-  .nav-dashboard-btn {
-    margin: 12px 16px 0;
-    width: calc(100% - 32px);
+  .nav-menu-mobile-cta .nav-dashboard-btn {
+    width: 100%;
     justify-content: center;
   }
 }
@@ -291,173 +315,5 @@
 
   .nav-logo img {
     height: 44px;
-  }
-}
-
-/* ===================== INSPO BAR (rounded white nav + green CTA) ===================== */
-
-.minimal-navbar--inspo {
-  background: transparent;
-  border-bottom: none;
-  padding: 10px 20px 0;
-}
-
-.minimal-navbar--inspo.scrolled .minimal-navbar__bar {
-  box-shadow: 0 8px 28px rgba(26, 43, 60, 0.1);
-}
-
-.minimal-navbar__bar {
-  max-width: 1180px;
-  margin: 0 auto;
-}
-
-.nav-inner--inspo {
-  position: relative;
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  align-items: center;
-  gap: 16px 24px;
-  min-height: 62px;
-  padding: 10px 22px 16px;
-  background: #fff;
-  border-radius: 0 0 22px 22px;
-  box-shadow: 0 4px 28px rgba(26, 43, 60, 0.08);
-  border: 1px solid rgba(226, 232, 240, 0.95);
-  border-top: none;
-}
-
-.nav-brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  cursor: pointer;
-  justify-self: start;
-}
-
-.nav-brand-mark {
-  width: 34px;
-  height: 34px;
-  flex-shrink: 0;
-  position: relative;
-  display: block;
-}
-
-.nav-brand-mark::before,
-.nav-brand-mark::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  margin: auto;
-  width: 12px;
-  height: 12px;
-  border-radius: 50% 50% 50% 2px;
-}
-
-.nav-brand-mark::before {
-  background: linear-gradient(135deg, #22d3ee, #0ea5e9);
-  transform: translate(-4px, -4px) rotate(-12deg);
-}
-
-.nav-brand-mark::after {
-  background: linear-gradient(135deg, #4ade80, #22c55e);
-  transform: translate(4px, 4px) rotate(140deg);
-}
-
-.nav-brand-img {
-  height: 38px;
-  width: auto;
-  object-fit: contain;
-}
-
-.nav-menu--inspo {
-  justify-self: center;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2px 4px;
-}
-
-.nav-menu--inspo a,
-.nav-menu--inspo .nav-link-inspo-extra {
-  color: #64748b;
-  font-weight: 500;
-  font-size: 0.9rem;
-}
-
-.nav-menu--inspo a:hover,
-.nav-menu--inspo a.active {
-  color: #1a2b3c;
-  background: rgba(241, 245, 249, 0.9);
-}
-
-.nav-menu--inspo a::after {
-  display: none;
-}
-
-.nav-actions-inspo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  justify-self: end;
-}
-
-.nav-btn--demo {
-  margin-left: 0;
-  padding: 10px 22px;
-  background: #64c850;
-  color: #fff !important;
-  text-shadow: none;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.875rem;
-}
-
-.nav-btn--demo:hover {
-  background: #ffda32;
-  color: #0f172a !important;
-}
-
-@media (min-width: 901px) {
-  .nav-link-inspo-extra {
-    display: none !important;
-  }
-
-  .nav-btn--inmenu,
-  .nav-dashboard-btn--inmenu {
-    display: none !important;
-  }
-}
-
-@media (max-width: 900px) {
-  .nav-inner--inspo {
-    grid-template-columns: 1fr auto;
-    padding: 10px 16px 12px;
-  }
-
-  .nav-brand {
-    grid-column: 1;
-  }
-
-  .nav-actions-inspo {
-    grid-column: 2;
-    justify-self: end;
-  }
-
-  .nav-actions-inspo > .nav-btn--demo,
-  .nav-actions-inspo > .nav-dashboard-btn {
-    display: none;
-  }
-
-  .minimal-navbar--inspo .nav-menu--inspo {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: calc(100% + 10px);
-    width: auto;
-    margin-top: 0;
-    border-radius: 16px;
-    box-shadow: 0 16px 40px rgba(26, 43, 60, 0.12);
-    border: 1px solid #e2e8f0;
-    padding: 12px 0 16px;
-    background: #fff;
   }
 }

@@ -1,7 +1,8 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import Navbar3 from "./components/navbar3";
+import TopUtilityBar from "./components/TopUtilityBar";
 import Footer from "./components/Footer";
 import PartnerLogos from "./components/PartnerLogos";
 import BrowseBySubject from "./components/BrowseBySubject";
@@ -29,53 +30,6 @@ export default function LandingPage() {
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
 
-  const [selectedLevel, setSelectedLevel] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [selectedIntake, setSelectedIntake] = useState("");
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const searchRef = useRef(null);
-
-  const COUNTRY = "Ireland";
-  const LEVELS = [
-    { label: "Postgraduate", value: "Master's (Postgraduate)" },
-    { label: "Undergraduate", value: "Bachelor's (Undergraduate)" },
-    { label: "Postgraduate Diploma", value: "Postgraduate Diploma" },
-    { label: "Higher Diploma", value: "Higher Diploma" },
-  ];
-  const CATEGORIES = [
-    { label: "Business, Management & Law", value: "Business, Management & Law" },
-    { label: "Computing, IT & Engineering", value: "Computing, IT & Engineering" },
-    { label: "Life Sciences & Health", value: "Life Sciences & Health" },
-    { label: "Social Sciences", value: "Social Sciences" },
-    { label: "Education & Media", value: "Education & Media" },
-    { label: "Others", value: "Others" },
-  ];
-  const INTAKES = [
-    { label: "September", value: "September" },
-    { label: "January / February", value: "January/February" },
-    { label: "April", value: "April" },
-  ];
-
-  const toggleDropdown = (name) =>
-    setActiveDropdown((prev) => (prev === name ? null : name));
-
-  const handleSearch = () => {
-    const params = new URLSearchParams();
-    if (selectedLevel) params.set("level", selectedLevel);
-    params.set("country", COUNTRY);
-    if (selectedCategory) params.set("category", selectedCategory);
-    if (selectedIntake) params.set("intake", selectedIntake);
-    navigate(`/search-results?${params.toString()}`);
-  };
-
-  useEffect(() => {
-    const handler = (e) => {
-      if (searchRef.current && !searchRef.current.contains(e.target))
-        setActiveDropdown(null);
-    };
-    document.addEventListener("mousedown", handler);
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   useEffect(() => {
     const onHash = () => {
@@ -130,7 +84,10 @@ export default function LandingPage() {
   return (
     <div className="LandingPage">
       <ParticlesBackground />
-      <Navbar3 />
+      <div className="landing-top">
+        <TopUtilityBar />
+        <Navbar3 />
+      </div>
 
       <BentoHero
         ariaLabel="FineAnswer Ireland"
@@ -143,11 +100,12 @@ export default function LandingPage() {
         subtitle="Search courses, plan your application, and get visa-ready with a guided, modern experience designed to keep everything simple and trackable."
         ctaLabel="Get Started"
         ctaTo="/search-results?country=Ireland"
-        heroSearchDefaults={{ location: "Ireland" }}
-        onHeroSearch={({ keyword, location }) => {
+        onSearch={({ country, level, category, intake }) => {
           const params = new URLSearchParams();
-          params.set("country", location || "Ireland");
-          if (keyword) params.set("q", keyword);
+          params.set("country", country || "Ireland");
+          if (level) params.set("level", level);
+          if (category) params.set("category", category);
+          if (intake) params.set("intake", intake);
           navigate(`/search-results?${params.toString()}`);
         }}
       />
@@ -156,93 +114,6 @@ export default function LandingPage() {
       <div className="scroll-reveal">
         <AboutUs />
       </div>
-
-      {/* 3. COURSE SEARCH ENGINE */}
-      <section className="search-engine-section scroll-reveal" id="search">
-        <div className="search-engine-inner">
-          <div className="search-engine-header">
-            <span className="section-badge">FineAnswer Ireland</span>
-            <h2>Course Search Engine</h2>
-            <p>Find your ideal program in Ireland</p>
-          </div>
-
-          <div className="hero-search-wrapper-new" ref={searchRef}>
-            <div className="hero-search-box-new">
-              <div className="search-item-wrap">
-                <div className="search-item-new">
-                  <span className="search-label">Country</span>
-                  <span className="search-value">{COUNTRY}</span>
-                </div>
-              </div>
-              <div className="divider" />
-
-              <div className={`search-item-wrap ${activeDropdown === "level" ? "dropdown-open" : ""}`}>
-                <button type="button" className="search-item-new" onClick={() => toggleDropdown("level")}>
-                  <span className="search-label">Level</span>
-                  <span className={`search-value${!selectedLevel ? " search-value--placeholder" : ""}`}>
-                    {LEVELS.find((l) => l.value === selectedLevel)?.label || "Select Level"}
-                    <span className="search-chevron">▼</span>
-                  </span>
-                </button>
-                {activeDropdown === "level" && (
-                  <div className="search-dropdown">
-                    {LEVELS.map((l) => (
-                      <button key={l.value} type="button" className="search-dropdown-item"
-                        onClick={() => { setSelectedLevel(l.value); setActiveDropdown(null); }}>
-                        {l.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="divider" />
-
-              <div className={`search-item-wrap search-item-wrap--category ${activeDropdown === "category" ? "dropdown-open" : ""}`}>
-                <button type="button" className="search-item-new" onClick={() => toggleDropdown("category")}>
-                  <span className="search-label">Category</span>
-                  <span className={`search-value${!selectedCategory ? " search-value--placeholder" : ""}`}>
-                    {CATEGORIES.find((c) => c.value === selectedCategory)?.label || "All Categories"}
-                    <span className="search-chevron">▼</span>
-                  </span>
-                </button>
-                {activeDropdown === "category" && (
-                  <div className="search-dropdown">
-                    {CATEGORIES.map((c) => (
-                      <button key={c.value} type="button" className="search-dropdown-item"
-                        onClick={() => { setSelectedCategory(c.value); setActiveDropdown(null); }}>
-                        {c.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              <div className="divider" />
-
-              <div className={`search-item-wrap ${activeDropdown === "intake" ? "dropdown-open" : ""}`}>
-                <button type="button" className="search-item-new" onClick={() => toggleDropdown("intake")}>
-                  <span className="search-label">Intake</span>
-                  <span className={`search-value${!selectedIntake ? " search-value--placeholder" : ""}`}>
-                    {INTAKES.find((i) => i.value === selectedIntake)?.label || "Select Intake"}
-                    <span className="search-chevron">▼</span>
-                  </span>
-                </button>
-                {activeDropdown === "intake" && (
-                  <div className="search-dropdown">
-                    {INTAKES.map((i) => (
-                      <button key={i.value} type="button" className="search-dropdown-item"
-                        onClick={() => { setSelectedIntake(i.value); setActiveDropdown(null); }}>
-                        {i.label}
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <button className="search-btn-new" onClick={handleSearch}>Search</button>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 4. BROWSE BY SUBJECT */}
       <div className="scroll-reveal">
