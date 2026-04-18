@@ -36,7 +36,7 @@
 }
 
 /* Avoid nested sticky (navbar + wrapper); the whole stack sticks together */
-.LandingPage > .landing-top .minimal-navbar {
+.LandingPage > .landing-top .minimal-navbar--inspo {
   position: relative;
   top: auto;
 }

@@ -34,14 +34,7 @@ export default function Navbar() {
   }, []);
 
   const getInitials = () => {
-    if (user?.name) {
-      return user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2);
-    }
+    if (user?.name) return user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
     if (user?.email) return user.email[0].toUpperCase();
     return "?";
   };
@@ -55,10 +48,10 @@ export default function Navbar() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const DashboardButton = ({ className = "" }) => (
+  const DashboardButton = ({ extraClass = "" }) => (
     <button
       type="button"
-      className={`nav-dashboard-btn ${className}`}
+      className={`nav-dashboard-btn${extraClass ? ` ${extraClass}` : ""}`}
       onClick={handleProfileClick}
       disabled={loading}
     >
@@ -90,79 +83,68 @@ export default function Navbar() {
   );
 
   return (
-    <header className={`minimal-navbar${scrolled ? " scrolled" : ""}`}>
-      <div className="nav-inner">
-        {/* Logo */}
-        <div
-          className="nav-logo"
-          onClick={() => {
-            navigate("/");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-            closeMenu();
-          }}
-        >
-          <img src={logo} alt="FineAnswer Ireland" />
-        </div>
+    <header className={`minimal-navbar minimal-navbar--inspo${scrolled ? " scrolled" : ""}`}>
+      <div className="minimal-navbar__bar">
+        <div className="nav-inner nav-inner--inspo">
 
-        {/* Nav links */}
-        <nav className={`nav-menu ${menuOpen ? "open" : ""}`}>
-          <NavLink
-            to="/"
-            end
-            onClick={() => {
-              closeMenu();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
+          {/* ── Logo ── */}
+          <div
+            className="nav-brand"
+            onClick={() => { navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); closeMenu(); }}
           >
-            Home
-          </NavLink>
-          <a href="/#about" onClick={closeMenu}>About</a>
-          <a href="/#services" onClick={closeMenu}>Services</a>
-          <a href="/#packages" onClick={closeMenu}>Packages</a>
-          <a href="/#contact" onClick={closeMenu}>Contact</a>
-          <NavLink to="/career" onClick={closeMenu}>Career</NavLink>
-          <NavLink to="/blog" onClick={closeMenu}>Blog</NavLink>
+            <span className="nav-brand-mark" aria-hidden />
+            <img src={logo} alt="FineAnswer Ireland" className="nav-brand-img" />
+          </div>
 
-          {/* Mobile-only CTA at the bottom of the open menu */}
-          <div className="nav-menu-mobile-cta">
+          {/* ── Nav links ── */}
+          <nav className={`nav-menu nav-menu--inspo${menuOpen ? " open" : ""}`} aria-label="Main navigation">
+            <NavLink to="/" end onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+              Home
+            </NavLink>
+            <a href="/#about"    onClick={closeMenu}>About</a>
+            <a href="/#services" onClick={closeMenu}>Services</a>
+            <a href="/#packages" onClick={closeMenu}>Packages</a>
+            <a href="/#contact"  onClick={closeMenu}>Contact</a>
+            <NavLink to="/career" onClick={closeMenu}>Career</NavLink>
+            <NavLink to="/blog"   onClick={closeMenu}>Blog</NavLink>
+
+            {/* Mobile-only CTA row inside open menu */}
+            <div className="nav-mobile-cta">
+              {showProfileArea
+                ? <DashboardButton extraClass="nav-dashboard-btn--mobile" />
+                : (
+                  <button type="button" className="nav-btn nav-btn--demo nav-btn--mobile"
+                    onClick={() => { closeMenu(); navigate("/contact"); }}>
+                    Apply Now
+                  </button>
+                )
+              }
+            </div>
+          </nav>
+
+          {/* ── Desktop right actions ── */}
+          <div className="nav-actions-inspo">
             {showProfileArea ? (
               <DashboardButton />
             ) : (
-              <button
-                type="button"
-                className="nav-btn"
-                onClick={() => { closeMenu(); navigate("/contact"); }}
-              >
+              <button type="button" className="nav-btn nav-btn--demo"
+                onClick={() => navigate("/contact")}>
                 Apply Now
               </button>
             )}
-          </div>
-        </nav>
 
-        {/* Desktop right-side actions */}
-        <div className="nav-right">
-          {showProfileArea ? (
-            <DashboardButton />
-          ) : (
             <button
-              type="button"
-              className="nav-btn"
-              onClick={() => navigate("/contact")}
+              className="hamburger"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
             >
-              Apply Now
+              <span />
+              <span />
+              <span />
             </button>
-          )}
-
-          <div
-            className="hamburger"
-            onClick={() => setMenuOpen(!menuOpen)}
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            aria-expanded={menuOpen}
-          >
-            <span />
-            <span />
-            <span />
           </div>
+
         </div>
       </div>
     </header>
