@@ -280,13 +280,25 @@
   /* Logo column 1 */
   .nav-brand { grid-column: 1; }
 
-  /* Hamburger + actions column 2, hide Apply Now / Dashboard on mobile */
+  /* Hamburger + actions column 2 — hide Apply Now here (it’s in the slide-down menu) */
   .nav-actions-inspo {
     grid-column: 2;
     justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 8px;
   }
-  .nav-actions-inspo > .nav-btn--demo,
+  .nav-actions-inspo > .nav-btn--demo {
+    display: none;
+  }
+
+  /* Compact dashboard (avatar only) next to hamburger — full control stayed hidden before */
   .nav-actions-inspo > .nav-dashboard-btn {
+    display: inline-flex;
+    padding: 4px;
+    gap: 0;
+  }
+  .nav-actions-inspo > .nav-dashboard-btn .nav-dashboard-text {
     display: none;
   }
 

@@ -63,7 +63,7 @@ export default function Navbar() {
             {showImage ? (
               <img
                 src={profileImageUrl}
-                alt={user.name || "Profile"}
+                alt={user?.name || "Profile"}
                 referrerPolicy="no-referrer"
                 onError={() => setImgError(true)}
               />
@@ -110,26 +110,31 @@ export default function Navbar() {
 
             {/* Mobile-only CTA row inside open menu */}
             <div className="nav-mobile-cta">
-              {showProfileArea
-                ? <DashboardButton extraClass="nav-dashboard-btn--mobile" />
-                : (
-                  <button type="button" className="nav-btn nav-btn--demo nav-btn--mobile"
-                    onClick={() => { closeMenu(); navigate("/contact"); }}>
-                    Apply Now
-                  </button>
-                )
-              }
+              {showProfileArea ? (
+                <DashboardButton extraClass="nav-dashboard-btn--mobile" />
+              ) : !loading ? (
+                <button
+                  type="button"
+                  className="nav-btn nav-btn--login nav-btn--mobile"
+                  onClick={() => { closeMenu(); navigate("/login"); }}
+                >
+                  Login
+                </button>
+              ) : null}
             </div>
           </nav>
 
-          {/* ── Desktop right actions ── */}
+          {/* ── Desktop right: Dashboard (logged in) or Login (guest) ── */}
           <div className="nav-actions-inspo">
             {showProfileArea ? (
               <DashboardButton />
             ) : (
-              <button type="button" className="nav-btn nav-btn--demo"
-                onClick={() => navigate("/contact")}>
-                Apply Now
+              <button
+                type="button"
+                className="nav-btn nav-btn--demo"
+                onClick={() => navigate("/login")}
+              >
+                Login
               </button>
             )}
 
