@@ -34,14 +34,7 @@ export default function Navbar() {
   }, []);
 
   const getInitials = () => {
-    if (user?.name) {
-      return user.name
-        .split(" ")
-        .map((n) => n[0])
-        .join("")
-        .toUpperCase()
-        .slice(0, 2);
-    }
+    if (user?.name) return user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2);
     if (user?.email) return user.email[0].toUpperCase();
     return "?";
   };
@@ -55,147 +48,110 @@ export default function Navbar() {
 
   const closeMenu = () => setMenuOpen(false);
 
+  const DashboardButton = ({ extraClass = "" }) => (
+    <button
+      type="button"
+      className={`nav-dashboard-btn${extraClass ? ` ${extraClass}` : ""}`}
+      onClick={handleProfileClick}
+      disabled={loading}
+    >
+      {loading ? (
+        <span className="nav-profile-loading" />
+      ) : (
+        <>
+          <span className="nav-dashboard-avatar">
+            {showImage ? (
+              <img
+                src={profileImageUrl}
+                alt={user?.name || "Profile"}
+                referrerPolicy="no-referrer"
+                onError={() => setImgError(true)}
+              />
+            ) : (
+              <span className="nav-dashboard-initials">{getInitials()}</span>
+            )}
+          </span>
+          <span className="nav-dashboard-text">
+            <span className="nav-dashboard-name">{firstName}</span>
+            <span className="nav-dashboard-label">
+              {isAdmin ? "Admin Panel" : "My Dashboard"}
+            </span>
+          </span>
+        </>
+      )}
+    </button>
+  );
+
   return (
-    <>
-      <header className={`minimal-navbar minimal-navbar--inspo${scrolled ? " scrolled" : ""}`}>
-        <div className="minimal-navbar__bar">
-          <div className="nav-inner nav-inner--inspo">
-            <div
-              className="nav-brand"
-              onClick={() => {
-                navigate("/");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-                closeMenu();
-              }}
-            >
-              <span className="nav-brand-mark" aria-hidden />
-              <img src={logo} alt="FineAnswer Ireland" className="nav-brand-img" />
-            </div>
+    <header className={`minimal-navbar minimal-navbar--inspo${scrolled ? " scrolled" : ""}`}>
+      <div className="minimal-navbar__bar">
+        <div className="nav-inner nav-inner--inspo">
 
-            <nav className={`nav-menu nav-menu--inspo ${menuOpen ? "open" : ""}`}>
-              <NavLink
-                to="/"
-                end
-                onClick={() => {
-                  closeMenu();
-                  window.scrollTo({ top: 0, behavior: "smooth" });
-                }}
-              >
-                Home
-              </NavLink>
-              <a href="/#search" onClick={closeMenu}>
-                How it works
-              </a>
-              <a href="/#about" onClick={closeMenu}>
-                About us
-              </a>
-              <a href="/#services" className="nav-link-inspo-extra" onClick={closeMenu}>
-                Services
-              </a>
-              <a href="/#packages" className="nav-link-inspo-extra" onClick={closeMenu}>
-                Packages
-              </a>
-              <a href="/#contact" className="nav-link-inspo-extra" onClick={closeMenu}>
-                Contact
-              </a>
-              <NavLink to="/career" className="nav-link-inspo-extra" onClick={closeMenu}>
-                Career
-              </NavLink>
-              <NavLink to="/blog" className="nav-link-inspo-extra" onClick={closeMenu}>
-                Blog
-              </NavLink>
+          {/* ── Logo ── */}
+          <div
+            className="nav-brand"
+            onClick={() => { navigate("/"); window.scrollTo({ top: 0, behavior: "smooth" }); closeMenu(); }}
+          >
+            <span className="nav-brand-mark" aria-hidden />
+            <img src={logo} alt="FineAnswer Ireland" className="nav-brand-img" />
+          </div>
 
+          {/* ── Nav links ── */}
+          <nav className={`nav-menu nav-menu--inspo${menuOpen ? " open" : ""}`} aria-label="Main navigation">
+            <NavLink to="/" end onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+              Home
+            </NavLink>
+            <a href="/#about"    onClick={closeMenu}>About</a>
+            <a href="/#services" onClick={closeMenu}>Services</a>
+            <a href="/#packages" onClick={closeMenu}>Packages</a>
+            <a href="/#contact"  onClick={closeMenu}>Contact</a>
+            <NavLink to="/career" onClick={closeMenu}>Career</NavLink>
+            <NavLink to="/blog"   onClick={closeMenu}>Blog</NavLink>
+
+            {/* Mobile-only CTA row inside open menu */}
+            <div className="nav-mobile-cta">
               {showProfileArea ? (
-                <button
-                  className="nav-dashboard-btn nav-dashboard-btn--inmenu"
-                  onClick={handleProfileClick}
-                  disabled={loading}
-                >
-                  {loading ? (
-                    <span className="nav-profile-loading" />
-                  ) : (
-                    <>
-                      <span className="nav-dashboard-avatar">
-                        {showImage ? (
-                          <img
-                            src={profileImageUrl}
-                            alt={user.name || "Profile"}
-                            referrerPolicy="no-referrer"
-                            onError={() => setImgError(true)}
-                          />
-                        ) : (
-                          <span className="nav-dashboard-initials">{getInitials()}</span>
-                        )}
-                      </span>
-                      <span className="nav-dashboard-text">
-                        <span className="nav-dashboard-name">{firstName}</span>
-                        <span className="nav-dashboard-label">
-                          {isAdmin ? "Admin Panel" : "My Dashboard"}
-                        </span>
-                      </span>
-                    </>
-                  )}
-                </button>
-              ) : (
-                <button type="button" className="nav-btn nav-btn--demo nav-btn--inmenu" onClick={() => { closeMenu(); navigate("/contact"); }}>
-                  Request a demo
-                </button>
-              )}
-            </nav>
-
-            <div className="nav-actions-inspo">
-              {!showProfileArea ? (
-                <button type="button" className="nav-btn nav-btn--demo" onClick={() => navigate("/contact")}>
-                  Request a demo
-                </button>
-              ) : (
+                <DashboardButton extraClass="nav-dashboard-btn--mobile" />
+              ) : !loading ? (
                 <button
                   type="button"
-                  className="nav-dashboard-btn"
-                  onClick={handleProfileClick}
-                  disabled={loading}
+                  className="nav-btn nav-btn--login nav-btn--mobile"
+                  onClick={() => { closeMenu(); navigate("/login"); }}
                 >
-                  {loading ? (
-                    <span className="nav-profile-loading" />
-                  ) : (
-                    <>
-                      <span className="nav-dashboard-avatar">
-                        {showImage ? (
-                          <img
-                            src={profileImageUrl}
-                            alt={user.name || "Profile"}
-                            referrerPolicy="no-referrer"
-                            onError={() => setImgError(true)}
-                          />
-                        ) : (
-                          <span className="nav-dashboard-initials">{getInitials()}</span>
-                        )}
-                      </span>
-                      <span className="nav-dashboard-text">
-                        <span className="nav-dashboard-name">{firstName}</span>
-                        <span className="nav-dashboard-label">
-                          {isAdmin ? "Admin Panel" : "My Dashboard"}
-                        </span>
-                      </span>
-                    </>
-                  )}
+                  Login
                 </button>
-              )}
-
-              <div
-                className="hamburger"
-                onClick={() => setMenuOpen(!menuOpen)}
-                aria-label={menuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={menuOpen}
-              >
-                <span />
-                <span />
-                <span />
-              </div>
+              ) : null}
             </div>
+          </nav>
+
+          {/* ── Desktop right: Dashboard (logged in) or Login (guest) ── */}
+          <div className="nav-actions-inspo">
+            {showProfileArea ? (
+              <DashboardButton />
+            ) : (
+              <button
+                type="button"
+                className="nav-btn nav-btn--demo"
+                onClick={() => navigate("/login")}
+              >
+                Login
+              </button>
+            )}
+
+            <button
+              className="hamburger"
+              onClick={() => setMenuOpen((o) => !o)}
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={menuOpen}
+            >
+              <span />
+              <span />
+              <span />
+            </button>
           </div>
+
         </div>
-      </header>
-    </>
+      </div>
+    </header>
   );
 }

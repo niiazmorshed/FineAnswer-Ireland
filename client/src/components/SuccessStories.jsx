@@ -4,6 +4,7 @@ import { FaUniversity, FaMapMarkerAlt } from "react-icons/fa";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 import "./SuccessStories.css";
 import { getSuccessStories } from "../services/successStoriesApi";
+import { resolveMediaUrl } from "../utils/resolveMediaUrl";
 
 export default function SuccessStories() {
   const [stories, setStories] = useState([]);
@@ -88,7 +89,7 @@ export default function SuccessStories() {
               >
                 <div className="story-card">
                   <div className="user-profile">
-                    <img src={story.image} alt={story.name} className="user-avatar" />
+                    <img src={resolveMediaUrl(story.image)} alt={story.name} className="user-avatar" />
                   </div>
                   
                   <div className="card-content">

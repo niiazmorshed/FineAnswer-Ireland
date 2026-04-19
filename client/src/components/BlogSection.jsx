@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaArrowRight, FaCalendar, FaNewspaper, FaUser } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
+import { resolveMediaUrl } from "../utils/resolveMediaUrl";
 import "./BlogSection.css";
 
 export default function BlogSection() {
@@ -79,7 +80,7 @@ export default function BlogSection() {
             <article key={blog._id} className="blog-item">
               <div className="blog-image-wrapper">
                 {blog.image ? (
-                  <img src={blog.image} alt={blog.title} className="blog-image" />
+                  <img src={resolveMediaUrl(blog.image)} alt={blog.title} className="blog-image" />
                 ) : (
                   <div className="blog-image-placeholder">
                     <FaNewspaper />

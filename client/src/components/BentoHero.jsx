@@ -1,10 +1,34 @@
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./BentoHero.css";
 import heroPerson from "../assets/student.jpg";
 
+const COUNTRY = "Ireland";
+
+const LEVELS = [
+  { label: "Postgraduate", value: "Master's (Postgraduate)" },
+  { label: "Undergraduate", value: "Bachelor's (Undergraduate)" },
+  { label: "Postgraduate Diploma", value: "Postgraduate Diploma" },
+  { label: "Higher Diploma", value: "Higher Diploma" },
+];
+
+const CATEGORIES = [
+  { label: "Business, Management & Law", value: "Business, Management & Law" },
+  { label: "Computing, IT & Engineering", value: "Computing, IT & Engineering" },
+  { label: "Life Sciences & Health", value: "Life Sciences & Health" },
+  { label: "Social Sciences", value: "Social Sciences" },
+  { label: "Education & Media", value: "Education & Media" },
+  { label: "Others", value: "Others" },
+];
+
+const INTAKES = [
+  { label: "September", value: "September" },
+  { label: "January / February", value: "January/February" },
+  { label: "April", value: "April" },
+];
+
 /**
- * Job-board style hero (reference): left headline + search bar, right person + floating cards.
+ * Hero section with an embedded Course Search Engine.
  * Keeps the existing app functionality by letting the parent handle searches.
  */
 export default function BentoHero({
@@ -18,20 +42,26 @@ export default function BentoHero({
   backTo = "/",
   showHeroSearch = true,
   heroImageSrc = heroPerson,
-  onHeroSearch,
-  heroSearchDefaults,
+  onSearch,
 }) {
-  const defaults = useMemo(
-    () => ({
-      keyword: "",
-      location: "Ireland",
-      ...(heroSearchDefaults || {}),
-    }),
-    [heroSearchDefaults],
-  );
+  const [selectedLevel, setSelectedLevel] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedIntake, setSelectedIntake] = useState("");
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
-  const [keyword, setKeyword] = useState(defaults.keyword);
-  const [location, setLocation] = useState(defaults.location);
+  const toggleDropdown = (name) =>
+    setActiveDropdown((prev) => (prev === name ? null : name));
+
+  const handleSearch = () => {
+    if (typeof onSearch === "function") {
+      onSearch({
+        country: COUNTRY,
+        level: selectedLevel,
+        category: selectedCategory,
+        intake: selectedIntake,
+      });
+    }
+  };
 
   const ctaIsRoute = ctaTo && ctaTo.startsWith("/");
 
@@ -50,12 +80,8 @@ export default function BentoHero({
       </a>
     );
 
-  const submitSearch = () => {
-    if (typeof onHeroSearch === "function") onHeroSearch({ keyword, location });
-  };
-
   return (
-    <section className="ireland-hero-bento" aria-label={ariaLabel}>
+    <section className="ireland-hero-bento" aria-label={ariaLabel} id="search">
       <div className="ireland-hero-bento__inner">
         {showBackLink ? (
           <Link to={backTo} className="ireland-hero-back">
@@ -74,42 +100,117 @@ export default function BentoHero({
             <p className="ireland-hero-sub">{subtitle}</p>
 
             {showHeroSearch ? (
-              <form
-                className="job-hero__search"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  submitSearch();
-                }}
-                aria-label="Hero search"
-              >
-                <div className="job-hero__inputWrap">
-                  <span className="job-hero__inputIcon" aria-hidden>🔎</span>
-                  <input
-                    className="job-hero__input"
-                    value={keyword}
-                    onChange={(e) => setKeyword(e.target.value)}
-                    placeholder="Course, university, or keyword"
-                    aria-label="Keyword"
-                  />
+              <div className="bento-search-engine">
+                <div className="bento-search-intro">
+                  <span className="bento-search-badge">FineAnswer Ireland</span>
+                  <span className="bento-search-tagline">Course Search · Find your ideal program in Ireland</span>
                 </div>
-                <div className="job-hero__inputDivider" aria-hidden />
-                <div className="job-hero__inputWrap job-hero__inputWrap--select">
-                  <span className="job-hero__inputIcon" aria-hidden>📍</span>
-                  <select
-                    className="job-hero__select"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    aria-label="Location"
-                  >
-                    <option>Ireland</option>
-                    <option>UK</option>
-                    <option>Australia</option>
-                  </select>
+                <div className="bento-search-box" role="group" aria-label="Course search filters">
+                  <div className="bento-search-item bento-search-item--fixed">
+                    <span className="bento-search-label">Country</span>
+                    <span className="bento-search-value">
+                      <span className="bento-val-text">{COUNTRY}</span>
+                    </span>
+                  </div>
+                  <div className="bento-divider" />
+
+                  <div className={`bento-search-item-wrap${activeDropdown === "level" ? " bento-open" : ""}`}>
+                    <button
+                      type="button"
+                      className="bento-search-item"
+                      onClick={() => toggleDropdown("level")}
+                    >
+                      <span className="bento-search-label">Level</span>
+                      <span className={`bento-search-value${!selectedLevel ? " bento-placeholder" : ""}`}>
+                        <span className="bento-val-text">
+                          {LEVELS.find((l) => l.value === selectedLevel)?.label || "Select Level"}
+                        </span>
+                        <span className="bento-chevron" aria-hidden="true" />
+                      </span>
+                    </button>
+                    {activeDropdown === "level" && (
+                      <div className="bento-dropdown">
+                        {LEVELS.map((l) => (
+                          <button
+                            key={l.value}
+                            type="button"
+                            className="bento-dropdown-item"
+                            onClick={() => { setSelectedLevel(l.value); setActiveDropdown(null); }}
+                          >
+                            {l.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="bento-divider" />
+
+                  <div className={`bento-search-item-wrap bento-search-item-wrap--wide${activeDropdown === "category" ? " bento-open" : ""}`}>
+                    <button
+                      type="button"
+                      className="bento-search-item"
+                      onClick={() => toggleDropdown("category")}
+                    >
+                      <span className="bento-search-label">Category</span>
+                      <span className={`bento-search-value${!selectedCategory ? " bento-placeholder" : ""}`}>
+                        <span className="bento-val-text">
+                          {CATEGORIES.find((c) => c.value === selectedCategory)?.label || "All Categories"}
+                        </span>
+                        <span className="bento-chevron" aria-hidden="true" />
+                      </span>
+                    </button>
+                    {activeDropdown === "category" && (
+                      <div className="bento-dropdown">
+                        {CATEGORIES.map((c) => (
+                          <button
+                            key={c.value}
+                            type="button"
+                            className="bento-dropdown-item"
+                            onClick={() => { setSelectedCategory(c.value); setActiveDropdown(null); }}
+                          >
+                            {c.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="bento-divider" />
+
+                  <div className={`bento-search-item-wrap${activeDropdown === "intake" ? " bento-open" : ""}`}>
+                    <button
+                      type="button"
+                      className="bento-search-item"
+                      onClick={() => toggleDropdown("intake")}
+                    >
+                      <span className="bento-search-label">Intake</span>
+                      <span className={`bento-search-value${!selectedIntake ? " bento-placeholder" : ""}`}>
+                        <span className="bento-val-text">
+                          {INTAKES.find((i) => i.value === selectedIntake)?.label || "Select Intake"}
+                        </span>
+                        <span className="bento-chevron" aria-hidden="true" />
+                      </span>
+                    </button>
+                    {activeDropdown === "intake" && (
+                      <div className="bento-dropdown">
+                        {INTAKES.map((i) => (
+                          <button
+                            key={i.value}
+                            type="button"
+                            className="bento-dropdown-item"
+                            onClick={() => { setSelectedIntake(i.value); setActiveDropdown(null); }}
+                          >
+                            {i.label}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <button type="button" className="bento-search-btn" onClick={handleSearch}>
+                    Search
+                  </button>
                 </div>
-                <button type="submit" className="job-hero__searchBtn" aria-label="Search">
-                  Search
-                </button>
-              </form>
+              </div>
             ) : null}
 
             <div className="job-hero__trusted">

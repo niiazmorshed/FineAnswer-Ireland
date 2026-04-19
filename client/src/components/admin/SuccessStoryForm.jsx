@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaTimes, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
-import { uploadImageToCloudinary } from "../../utils/cloudinary";
+import { uploadImageToS3 } from "../../utils/s3Upload";
 import { createSuccessStory, updateSuccessStory } from "../../services/successStoriesApi";
 import "./SuccessStoryForm.css";
 
@@ -89,7 +89,7 @@ export default function SuccessStoryForm({ isOpen, onClose, onSuccess, initialSt
 
       let imageUrl = initialStory?.image || null;
       if (formData.image && typeof formData.image === "object" && formData.image instanceof File) {
-        imageUrl = await uploadImageToCloudinary(formData.image);
+        imageUrl = await uploadImageToS3(formData.image);
       } else if (imagePreview && imagePreview.startsWith("http")) {
         imageUrl = imagePreview;
       }

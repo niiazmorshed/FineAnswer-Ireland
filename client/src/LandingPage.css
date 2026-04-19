@@ -27,6 +27,19 @@
   position: relative;
   z-index: 1;
 }
+
+/* Sticky header stack (utility bar + navbar) — override position:relative from rule above */
+.LandingPage > .landing-top {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Avoid nested sticky (navbar + wrapper); the whole stack sticks together */
+.LandingPage > .landing-top .minimal-navbar--inspo {
+  position: relative;
+  top: auto;
+}
 .particles-bg {
   position: fixed;
   inset: 0;

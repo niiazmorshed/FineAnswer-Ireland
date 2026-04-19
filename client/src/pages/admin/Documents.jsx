@@ -130,7 +130,7 @@ export default function AdminDocuments() {
       }
       setTimeout(() => URL.revokeObjectURL(blobUrl), 5000);
     } catch (_err) {
-      // Fallback: open Cloudinary URL directly
+      // Fallback: open S3 URL directly
       if (action === "download") {
         const a = document.createElement("a");
         a.href = url;
