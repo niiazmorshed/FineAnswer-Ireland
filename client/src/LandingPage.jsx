@@ -23,6 +23,7 @@ import ParticlesBackground from "./components/ParticlesBackground";
 
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
+import SEO from "./components/SEO";
 import "./LandingPage.css";
 
 export default function LandingPage() {
@@ -129,6 +130,22 @@ export default function LandingPage() {
 
   return (
     <div className="LandingPage">
+      <SEO
+        title="Study in Ireland"
+        canonicalPath="/"
+        description="Study in Ireland with FineAnswer Ireland. Search courses, shortlist universities, get SOP and visa guidance, and move step-by-step from application to arrival."
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "FineAnswer Ireland",
+          url: "https://www.fineanswer.net/",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://www.fineanswer.net/search-results?q={search_term_string}&country=Ireland",
+            "query-input": "required name=search_term_string",
+          },
+        }}
+      />
       <ParticlesBackground />
       <Navbar3 />
 
