@@ -1,178 +1,221 @@
-.ceo-quote-wrapper {
+.ceoQuote {
+  --ceo-accent: #6d28d9;
+  --ceo-surface: #ffffff;
+  --ceo-tint: #f6f0fc;
+  --ceo-text: #0f172a;
+  --ceo-muted: rgba(15, 23, 42, 0.72);
+  --ceo-border: rgba(109, 40, 217, 0.14);
+
   width: 100%;
   display: flex;
   justify-content: center;
-  padding: 80px 20px;
-  background: var(--color-bg-light, #F8F9FA);
-}
-
-.ceo-card {
-  background: #ffffff;
-  width: 80%;
-  max-width: 950px;
-  padding: 50px 40px;
-  border-radius: 20px;
+  padding: clamp(44px, 6vw, 84px) 18px;
+  background: radial-gradient(
+      1200px 420px at 50% 0%,
+      rgba(99, 102, 241, 0.12) 0%,
+      rgba(99, 102, 241, 0) 55%
+    ),
+    radial-gradient(
+      900px 360px at 15% 30%,
+      rgba(236, 72, 153, 0.1) 0%,
+      rgba(236, 72, 153, 0) 55%
+    ),
+    radial-gradient(
+      900px 360px at 85% 40%,
+      rgba(56, 189, 248, 0.1) 0%,
+      rgba(56, 189, 248, 0) 55%
+    ),
+    linear-gradient(180deg, #fbfbfe 0%, var(--ceo-tint) 100%);
   position: relative;
-  text-align: center;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+  overflow: hidden;
 }
 
-/* Circular image */
-.ceo-image-box img {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
+.ceoQuote::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  background-repeat: no-repeat;
+  background-position: right 26px top 18px;
+  background-size: 460px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='700' height='700' viewBox='0 0 700 700'%3E%3Cg fill='%236d28d9'%3E%3Cpath d='M350 335c-18-60-78-116-146-116-77 0-139 62-139 139s62 139 139 139c55 0 109-34 133-86 6-12 11-25 13-38z'/%3E%3Cpath d='M350 335c18-60 78-116 146-116 77 0 139 62 139 139s-62 139-139 139c-55 0-109-34-133-86-6-12-11-25-13-38z'/%3E%3Cpath d='M350 330c-44-44-55-132-1-186 54-54 141-54 195 0 54 54 54 141 0 195-39 39-98 50-148 31-18-7-34-18-46-31z'/%3E%3Cpath d='M337 520c-6 52-35 96-69 132h164c-34-36-63-80-69-132-5-39-3-75 0-107h-26c3 32 5 68 0 107z'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+.ceoQuote__card {
+  width: min(980px, 100%);
+  position: relative;
+  border-radius: 22px;
+  padding: clamp(22px, 3.2vw, 36px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.92), #ffffff);
+  border: 1px solid var(--ceo-border);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.ceoQuote__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.14);
+}
+
+.ceoQuote__decor {
+  position: absolute;
+  inset: -2px;
+  background: radial-gradient(
+      520px 240px at 14% 0%,
+      rgba(109, 40, 217, 0.16),
+      transparent 60%
+    ),
+    radial-gradient(
+      560px 240px at 100% 45%,
+      rgba(109, 40, 217, 0.12),
+      transparent 55%
+    );
+  pointer-events: none;
+  opacity: 0.65;
+}
+
+.ceoQuote__header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px 1fr;
+  gap: 16px;
+  align-items: center;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(109, 40, 217, 0.12);
+}
+
+.ceoQuote__avatar {
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  padding: 2px;
+  background: linear-gradient(135deg, rgba(109, 40, 217, 0.55), rgba(109, 40, 217, 0.08));
+  box-shadow: 0 12px 24px rgba(109, 40, 217, 0.14);
+}
+
+.ceoQuote__avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 16px;
   object-fit: cover;
   display: block;
-  margin: 0 auto 25px;
+  background: #fff;
 }
 
-/* Big left quote icon */
-.quote-icon-left {
-  font-size: 70px;
-  font-weight: 800;
+.ceoQuote__headerText {
+  min-width: 0;
+}
+
+.ceoQuote__eyebrow {
+  margin: 0 0 6px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(109, 40, 217, 0.78);
+  font-weight: 700;
+}
+
+.ceoQuote__title {
+  margin: 0;
+  color: var(--ceo-text);
+  font-size: clamp(18px, 2.3vw, 24px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.ceoQuote__body {
+  position: relative;
+  padding-top: 18px;
+}
+
+.ceoQuote__quoteIcon {
   position: absolute;
-  top: 80px;
-  left: 40px;
-  color: #000;
-  opacity: 0.2;
+  top: 6px;
+  left: -2px;
+  font-size: 56px;
+  line-height: 1;
+  font-weight: 900;
+  color: rgba(109, 40, 217, 0.18);
+  user-select: none;
 }
 
-/* Big right quote icon */
-.quote-icon-right {
-  font-size: 70px;
-  font-weight: 800;
-  position: absolute;
-  right: 40px;
-  bottom: 80px;
-  color: #000;
-  opacity: 0.2;
+.ceoQuote__quote {
+  margin: 0;
+  padding: 18px 18px 18px 18px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(246, 240, 252, 0.85), rgba(246, 240, 252, 0.55));
+  border: 1px solid rgba(109, 40, 217, 0.12);
+  color: var(--ceo-muted);
+  font-size: 16px;
+  line-height: 1.8;
 }
 
-/* Main quote text */
-.ceo-quote-text {
-  font-size: 17px;
-  line-height: 28px;
-  color: var(--color-text-secondary, #555);
-  max-width: 750px;
-  margin: 0 auto 28px;
-  text-align: left;
-  background: var(--color-primary-light, #e6f7f0);
-  border: 1px solid rgba(0,135,90,0.12);
-  border-radius: var(--radius-card, 8px);
-  padding: 24px 22px;
-  border-left: 3px solid var(--color-primary, #00875a);
+.ceoQuote__quote p {
+  margin: 0 0 14px;
 }
 
-.ceo-quote-text p {
-  margin: 0 0 16px;
-}
-
-.ceo-quote-text p:last-child {
+.ceoQuote__quote p:last-child {
   margin-bottom: 0;
 }
 
-/* Name */
-.ceo-name {
-  font-size: 20px;
-  font-weight: 700;
-  color: #000;
-  margin-bottom: 5px;
+.ceoQuote__footer {
+  position: relative;
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(109, 40, 217, 0.12);
 }
 
-/* Designation */
-.ceo-desg {
-  font-size: 14px;
-  color: #888;
-  letter-spacing: 0.7px;
-  text-transform: uppercase;
+.ceoQuote__name {
+  margin: 0 0 6px;
+  color: var(--ceo-text);
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .ceo-quote-wrapper {
-    padding: 40px 16px;
-  }
-
-  .ceo-card {
-    width: 95%;
-    padding: 40px 28px;
-  }
-
-  .quote-icon-left {
-    font-size: 50px;
-    top: 60px;
-    left: 20px;
-  }
-
-  .quote-icon-right {
-    font-size: 50px;
-    right: 20px;
-    bottom: 60px;
-  }
-
-  .ceo-image-box img {
-    width: 90px;
-    height: 90px;
-    margin-bottom: 20px;
-  }
-
-  .ceo-quote-text {
-    font-size: 16px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-    padding: 20px 18px;
-  }
-
-  .ceo-name {
-    font-size: 18px;
-  }
+.ceoQuote__role {
+  margin: 0;
+  color: rgba(15, 23, 42, 0.65);
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-@media (max-width: 480px) {
-  .ceo-quote-wrapper {
-    padding: 32px 12px;
+@media (max-width: 720px) {
+  .ceoQuote__header {
+    grid-template-columns: 76px 1fr;
+    gap: 14px;
   }
 
-  .ceo-card {
-    width: 100%;
-    padding: 32px 20px;
+  .ceoQuote__avatar {
+    width: 76px;
+    height: 76px;
     border-radius: 16px;
   }
 
-  .quote-icon-left,
-  .quote-icon-right {
-    font-size: 36px;
-    opacity: 0.15;
+  .ceoQuote__avatar img {
+    border-radius: 14px;
   }
 
-  .quote-icon-left {
-    top: 40px;
-    left: 16px;
+  .ceoQuote__quoteIcon {
+    font-size: 48px;
   }
 
-  .quote-icon-right {
-    right: 16px;
-    bottom: 40px;
+  .ceoQuote__quote {
+    padding: 16px;
+    font-size: 15.5px;
+    line-height: 1.75;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ceoQuote__card {
+    transition: none;
   }
 
-  .ceo-image-box img {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 16px;
-  }
-
-  .ceo-quote-text {
-    font-size: 15px;
-    line-height: 1.65;
-    padding: 16px 14px;
-  }
-
-  .ceo-name {
-    font-size: 17px;
-  }
-
-  .ceo-desg {
-    font-size: 12px;
+  .ceoQuote__card:hover {
+    transform: none;
   }
 }
