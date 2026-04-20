@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./BentoHero.css";
-import heroPerson from "../assets/student.jpg";
+import { ResponsiveGlobe } from "./Globe";
+import britishCouncil from "../assets/british.png";
+import bylc from "../assets/bylc.png";
 import cityBank from "../assets/city-bank-logo.webp";
 import nrbcBank from "../assets/nrbc.webp";
 import premierBank from "../assets/pp.webp";
-import britishCouncil from "../assets/british.png";
-import bylc from "../assets/bylc.png";
+import heroPerson from "../assets/student.jpg";
 import studyProtect from "../assets/studyp.png";
+import "./BentoHero.css";
 
 /** Same strategic partners as PartnerBank — keeps hero strip aligned with the section below */
 const TRUSTED_PARTNERS = [
@@ -58,6 +59,7 @@ export default function BentoHero({
   backTo = "/",
   showHeroSearch = true,
   heroImageSrc = heroPerson,
+  useGlobeHero = false,
   onSearch,
 }) {
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -245,7 +247,13 @@ export default function BentoHero({
 
           <div className="job-hero__right" aria-hidden="true">
             <div className="job-hero__ring" />
-            <div className="job-hero__photo" style={{ backgroundImage: `url(${heroImageSrc})` }} />
+            {useGlobeHero ? (
+              <div className="job-hero__globeWrap">
+                <ResponsiveGlobe />
+              </div>
+            ) : (
+              <div className="job-hero__photo" style={{ backgroundImage: `url(${heroImageSrc})` }} />
+            )}
 
             <div className="job-hero__float job-hero__float--top">
               <span className="job-hero__floatDot" />
