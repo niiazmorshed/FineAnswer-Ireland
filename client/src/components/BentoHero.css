@@ -367,6 +367,11 @@
 /* Taller right column when globe replaces photo */
 .job-hero__right--globe {
   min-height: 540px;
+  /* Fill the grid track so the globe centers in the column, not hugging the viewport edge */
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  place-items: stretch;
 }
 
 /* Globe fills the entire right column — NO CSS transform on this wrapper */
@@ -377,6 +382,12 @@
   align-items: center;
   justify-content: center;
   line-height: 0;
+}
+
+/* Slight right inset so the orb + cards sit a bit left of center — balances page margins */
+.job-hero__right--globe .job-hero__globeWrap {
+  padding-right: clamp(20px, 4.5vw, 52px);
+  box-sizing: border-box;
 }
 
 .job-hero__photo {
@@ -500,6 +511,12 @@
     min-height: 360px;
     justify-self: center;
   }
+
+  .job-hero__right--globe {
+    justify-self: stretch;
+    width: 100%;
+  }
+
   .job-hero__ring {
     right: 14px;
     top: 18px;
