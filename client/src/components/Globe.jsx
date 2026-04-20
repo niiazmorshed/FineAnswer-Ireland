@@ -59,46 +59,28 @@ function ctrlPt(p0, p1, cx, cy, push) {
   return { x: mx + (dx / len) * push, y: my + (dy / len) * push };
 }
 
-/** Outward from globe centre + perpendicular fan by index (unsticks Gulf / South Asia clusters) */
-function cardOffsetFromProjection(src, index, n, spreadR, cx, cy) {
-  const dx = src.x - cx;
-  const dy = src.y - cy;
-  const len = Math.hypot(dx, dy) || 1;
-  const ux = dx / len;
-  const uy = dy / len;
-  const px = -uy;
-  const py = ux;
-  const fan = (index - (n - 1) * 0.5) * (spreadR * 0.45);
-  const outward = spreadR * 1.05;
+/**
+ * Card anchors on a near-circle around the globe (full 360°) so labels use top, bottom,
+ * left, and right — not squeezed into one quadrant. ry ≈ rx avoids a flat “upper belt”.
+ */
+function ringCardAnchor(slotIndex, totalSlots, cx, cy, R, rotDeg) {
+  if (totalSlots <= 0) return { x: cx, y: cy };
+  const rotRad = (rotDeg * Math.PI) / 180;
+  /** Full sync with globe rotation so card slots orbit the whole frame, not one quadrant */
+  const t = -Math.PI / 2 + (2 * Math.PI * slotIndex) / totalSlots + rotRad;
+  const rx = R * 1.02;
+  const ry = R * 1.02 * 0.88;
   return {
-    ox: ux * outward + px * fan,
-    oy: uy * outward * 0.68 + py * fan * 0.52,
+    x: cx + Math.cos(t) * rx,
+    y: cy + Math.sin(t) * ry,
   };
 }
 
-/** Push overlapping card anchors apart (screen space), then clamp to canvas */
-function relaxAnchorPositions(points, canvasSize, minDist, margin = 12, iterations = 12) {
-  const n = points.length;
-  for (let iter = 0; iter < iterations; iter++) {
-    for (let a = 0; a < n; a++) {
-      for (let b = a + 1; b < n; b++) {
-        const dx = points[b].x - points[a].x;
-        const dy = points[b].y - points[a].y;
-        const dist = Math.hypot(dx, dy) || 0.001;
-        if (dist >= minDist) continue;
-        const push = (minDist - dist) * 0.55;
-        const nx = (dx / dist) * push;
-        const ny = (dy / dist) * push;
-        points[a].x -= nx;
-        points[a].y -= ny;
-        points[b].x += nx;
-        points[b].y += ny;
-      }
-    }
-  }
-  for (const p of points) {
-    p.x = Math.max(margin, Math.min(canvasSize - margin, p.x));
-    p.y = Math.max(margin, Math.min(canvasSize - margin, p.y));
+/** Nudge anchors inward if they sit outside the canvas (cards have half-width) */
+function clampRingToCanvas(layout, canvasSize, pad = 56) {
+  for (const L of layout) {
+    L.x = Math.max(pad, Math.min(canvasSize - pad, L.x));
+    L.y = Math.max(pad, Math.min(canvasSize - pad, L.y));
   }
 }
 
@@ -130,7 +112,6 @@ export default function Globe({ size = 500 }) {
     const cx = size / 2;
     const cy = size / 2;
     const R = size * 0.4;
-    const cardLift = Math.max(52, size * 0.12);
     let cancelled = false;
 
     function draw(rot) {
@@ -250,59 +231,51 @@ export default function Globe({ size = 500 }) {
 
       const tPulse = performance.now() / 1000;
 
-      // ── Card anchors: radial fan + physics-style separation (no stacked labels) ──
+      // ── Card anchors: fixed slots on full ring; cards always shown (dots still 3D) ──
       const nOrig = ORIGINS.length;
-      const baseSpread = Math.max(36, Math.min(58, size * 0.078));
-      const zShow = R * 0.032;
-
+      const totalSlots = nOrig + 1;
       const layout = [];
+
       for (let i = 0; i < nOrig; i++) {
         const src = projs[i];
-        if (!src.vis || src.z < zShow) continue;
-        const { ox, oy } = cardOffsetFromProjection(src, i, nOrig, baseSpread, cx, cy);
+        const { x, y } = ringCardAnchor(i, totalSlots, cx, cy, R, rot);
         layout.push({
           kind: "origin",
           index: i,
           srcX: src.x,
           srcY: src.y,
-          x: src.x + ox,
-          y: src.y - cardLift + oy,
+          x,
+          y,
+          z: src.z,
           color: ORIGINS[i].color,
         });
       }
-      if (dub.vis && dub.z > zShow) {
-        const dx = dub.x - cx;
-        const dy = dub.y - cy;
-        const len = Math.hypot(dx, dy) || 1;
-        const ux = dx / len;
-        const uy = dy / len;
-        const ex = baseSpread * 1.4;
+      {
+        const { x, y } = ringCardAnchor(nOrig, totalSlots, cx, cy, R, rot);
         layout.push({
           kind: "dublin",
           srcX: dub.x,
           srcY: dub.y,
-          x: dub.x + ux * ex,
-          y: dub.y - cardLift + uy * ex * 0.72,
+          x,
+          y,
+          z: dub.z,
           color: "#facc15",
         });
       }
 
-      const minGap = Math.max(104, size * 0.205);
-      const work = layout.map((L) => ({ x: L.x, y: L.y, L }));
-      relaxAnchorPositions(work, size, minGap, 14, 14);
-      work.forEach((p) => {
-        p.L.x = p.x;
-        p.L.y = p.y;
-      });
+      clampRingToCanvas(layout, size, Math.max(52, size * 0.1));
 
       const originAnchor = [];
       let dublinPos = null;
       for (const L of layout) {
-        if (L.kind === "origin") originAnchor[L.index] = { x: L.x, y: L.y };
-        else if (L.kind === "dublin") dublinPos = { x: L.x, y: L.y };
+        if (L.kind === "origin") {
+          originAnchor[L.index] = { x: L.x, y: L.y, z: L.z };
+        } else if (L.kind === "dublin") {
+          dublinPos = { x: L.x, y: L.y, z: L.z };
+        }
       }
 
-      // ── Network lines (after separation) ──
+      // ── Network lines (ring anchors; edges when both cities exist on sphere) ──
       ctx.save();
       ctx.setLineDash([4, 6]);
       ctx.lineDashOffset = -dashPhase;
@@ -310,7 +283,6 @@ export default function Globe({ size = 500 }) {
         const pa = projs[ai];
         const pb = projs[bi];
         if (!pa?.vis || !pb?.vis) continue;
-        if (pa.z < zShow || pb.z < zShow) continue;
         const A = originAnchor[ai];
         const B = originAnchor[bi];
         if (!A || !B) continue;
@@ -323,8 +295,12 @@ export default function Globe({ size = 500 }) {
       }
       ctx.restore();
 
-      // ── Connectors: surface dot → card bottom (matches HTML anchor) ──
+      // ── Connectors: surface dot → card bottom (only when the hub/city is on the front) ──
       layout.forEach((L) => {
+        if (L.kind === "origin") {
+          const src = projs[L.index];
+          if (!src?.vis) return;
+        } else if (!dub.vis) return;
         ctx.save();
         ctx.setLineDash([4, 5]);
         ctx.lineDashOffset = -dashPhase * 1.1;
@@ -392,7 +368,12 @@ export default function Globe({ size = 500 }) {
         ctx.shadowBlur = 0;
       }
 
-      // ── HTML cards (bottom-center at relaxed anchor) ──
+      // ── HTML cards: always on ring; opacity from depth so back-side cities stay readable ──
+      const cardOpacity = (z) => {
+        const t = (z / R + 1) / 2;
+        return 0.52 + 0.48 * Math.max(0, Math.min(1, t));
+      };
+
       ORIGINS.forEach((_, i) => {
         const el = cardRefs.current[i];
         if (!el) return;
@@ -400,21 +381,17 @@ export default function Globe({ size = 500 }) {
         if (A) {
           el.style.left = `${A.x}px`;
           el.style.top = `${A.y}px`;
+          el.style.opacity = String(cardOpacity(A.z));
           el.classList.add("is-visible");
-        } else {
-          el.classList.remove("is-visible");
         }
       });
 
       const dEl = dublinCardRef.current;
-      if (dEl) {
-        if (dublinPos) {
-          dEl.style.left = `${dublinPos.x}px`;
-          dEl.style.top = `${dublinPos.y}px`;
-          dEl.classList.add("is-visible");
-        } else {
-          dEl.classList.remove("is-visible");
-        }
+      if (dEl && dublinPos) {
+        dEl.style.left = `${dublinPos.x}px`;
+        dEl.style.top = `${dublinPos.y}px`;
+        dEl.style.opacity = String(cardOpacity(dublinPos.z));
+        dEl.classList.add("is-visible");
       }
     }
 
@@ -442,7 +419,7 @@ export default function Globe({ size = 500 }) {
             ref={(el) => {
               cardRefs.current[i] = el;
             }}
-            className="globe-node-card"
+            className="globe-node-card is-visible"
             style={{ transitionDelay: `${0.04 + i * 0.03}s`, zIndex: 20 + i }}
           >
             <span className="globe-node-card__flag">{orig.flag}</span>
@@ -452,7 +429,7 @@ export default function Globe({ size = 500 }) {
         ))}
         <div
           ref={dublinCardRef}
-          className="globe-node-card globe-node-card--dublin"
+          className="globe-node-card globe-node-card--dublin is-visible"
           style={{ transitionDelay: "0.08s", zIndex: 80 }}
         >
           <span className="globe-node-card__flag">🇮🇪</span>
