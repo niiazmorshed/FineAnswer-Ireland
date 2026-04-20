@@ -245,8 +245,11 @@ export default function BentoHero({
             <div className="job-hero__ctaRow">{ctaEl}</div>
           </div>
 
-          <div className="job-hero__right" aria-hidden="true">
-            <div className="job-hero__ring" />
+          <div
+            className={`job-hero__right${useGlobeHero ? " job-hero__right--globe" : ""}`}
+            aria-hidden="true"
+          >
+            {!useGlobeHero && <div className="job-hero__ring" />}
             {useGlobeHero ? (
               <div className="job-hero__globeWrap">
                 <ResponsiveGlobe />
@@ -255,27 +258,31 @@ export default function BentoHero({
               <div className="job-hero__photo" style={{ backgroundImage: `url(${heroImageSrc})` }} />
             )}
 
-            <div className="job-hero__float job-hero__float--top">
-              <span className="job-hero__floatDot" />
-              <div>
-                <div className="job-hero__floatTitle">Congrats!</div>
-                <div className="job-hero__floatSub">You have got an Email</div>
-              </div>
-            </div>
+            {!useGlobeHero && (
+              <>
+                <div className="job-hero__float job-hero__float--top">
+                  <span className="job-hero__floatDot" />
+                  <div>
+                    <div className="job-hero__floatTitle">Congrats!</div>
+                    <div className="job-hero__floatSub">You have got an Email</div>
+                  </div>
+                </div>
 
-            <div className="job-hero__float job-hero__float--mid">
-              <div className="job-hero__miniAvatars">
-                <span />
-                <span />
-                <span />
-              </div>
-              <div className="job-hero__floatSub">10k+ students guided</div>
-            </div>
+                <div className="job-hero__float job-hero__float--mid">
+                  <div className="job-hero__miniAvatars">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                  <div className="job-hero__floatSub">10k+ students guided</div>
+                </div>
 
-            <div className="job-hero__float job-hero__float--bottom">
-              <div className="job-hero__chatLine" />
-              <div className="job-hero__chatLine job-hero__chatLine--short" />
-            </div>
+                <div className="job-hero__float job-hero__float--bottom">
+                  <div className="job-hero__chatLine" />
+                  <div className="job-hero__chatLine job-hero__chatLine--short" />
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>
