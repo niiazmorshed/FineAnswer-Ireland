@@ -1,0 +1,94 @@
+/* Stacked globe + HTML cards — no transforms on .globe-stack (canvas stays sharp) */
+.globe-stack {
+  position: relative;
+  display: block;
+  line-height: 0;
+}
+
+.globe-stack__canvas {
+  display: block;
+  vertical-align: top;
+}
+
+.globe-stack__cards {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.globe-node-card {
+  position: absolute;
+  left: 0;
+  top: 0;
+  min-width: 108px;
+  max-width: 140px;
+  padding: 7px 10px 8px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow:
+    0 4px 14px rgba(15, 23, 42, 0.12),
+    0 0 0 1px rgba(100, 200, 80, 0.12);
+  text-align: left;
+  opacity: 0;
+  transform: translate(-50%, -100%) translateY(10px) scale(0.96);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease;
+  will-change: transform, opacity;
+}
+
+.globe-node-card.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -100%) translateY(0) scale(1);
+}
+
+.globe-node-card__flag {
+  font-size: 1.05rem;
+  line-height: 1;
+  margin-bottom: 3px;
+  display: block;
+}
+
+.globe-node-card__name {
+  font-family: Mulish, system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #0f172a;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.globe-node-card__stat {
+  font-family: Mulish, system-ui, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  color: #00875a;
+  margin-top: 3px;
+  line-height: 1.2;
+}
+
+.globe-node-card--dublin {
+  border: 1px solid rgba(255, 218, 50, 0.55);
+  box-shadow:
+    0 4px 18px rgba(255, 200, 50, 0.18),
+    0 0 0 1px rgba(255, 218, 50, 0.25);
+}
+
+.globe-node-card--dublin .globe-node-card__name {
+  color: #854d0e;
+}
+
+.globe-node-card--dublin .globe-node-card__stat {
+  color: #ca8a04;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .globe-node-card {
+    transition: opacity 0.2s ease;
+    transform: translate(-50%, -100%);
+  }
+  .globe-node-card.is-visible {
+    transform: translate(-50%, -100%);
+  }
+}

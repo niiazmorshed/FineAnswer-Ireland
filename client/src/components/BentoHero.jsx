@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { ResponsiveGlobe } from "./Globe";
 import britishCouncil from "../assets/british.png";
 import bylc from "../assets/bylc.png";
 import cityBank from "../assets/city-bank-logo.webp";
@@ -9,6 +8,7 @@ import premierBank from "../assets/pp.webp";
 import heroPerson from "../assets/student.jpg";
 import studyProtect from "../assets/studyp.png";
 import "./BentoHero.css";
+import { ResponsiveGlobe } from "./Globe";
 
 /** Same strategic partners as PartnerBank — keeps hero strip aligned with the section below */
 const TRUSTED_PARTNERS = [
