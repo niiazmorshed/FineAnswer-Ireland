@@ -1,26 +1,25 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import Navbar3 from "./components/navbar3";
-import TopUtilityBar from "./components/TopUtilityBar";
-import Footer from "./components/Footer";
-import PartnerLogos from "./components/PartnerLogos";
-import BrowseBySubject from "./components/BrowseBySubject";
-import ScholarshipCTA from "./components/ScholarshipCTA";
-import Services from "./components/Services";
-import QuickLinks from "./components/QuickLinks";
-import FeaturedCourses from "./components/FeaturedCourses";
-import SuccessStories from "./components/SuccessStories";
-import FAQSection from "./components/FAQSection";
-import EnquiryCTA from "./components/EnquiryCTA";
-import EventsSection from "./components/EventsSection";
-import PackagesSection from "./components/PackagesSection";
-import ContactSection from "./components/ContactSection";
-import PartnerBank from "./components/PartnerBank";
-import CEOQuote from "./components/CEOQuote";
 import AboutUs from "./components/AboutUs";
 import BentoHero from "./components/BentoHero";
+import BrowseBySubject from "./components/BrowseBySubject";
+import CEOQuote from "./components/CEOQuote";
+import ContactSection from "./components/ContactSection";
+import EventsSection from "./components/EventsSection";
+import FAQSection from "./components/FAQSection";
+import FeaturedCourses from "./components/FeaturedCourses";
+import Footer from "./components/Footer";
+import Navbar3 from "./components/navbar3";
+import PackagesSection from "./components/PackagesSection";
 import ParticlesBackground from "./components/ParticlesBackground";
+import PartnerBank from "./components/PartnerBank";
+import PartnerLogos from "./components/PartnerLogos";
+import QuickLinks from "./components/QuickLinks";
+import ScholarshipCTA from "./components/ScholarshipCTA";
+import Services from "./components/Services";
+import SuccessStories from "./components/SuccessStories";
+import TopUtilityBar from "./components/TopUtilityBar";
 
 import { AuthContext } from "./pages/Provider/ContextProvider";
 
@@ -107,6 +106,7 @@ export default function LandingPage() {
       </div>
 
       <BentoHero
+        useGlobeHero
         ariaLabel="FineAnswer Ireland"
         title={
           <>
@@ -132,25 +132,21 @@ export default function LandingPage() {
         <AboutUs />
       </div>
 
-      {/* 4. BROWSE BY SUBJECT */}
+      {/* 3. BROWSE BY SUBJECT */}
       <div className="scroll-reveal">
         <BrowseBySubject />
       </div>
 
-      {/* 3. PARTNER INSTITUTES */}
-      <div className="scroll-reveal">
-        <PartnerLogos />
-      </div>
-
-      
-
-      
-
-      {/* 6. SERVICES WE OFFER */}
+      {/* 4. SERVICES WE OFFER */}
       <div id="services">
         <div className="scroll-reveal">
           <Services />
         </div>
+      </div>
+
+      {/* 5. PARTNER INSTITUTES — directly under Services */}
+      <div className="scroll-reveal">
+        <PartnerLogos />
       </div>
 
       {/* 7. QUICK LINKS */}
@@ -173,12 +169,7 @@ export default function LandingPage() {
         <FAQSection />
       </div>
 
-      {/* 11. ENQUIRY CTA BANNER */}
-      <div className="scroll-reveal">
-        <EnquiryCTA />
-      </div>
-
-      {/* 12. EVENTS */}
+      {/* 11. EVENTS */}
       <div className="scroll-reveal">
         <EventsSection />
       </div>

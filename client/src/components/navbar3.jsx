@@ -1,12 +1,27 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../pages/Provider/ContextProvider";
 import "../css/navbar3.css";
 import logo from "../images/logo.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [hash, setHash] = useState(() =>
+    typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : ""
+  );
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setHash((location.hash || "").replace(/^#/, ""));
+  }, [location.hash]);
+
+  useEffect(() => {
+    const onHashChange = () =>
+      setHash((window.location.hash || "").replace(/^#/, ""));
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
   const [scrolled, setScrolled] = useState(false);
   const [imgError, setImgError] = useState(false);
   const { user, isAdmin, loading } = useContext(AuthContext);
@@ -98,13 +113,50 @@ export default function Navbar() {
 
           {/* ── Nav links ── */}
           <nav className={`nav-menu nav-menu--inspo${menuOpen ? " open" : ""}`} aria-label="Main navigation">
-            <NavLink to="/" end onClick={() => { closeMenu(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+            <NavLink
+              to="/"
+              end
+              className={({ isActive }) =>
+                isActive && location.pathname === "/" && !hash ? "active" : undefined
+              }
+              onClick={() => {
+                closeMenu();
+                if (location.pathname === "/" && hash) {
+                  navigate("/", { replace: true });
+                }
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
+            >
               Home
             </NavLink>
-            <a href="/#about"    onClick={closeMenu}>About</a>
-            <a href="/#services" onClick={closeMenu}>Services</a>
-            <a href="/#packages" onClick={closeMenu}>Packages</a>
-            <a href="/#contact"  onClick={closeMenu}>Contact</a>
+            <a
+              href="/#about"
+              className={location.pathname === "/" && hash === "about" ? "active" : undefined}
+              onClick={closeMenu}
+            >
+              About
+            </a>
+            <a
+              href="/#services"
+              className={location.pathname === "/" && hash === "services" ? "active" : undefined}
+              onClick={closeMenu}
+            >
+              Services
+            </a>
+            <a
+              href="/#packages"
+              className={location.pathname === "/" && hash === "packages" ? "active" : undefined}
+              onClick={closeMenu}
+            >
+              Packages
+            </a>
+            <a
+              href="/#contact"
+              className={location.pathname === "/" && hash === "contact" ? "active" : undefined}
+              onClick={closeMenu}
+            >
+              Contact
+            </a>
             <NavLink to="/career" onClick={closeMenu}>Career</NavLink>
             <NavLink to="/blog"   onClick={closeMenu}>Blog</NavLink>
 
