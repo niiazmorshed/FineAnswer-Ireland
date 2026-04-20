@@ -71,7 +71,7 @@ export default function TopUtilityBar() {
 
       <style>{`
         .utility-bar {
-          background-color: var(--color-primary);
+          background-color: #491d6e;
           height: 40px;
           width: 100%;
           display: flex;

@@ -65,7 +65,7 @@ class AppErrorBoundary extends React.Component {
     if (!this.state.hasError) return this.props.children;
 
     return (
-      <div style={{ padding: 24, fontFamily: "Inter, system-ui, sans-serif" }}>
+      <div style={{ padding: 24, fontFamily: '"Mulish", system-ui, sans-serif' }}>
         <h2 style={{ marginBottom: 8 }}>Something went wrong</h2>
         <p style={{ color: "rgba(15, 23, 42, 0.75)", marginBottom: 12 }}>
           The app crashed while rendering. Open the browser console to see the exact error.

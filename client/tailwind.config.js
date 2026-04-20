@@ -28,7 +28,7 @@ export default {
         border: "#E0E0E0",
       },
       fontFamily: {
-        sans: ["Inter", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
+        sans: ["Mulish", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
       fontSize: {
         "h1": ["3rem", { lineHeight: "1.15", fontWeight: "700" }],

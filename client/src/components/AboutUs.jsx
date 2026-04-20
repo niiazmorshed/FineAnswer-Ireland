@@ -148,7 +148,7 @@ export default function AboutUs() {
         .about-section-v2{
           padding: var(--section-padding, 80px) 0;
           background: var(--color-bg-white, #fff);
-          font-family: var(--font-sans, "Inter", system-ui, sans-serif);
+          font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
         }
         @media (max-width: 768px){
           .about-section-v2{ padding: var(--section-padding-mobile, 48px) 0; }

@@ -69,6 +69,9 @@ export default function BrowseBySubject() {
       <div className="bbs-inner">
         <div className="bbs-header">
           <h2 className="bbs-title">Browse by Subject</h2>
+          <p className="bbs-subtitle">
+            Explore your desired subject—discover Irish courses aligned with your ambitions and move from browsing to applying with clarity.
+          </p>
         </div>
 
         <div className="bbs-grid">
@@ -119,6 +122,14 @@ export default function BrowseBySubject() {
           font-weight: var(--weight-bold);
           color: var(--color-text-primary);
           margin-bottom: 8px;
+        }
+        .bbs-subtitle {
+          max-width: 640px;
+          margin: 0 auto;
+          font-size: 0.95rem;
+          line-height: 1.65;
+          font-weight: 400;
+          color: var(--color-text-secondary, #64748b);
         }
         .bbs-grid {
           display: grid;
