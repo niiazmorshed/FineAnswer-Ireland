@@ -384,9 +384,11 @@
   line-height: 0;
 }
 
-/* Slight right inset so the orb + cards sit a bit left of center — balances page margins */
+/* Asymmetric padding: extra left inset shifts the centered globe slightly right, away from the search column */
 .job-hero__right--globe .job-hero__globeWrap {
-  padding-right: clamp(20px, 4.5vw, 52px);
+  justify-content: center;
+  padding-left: clamp(24px, 3.2vw, 56px);
+  padding-right: clamp(2px, 0.8vw, 12px);
   box-sizing: border-box;
 }
 
