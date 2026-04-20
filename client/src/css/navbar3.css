@@ -15,7 +15,7 @@
   background: transparent;
   border-bottom: none;
   padding: 10px 20px 0;
-  pointer-events: none;        /* let clicks through the transparent gap */
+  pointer-events: none;        /* let clicks through the transparent gap — hero shows through */
   transition: none;
 }
 

@@ -4,7 +4,7 @@
 .sr-page {
   min-height: 100vh;
   background: var(--color-bg-light, #F8F9FA);
-  font-family: var(--font-sans, "Inter", "Segoe UI", sans-serif);
+  font-family: var(--font-sans, "Mulish", "Segoe UI", sans-serif);
   color: var(--color-text-primary, #1A1A1A);
 }
 

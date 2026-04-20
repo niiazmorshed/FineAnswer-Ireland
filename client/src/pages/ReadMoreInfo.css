@@ -1,6 +1,6 @@
 /* ─── Base ─────────────────────────────────────── */
 .read-more-container {
-  font-family: var(--font-sans, "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
+  font-family: var(--font-sans, "Mulish", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   background: var(--color-bg-white, #fff);
   color: var(--color-text-primary, #1A1A1A);
   overflow-x: hidden;

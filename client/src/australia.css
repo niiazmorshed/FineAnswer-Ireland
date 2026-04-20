@@ -1,5 +1,5 @@
 .australia-page {
-  font-family: "Poppins", sans-serif;
+  font-family: var(--font-sans, "Mulish", sans-serif);
   color: #222;
 }
 
