@@ -264,21 +264,62 @@
 
 .job-hero__trustedLogos {
   display: inline-flex;
+  flex-wrap: wrap;
   gap: 10px;
   align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
-.job-hero__logo {
-  width: 28px;
-  height: 28px;
-  border-radius: 10px;
-  display: grid;
-  place-items: center;
+.job-hero__trustedLogo {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: #fff;
   border: 1px solid rgba(212, 233, 244, 0.95);
-  color: rgba(15, 23, 42, 0.72);
-  font-weight: 700;
-  font-size: 0.85rem;
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.07);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+.job-hero__trustedLogo img {
+  width: 72%;
+  height: 72%;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.82;
+  transition: filter 0.28s ease, opacity 0.28s ease;
+}
+
+.job-hero__trustedLogo:hover,
+.job-hero__trustedLogo:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(100, 200, 80, 0.4);
+  box-shadow: 0 10px 26px rgba(15, 23, 42, 0.12);
+}
+
+.job-hero__trustedLogo:hover img,
+.job-hero__trustedLogo:focus-within img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+@media (max-width: 520px) {
+  .job-hero__trustedLogo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .job-hero__trustedLogos {
+    gap: 8px;
+  }
 }
 
 .job-hero__ctaRow {
