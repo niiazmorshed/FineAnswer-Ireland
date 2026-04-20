@@ -79,38 +79,23 @@ const SERVICES = [
   },
 ];
 
-function ServiceFlipCard({ icon, label, desc, accentClass }) {
-  const [touchFlip, setTouchFlip] = useState(false);
-  const [coarsePointer, setCoarsePointer] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: none), (pointer: coarse)");
-    const sync = () => setCoarsePointer(mq.matches);
-    sync();
-    mq.addEventListener("change", sync);
-    return () => mq.removeEventListener("change", sync);
-  }, []);
-
-  const toggle = () => {
-    if (coarsePointer) setTouchFlip((f) => !f);
-  };
-
+function ServiceFlipCard({ icon, label, desc, accentClass, isFlipped, onToggle }) {
   const onKeyDown = (e) => {
-    if (!coarsePointer && (e.key === "Enter" || e.key === " ")) {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
-      setTouchFlip((f) => !f);
+      onToggle();
     }
   };
 
   return (
     <div
-      className={`service-flip${touchFlip ? " is-flipped" : ""}`}
-      onClick={toggle}
+      className={`service-flip${isFlipped ? " is-flipped" : ""}`}
+      onClick={onToggle}
       onKeyDown={onKeyDown}
       role="button"
       tabIndex={0}
-      aria-expanded={touchFlip}
-      aria-label={`${label}. ${coarsePointer ? "Tap to flip for details." : "Hover or activate to read details."}`}
+      aria-expanded={isFlipped}
+      aria-label={`${label}. Click to ${isFlipped ? "close" : "flip for details"}.`}
     >
       <div className="service-flip-inner">
         <div className="service-face service-face--front">
@@ -118,7 +103,7 @@ function ServiceFlipCard({ icon, label, desc, accentClass }) {
             {icon}
           </span>
           <h3 className="service-label">{label}</h3>
-          <p className="service-flip-hint">{coarsePointer ? "Tap for details" : "Hover for details"}</p>
+          <p className="service-flip-hint">Click for details</p>
         </div>
         <div className="service-face service-face--back">
           <h3 className="service-label service-label--back">{label}</h3>
@@ -129,27 +114,60 @@ function ServiceFlipCard({ icon, label, desc, accentClass }) {
   );
 }
 
+function scrollToContact() {
+  const el = document.getElementById("contact");
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
 const Services = () => {
+  const [flippedLabel, setFlippedLabel] = useState(null);
+
+  useEffect(() => {
+    const onDocPointerDown = (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      if (target.closest?.(".service-flip")) return;
+      setFlippedLabel(null);
+    };
+    document.addEventListener("pointerdown", onDocPointerDown, { capture: true });
+    return () => document.removeEventListener("pointerdown", onDocPointerDown, { capture: true });
+  }, []);
+
   return (
     <section className="services-section" id="services">
       <div className="services-inner">
-        <div className="services-header">
-          <h2 className="services-heading">Services We Offer</h2>
-          <p className="services-lede">
-            Everything you need to plan, apply, and settle—presented as clear steps you can follow with confidence.
-          </p>
-        </div>
+        <div className="services-layout">
+          <div className="services-intro">
+            <div className="services-kicker">What we do?</div>
+            <h2 className="services-heading">
+              Enhance your experience with our expert services designed to meet your unique needs.
+            </h2>
+            <p className="services-lede">
+              Whether you need strategic consultation, application guidance, or on-ground support, our dedicated team is
+              here to assist you every step of the way.
+            </p>
 
-        <div className="services-grid">
-          {SERVICES.map((s, i) => (
-            <ServiceFlipCard
-              key={s.label}
-              icon={s.icon}
-              label={s.label}
-              desc={s.desc}
-              accentClass={`service-icon--accent-${(i % 3) + 1}`}
-            />
-          ))}
+            <button type="button" className="services-cta" onClick={scrollToContact}>
+              Explore Services
+            </button>
+          </div>
+
+          <div className="services-grid" aria-label="Services list">
+            {SERVICES.map((s, i) => {
+              const isFlipped = flippedLabel === s.label;
+              return (
+                <ServiceFlipCard
+                  key={s.label}
+                  icon={s.icon}
+                  label={s.label}
+                  desc={s.desc}
+                  accentClass={`service-icon--accent-${(i % 6) + 1}`}
+                  isFlipped={isFlipped}
+                  onToggle={() => setFlippedLabel((cur) => (cur === s.label ? null : s.label))}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     </section>
