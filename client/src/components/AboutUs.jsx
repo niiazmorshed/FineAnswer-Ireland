@@ -1,8 +1,10 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
 import aboutImg1 from "../images/uni1.jpg";
 import aboutImg2 from "../images/uni2.jpg";
 import aboutImg3 from "../images/uni3.jpg";
+import mapAnimation from "../assets/map.json";
 
 export default function AboutUs() {
   const navigate = useNavigate();
@@ -63,6 +65,15 @@ export default function AboutUs() {
 
   return (
     <section className="about-section-v2" id="about" ref={sectionRef}>
+      <div className="aboutv2-mapBg" aria-hidden="true">
+        <Lottie
+          animationData={mapAnimation}
+          loop
+          autoplay
+          style={{ width: "100%", height: "100%" }}
+          rendererSettings={{ preserveAspectRatio: "xMidYMid slice" }}
+        />
+      </div>
       <div className="aboutv2-container">
         <div className="aboutv2-grid">
           {/* Left: 2×2 image grid with doodles */}
@@ -149,14 +160,30 @@ export default function AboutUs() {
           padding: var(--section-padding, 80px) 0;
           background: var(--color-bg-white, #fff);
           font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
+          position: relative;
+          overflow: hidden;
         }
         @media (max-width: 768px){
           .about-section-v2{ padding: var(--section-padding-mobile, 48px) 0; }
+        }
+        .aboutv2-mapBg{
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          opacity: 0.32;
+          filter: saturate(1.05) contrast(1.02);
+        }
+        .aboutv2-mapBg svg{
+          width: 100%;
+          height: 100%;
         }
         .aboutv2-container{
           max-width: 1120px;
           margin: 0 auto;
           padding: 0 24px;
+          position: relative;
+          z-index: 1;
         }
         .aboutv2-grid{
           display: grid;
