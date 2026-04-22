@@ -1,6 +1,7 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../pages/Provider/ContextProvider";
+import { WHY_IRELAND_NAV } from "../pages/why-ireland/pageContent";
 import "../css/navbar3.css";
 import logo from "../images/logo.png";
 
@@ -11,6 +12,9 @@ export default function Navbar() {
     typeof window !== "undefined" ? window.location.hash.replace(/^#/, "") : ""
   );
   const [menuOpen, setMenuOpen] = useState(false);
+  const [whySubOpen, setWhySubOpen] = useState(false);
+  const whyDropdownRef = useRef(null);
+  const whyIrelandActive = location.pathname.startsWith("/why-ireland");
 
   useEffect(() => {
     setHash((location.hash || "").replace(/^#/, ""));
@@ -61,7 +65,36 @@ export default function Navbar() {
     navigate(isAdmin ? "/admin/dashboard" : "/dashboard");
   };
 
-  const closeMenu = () => setMenuOpen(false);
+  const closeMenu = () => {
+    setMenuOpen(false);
+    setWhySubOpen(false);
+  };
+
+  useEffect(() => {
+    setWhySubOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!whySubOpen) return;
+    const onDoc = (e) => {
+      if (whyDropdownRef.current && !whyDropdownRef.current.contains(e.target)) {
+        setWhySubOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [whySubOpen]);
+
+  useEffect(() => {
+    if (!whySubOpen) return;
+    const onKey = (e) => {
+      if (e.key === "Escape") setWhySubOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [whySubOpen]);
+
+  const isWideNav = () => typeof window !== "undefined" && window.innerWidth > 900;
 
   const DashboardButton = ({ extraClass = "" }) => (
     <button
@@ -129,6 +162,44 @@ export default function Navbar() {
             >
               Home
             </NavLink>
+
+            <div
+              ref={whyDropdownRef}
+              className={`nav-dropdown${whySubOpen ? " nav-dropdown--open" : ""}`}
+              onMouseLeave={() => {
+                if (isWideNav()) setWhySubOpen(false);
+              }}
+            >
+              <button
+                type="button"
+                className={`nav-dropdown__trigger${whyIrelandActive ? " active" : ""}`}
+                aria-expanded={whySubOpen}
+                aria-haspopup="true"
+                onMouseEnter={() => {
+                  if (isWideNav()) setWhySubOpen(true);
+                }}
+                onClick={() => setWhySubOpen((o) => !o)}
+              >
+                Why Ireland
+                <span className="nav-dropdown__caret" aria-hidden />
+              </button>
+              <div className="nav-dropdown__panel" role="menu" aria-label="Why Ireland">
+                {WHY_IRELAND_NAV.map((item) => (
+                  <NavLink
+                    key={item.slug}
+                    role="menuitem"
+                    to={`/why-ireland/${item.slug}`}
+                    className={({ isActive }) =>
+                      `nav-dropdown__link${item.featured ? " nav-dropdown__link--featured" : ""}${isActive ? " is-active" : ""}`
+                    }
+                    onClick={closeMenu}
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
+              </div>
+            </div>
+
             <a
               href="/#about"
               className={location.pathname === "/" && hash === "about" ? "active" : undefined}
