@@ -1,36 +1,141 @@
 import React from "react";
-import WhyIrelandPageShell from "./WhyIrelandPageShell";
+import { Link } from "react-router-dom";
+import SEO from "../../components/SEO";
+import "./TopReasonsIrelandPage.css";
+
+const SUBTITLE =
+  "Ireland is an island nation on the westernmost edge of Europe, offering world-class education, career opportunities, and an unmatched quality of life.";
+
+const COURSE_CHIPS = [
+  "Business Analytics",
+  "Investment Banking & Finance",
+  "Big Data / Data Science",
+  "Pharmaceutical Sciences",
+  "Construction",
+  "Computing",
+  "Cybersecurity",
+  "Business Studies",
+];
 
 export default function TopReasonsIrelandPage() {
   return (
-    <WhyIrelandPageShell
-      seoTitle="Top Reasons to Study in Ireland"
-      seoDescription="Practical reasons students choose Ireland: employability, English language, post-study pathways, culture, and value."
-      canonicalPath="/why-ireland/top-reasons"
-      heading="Top reasons to study in Ireland"
-      lede="Every student weighs different factors. Here are the reasons Ireland consistently appears on shortlists for international applicants."
-    >
-      <section className="why-article__section">
-        <h2 className="why-article__h2">Employability & sectors</h2>
-        <p className="why-article__p">
-          Ireland hosts many global headquarters and scaling firms. That concentration supports internships, graduate programmes, and networking—particularly in technology and life sciences.
-        </p>
-      </section>
-      <section className="why-article__section">
-        <h2 className="why-article__h2">Language & mobility</h2>
-        <p className="why-article__p">
-          Studying in English removes a second-language barrier for many applicants while keeping access to the broader European education and travel space.
-        </p>
-        <p className="why-article__p">
-          Qualifications are widely understood by employers in Ireland, the UK, and further afield when presented with clear transcripts and credential evaluation where needed.
-        </p>
-      </section>
-      <section className="why-article__section">
-        <h2 className="why-article__h2">Experience of place</h2>
-        <p className="why-article__p">
-          From literature and music to sport and festivals, Irish cities balance history with a young, international population—so it is easy to build a social circle while you study.
-        </p>
-      </section>
-    </WhyIrelandPageShell>
+    <>
+      <SEO
+        title="Top Reasons to Study in Ireland"
+        description="Courses, multinationals, enterprise support, part-time work, cost of living, English-medium study, QQI quality, and Irish hospitality—why students choose Ireland."
+        canonicalPath="/why-ireland/top-reasons"
+      />
+      <main className="tr-top">
+        <header className="tr-top__hero">
+          <h1 className="tr-top__title">Top Reasons to Study in Ireland</h1>
+          <p className="tr-top__subtitle">{SUBTITLE}</p>
+        </header>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-1">
+          <h2 id="tr-reason-1" className="tr-top__card-title">
+            Wide Range of Courses Leading to Employability
+          </h2>
+          <p className="tr-top__p">
+            Ireland offers over 5,000 programs. Students choose from medicine, engineering, business, science, technology, literature, history, philosophy, psychology and more.
+          </p>
+          <p className="tr-top__chips-label">Most Popular Courses</p>
+          <div className="tr-top__chips" role="list">
+            {COURSE_CHIPS.map((label) => (
+              <span key={label} className="tr-top__chip" role="listitem">
+                {label}
+              </span>
+            ))}
+          </div>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-2">
+          <h2 id="tr-reason-2" className="tr-top__card-title">
+            Home to 1,000+ Multinational Companies
+          </h2>
+          <div className="tr-top__stat-block">
+            <span className="tr-top__stat-num">1000+</span>
+            <span className="tr-top__stat-label">Leading Multinational Companies</span>
+          </div>
+          <p className="tr-top__p">
+            Ireland is the European hub for 1,000+ world-leading multinationals. One third have operated in Ireland for over 20 years. Companies requiring skilled, educated workforces choose Ireland.
+          </p>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-3">
+          <h2 id="tr-reason-3" className="tr-top__card-title">
+            Opportunity to Start Your Own Business
+          </h2>
+          <p className="tr-top__p">
+            Enterprise Ireland offers comprehensive support to set up and grow your business in Ireland and on global markets.
+          </p>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-4">
+          <h2 id="tr-reason-4" className="tr-top__card-title">
+            Part-Time Job While You Study
+          </h2>
+          <p className="tr-top__p">
+            International students in full-time study (min. 1 year) do not need a work permit to work in Ireland.
+          </p>
+          <p className="tr-top__highlight">Ireland&apos;s minimum wage is €13.50 per hour</p>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-5">
+          <h2 id="tr-reason-5" className="tr-top__card-title">
+            Low Cost of Living
+          </h2>
+          <p className="tr-top__p">
+            On average, a student spends between €10,000 and €20,000 per year, depending on location, accommodation type, and lifestyle.
+          </p>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-6">
+          <h2 id="tr-reason-6" className="tr-top__card-title">
+            Only English-Speaking Country in the Eurozone
+          </h2>
+          <p className="tr-top__p">
+            Most courses are offered in English. Ireland has a rich English literary tradition and is the only English-speaking country in the Eurozone.
+          </p>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-reason-7">
+          <h2 id="tr-reason-7" className="tr-top__card-title">
+            Internationally Renowned Education
+          </h2>
+          <p className="tr-top__p">
+            Irish education quality is maintained by the QQI body. All Irish Universities rank in the top 3% of institutions worldwide, with many research fields in the top 1% globally. Over 32,000 international students study in Ireland.
+          </p>
+        </section>
+
+        <section className="tr-top__card" aria-labelledby="tr-hospitality">
+          <h2 id="tr-hospitality" className="tr-top__card-title">
+            Irish Hospitality — The Friendliest Country
+          </h2>
+          <ul className="tr-top__numbered">
+            <li className="tr-top__numbered-item">
+              <span className="tr-top__numbered-index">01</span>
+              <p className="tr-top__numbered-text">Ireland ranked 3rd most peaceful country in the world</p>
+            </li>
+            <li className="tr-top__numbered-item">
+              <span className="tr-top__numbered-index">02</span>
+              <p className="tr-top__numbered-text">Named in top 10 by Global Peace Index (GPI) 2022</p>
+            </li>
+            <li className="tr-top__numbered-item">
+              <span className="tr-top__numbered-index">03</span>
+              <p className="tr-top__numbered-text">
+                Ranked 13th happiest country in the world (UN-sponsored index), ahead of USA and UK
+              </p>
+            </li>
+          </ul>
+        </section>
+
+        <section className="tr-top__cta" aria-label="Apply">
+          <p className="tr-top__cta-text">Are you ready to take the next step toward your future career?</p>
+          <Link to="/#contact" className="tr-top__cta-btn">
+            Apply Now
+          </Link>
+        </section>
+      </main>
+    </>
   );
 }
