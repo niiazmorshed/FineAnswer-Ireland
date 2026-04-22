@@ -1,5 +1,7 @@
 import React, { useMemo, useState } from "react";
 import faqsIllustration from "../assets/FAQs-bro.svg";
+import Lottie from "lottie-react";
+import submittingAnim from "../assets/Submitting Loading Button.json";
 
 const FAQS = [
   {
@@ -53,6 +55,9 @@ export default function FAQSection() {
   const [openIdx, setOpenIdx] = useState(null);
   const [question, setQuestion] = useState("");
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [submitAnimKey, setSubmitAnimKey] = useState(0);
 
   const toggle = (i) => setOpenIdx(openIdx === i ? null : i);
 
@@ -60,10 +65,26 @@ export default function FAQSection() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    if (!question.trim()) return;
-    setSubmitted(true);
-    window.setTimeout(() => setSubmitted(false), 2200);
-    setQuestion("");
+    if (isSubmitting) return;
+    setError("");
+
+    const ANIM_MS = 7000;
+    setSubmitAnimKey((k) => k + 1);
+
+    if (!question.trim()) {
+      setIsSubmitting(true);
+      setError("Please write your question first.");
+      window.setTimeout(() => setIsSubmitting(false), 1100);
+      return;
+    }
+
+    setIsSubmitting(true);
+    window.setTimeout(() => {
+      setSubmitted(true);
+      setQuestion("");
+      window.setTimeout(() => setSubmitted(false), 2200);
+    }, ANIM_MS);
+    window.setTimeout(() => setIsSubmitting(false), ANIM_MS + 60);
   };
 
   return (
@@ -126,13 +147,49 @@ export default function FAQSection() {
                     placeholder="write here..."
                     type="text"
                     autoComplete="off"
+                    disabled={isSubmitting}
                   />
-                  <button className="faq-submit" type="submit">
-                    Submit Now
+                  <button
+                    className="faq-submit"
+                    type="submit"
+                    disabled={isSubmitting}
+                    aria-busy={isSubmitting}
+                    aria-label={isSubmitting ? "Submitting" : "Submit"}
+                  >
+                    <span className="faq-submitInner" aria-hidden="true">
+                      <span className="faq-submitAnimWrap">
+                        <span className="faq-submitAnimBase">
+                          <Lottie
+                            animationData={submittingAnim}
+                            loop={false}
+                            autoplay={false}
+                            style={{ width: "100%", height: "100%" }}
+                            rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
+                          />
+                        </span>
+                        {isSubmitting ? (
+                          <span className="faq-submitAnimOverlay">
+                            <Lottie
+                              key={submitAnimKey}
+                              animationData={submittingAnim}
+                              loop
+                              autoplay
+                              style={{ width: "100%", height: "100%" }}
+                              rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
+                            />
+                          </span>
+                        ) : null}
+                      </span>
+                    </span>
                   </button>
                 </div>
+                {error ? (
+                  <div className="faq-error" role="status" aria-live="polite">
+                    {error}
+                  </div>
+                ) : null}
                 <div className={`faq-toast ${submitted ? "faq-toast--show" : ""}`} role="status" aria-live="polite">
-                  Submitted. We&apos;ll get back to you soon.
+                  Successfully submitted. We&apos;ll get back to you soon.
                 </div>
               </form>
             </div>
@@ -315,23 +372,53 @@ export default function FAQSection() {
           box-shadow: 0 0 0 3px rgba(99,102,241,0.14);
         }
         .faq-submit{
-          height: 42px;
-          border-radius: 12px;
-          border: none;
+          height: 56px;
+          border-radius: 16px;
+          border: 0;
           cursor: pointer;
-          font-weight: 800;
-          color: #fff;
-          background: linear-gradient(135deg, rgba(100, 200, 80, 0.95), rgba(82, 166, 63, 0.95));
-          box-shadow: 0 14px 30px rgba(82, 166, 63, 0.18);
-          transition: transform 160ms ease, filter 200ms ease, box-shadow 200ms ease;
+          background: transparent;
+          box-shadow: none;
+          transition: transform 160ms ease, filter 200ms ease;
+          display: grid;
+          place-items: center;
+          padding: 0;
         }
         .faq-submit:hover{
-          filter: brightness(0.98) saturate(1.05);
-          box-shadow: 0 18px 44px rgba(82, 166, 63, 0.22);
+          filter: saturate(1.05) brightness(0.98);
           transform: translateY(-1px);
         }
         .faq-submit:active{
           transform: translateY(1px);
+        }
+        .faq-submit:disabled{
+          cursor: not-allowed;
+          filter: grayscale(0.05) saturate(0.9);
+          opacity: 0.9;
+          transform: none;
+        }
+        .faq-submitInner{
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          gap: 0;
+        }
+        .faq-submitAnimWrap{
+          width: 200px;
+          height: 54px;
+          display: inline-block;
+          position: relative;
+          overflow: hidden;
+        }
+        .faq-submitAnimBase{
+          position: absolute;
+          inset: 0;
+        }
+        .faq-submitAnimOverlay{
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
         }
         .faq-toast{
           margin-top: 10px;
@@ -340,6 +427,14 @@ export default function FAQSection() {
           opacity: 0;
           transform: translateY(6px);
           transition: opacity 200ms ease, transform 200ms ease;
+          text-align: center;
+          min-height: 18px;
+        }
+        .faq-error{
+          margin-top: 10px;
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: rgba(220, 38, 38, 0.92);
           text-align: center;
           min-height: 18px;
         }
