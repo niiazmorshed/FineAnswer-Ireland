@@ -241,7 +241,7 @@
 }
 
 .nav-dropdown__link--featured {
-  color: #c2410c;
+  color: #ff7900;
   font-weight: 700;
 }
 
@@ -522,7 +522,7 @@
   }
 
   .nav-dropdown__link--featured {
-    color: #c2410c;
+    color: #ff7900;
   }
 
   /* Show mobile CTA */

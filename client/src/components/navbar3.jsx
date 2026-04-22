@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../pages/Provider/ContextProvider";
-import { WHY_IRELAND_NAV } from "../pages/why-ireland/pageContent";
+import { WHY_IRELAND_NAV } from "../pages/why-ireland/whyIrelandNav";
 import "../css/navbar3.css";
 import logo from "../images/logo.png";
 
@@ -14,7 +14,8 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [whySubOpen, setWhySubOpen] = useState(false);
   const whyDropdownRef = useRef(null);
-  const whyIrelandActive = location.pathname.startsWith("/why-ireland");
+  const whyIrelandActive =
+    location.pathname.startsWith("/why-ireland") || location.pathname === "/study";
 
   useEffect(() => {
     setHash((location.hash || "").replace(/^#/, ""));
@@ -184,19 +185,22 @@ export default function Navbar() {
                 <span className="nav-dropdown__caret" aria-hidden />
               </button>
               <div className="nav-dropdown__panel" role="menu" aria-label="Why Ireland">
-                {WHY_IRELAND_NAV.map((item) => (
-                  <NavLink
-                    key={item.slug}
-                    role="menuitem"
-                    to={`/why-ireland/${item.slug}`}
-                    className={({ isActive }) =>
-                      `nav-dropdown__link${item.featured ? " nav-dropdown__link--featured" : ""}${isActive ? " is-active" : ""}`
-                    }
-                    onClick={closeMenu}
-                  >
-                    {item.label}
-                  </NavLink>
-                ))}
+                {WHY_IRELAND_NAV.map((item) => {
+                  const dest = item.to ?? `/why-ireland/${item.slug}`;
+                  return (
+                    <NavLink
+                      key={item.to || item.slug}
+                      role="menuitem"
+                      to={dest}
+                      className={({ isActive }) =>
+                        `nav-dropdown__link${item.featured ? " nav-dropdown__link--featured" : ""}${isActive ? " is-active" : ""}`
+                      }
+                      onClick={closeMenu}
+                    >
+                      {item.label}
+                    </NavLink>
+                  );
+                })}
               </div>
             </div>
 

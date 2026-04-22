@@ -41,6 +41,7 @@ import SuccessStoryDetail from "./pages/SuccessStoryDetail";
 import SearchResults from "./pages/SearchResults";
 import JobDetail from "./pages/JobDetail";
 import WhyIrelandHub from "./pages/why-ireland/WhyIrelandHub";
+import { StudyInIrelandRouteLayout } from "./pages/why-ireland/StudyInIrelandPage";
 
 import "./App.css";
 
@@ -111,6 +112,7 @@ function AppRoutes() {
       {/* Public Routes */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/ireland" element={<IrelandPage />} />
+      <Route path="/study" element={<StudyInIrelandRouteLayout />} />
       <Route path="/why-ireland/*" element={<WhyIrelandHub />} />
       {/* /australia and /uk redirect to home — pages removed */}
       <Route path="/australia" element={<Navigate to="/" replace />} />

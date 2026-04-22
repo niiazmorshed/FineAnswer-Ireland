@@ -3,7 +3,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import TopUtilityBar from "../../components/TopUtilityBar";
 import Navbar3 from "../../components/navbar3";
 import Footer from "../../components/Footer";
-import WhyArticle from "./WhyArticle";
+import StudyInIrelandPage from "./StudyInIrelandPage";
+import TopReasonsIrelandPage from "./TopReasonsIrelandPage";
+import StudentLifeIrelandPage from "./StudentLifeIrelandPage";
+import PlacesToVisitIrelandPage from "./PlacesToVisitIrelandPage";
 import "../../css/why-ireland.css";
 
 export default function WhyIrelandHub() {
@@ -15,10 +18,10 @@ export default function WhyIrelandHub() {
       </div>
       <Routes>
         <Route index element={<Navigate to="study-in-ireland" replace />} />
-        <Route path="study-in-ireland" element={<WhyArticle pageKey="study-in-ireland" />} />
-        <Route path="top-reasons" element={<WhyArticle pageKey="top-reasons" />} />
-        <Route path="student-life" element={<WhyArticle pageKey="student-life" />} />
-        <Route path="places-to-visit" element={<WhyArticle pageKey="places-to-visit" />} />
+        <Route path="study-in-ireland" element={<StudyInIrelandPage />} />
+        <Route path="top-reasons" element={<TopReasonsIrelandPage />} />
+        <Route path="student-life" element={<StudentLifeIrelandPage />} />
+        <Route path="places-to-visit" element={<PlacesToVisitIrelandPage />} />
         <Route path="*" element={<Navigate to="study-in-ireland" replace />} />
       </Routes>
       <Footer />
