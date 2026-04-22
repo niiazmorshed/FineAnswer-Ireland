@@ -100,11 +100,6 @@
     gap: 22px;
   }
 }
-@media (max-width: 520px) {
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* Flip container */
 .service-flip {
@@ -241,6 +236,55 @@
   max-width: 36ch;
 }
 
+/* Mobile 2-col: row height = track width (square), clip 3D overflow, align-items:start avoids stretch bugs */
+@media (max-width: 520px) {
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+    align-items: start;
+  }
+
+  .services-grid .service-flip {
+    width: 100%;
+    min-height: unset;
+    aspect-ratio: 1 / 1;
+    height: auto;
+    align-self: start;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .service-face {
+    padding: 14px 10px;
+  }
+
+  .service-icon {
+    width: 46px;
+    height: 46px;
+    font-size: 1.12rem;
+    border-radius: 12px;
+  }
+
+  .service-label {
+    font-size: 0.82rem;
+    max-width: none;
+  }
+
+  .service-label--back {
+    font-size: 0.78rem;
+  }
+
+  .service-desc {
+    font-size: 0.72rem;
+    max-width: none;
+  }
+
+  .service-flip-hint {
+    font-size: 0.58rem;
+    letter-spacing: 0.03em;
+  }
+}
+
 /* No 3D motion */
 @media (prefers-reduced-motion: reduce) {
   .service-flip {
@@ -275,5 +319,14 @@
 
   .service-flip-hint {
     display: none;
+  }
+}
+
+/* Stacked faces need natural height — undo square flip box on small screens */
+@media (max-width: 520px) and (prefers-reduced-motion: reduce) {
+  .services-grid .service-flip {
+    aspect-ratio: unset;
+    overflow: visible;
+    min-height: 0;
   }
 }
