@@ -134,7 +134,7 @@ const Services = () => {
   }, []);
 
   return (
-    <section className="services-section" id="services">
+    <section className="services-section">
       <div className="services-inner">
         <div className="services-layout">
           <div className="services-intro">
