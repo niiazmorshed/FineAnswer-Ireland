@@ -177,10 +177,10 @@
   .nav-dropdown:hover .nav-dropdown__trigger,
   .nav-dropdown:focus-within .nav-dropdown__trigger,
   .nav-dropdown--open .nav-dropdown__trigger {
-    background: #64c850;
+    background: #009a49;
     color: #fff !important;
     font-weight: 600;
-    box-shadow: 0 4px 14px rgba(100, 200, 80, 0.25);
+    box-shadow: 0 4px 18px rgba(0, 154, 73, 0.35);
   }
 
   .nav-dropdown:hover .nav-dropdown__caret,
@@ -194,14 +194,19 @@
   position: absolute;
   left: 0;
   top: calc(100% + 10px);
-  min-width: 292px;
-  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+  min-width: min(320px, calc(100vw - 32px));
+  max-width: 380px;
+  padding: 6px 0;
   margin: 0;
   list-style: none;
   background: #fff;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid rgba(226, 232, 240, 0.98);
-  box-shadow: 0 18px 44px rgba(26, 43, 60, 0.14);
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.12), 0 0 0 1px rgba(0, 154, 73, 0.06);
   z-index: 1002;
   opacity: 0;
   visibility: hidden;
@@ -224,31 +229,61 @@
   }
 }
 
-.nav-dropdown__link {
-  display: block;
-  padding: 11px 20px;
-  font-size: 0.9rem;
+/**
+ * Dropdown links must override `.nav-menu--inspo a` (inline-flex + nowrap),
+ * which was forcing items onto one row and breaking layout.
+ */
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 12px 18px 12px 16px;
+  border-radius: 0;
+  border-left: 3px solid transparent;
+  white-space: normal;
+  text-align: left;
+  font-size: 0.875rem;
   font-weight: 500;
+  line-height: 1.45;
   color: #334155;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
-  line-height: 1.35;
+  background: transparent;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 
-.nav-dropdown__link:hover {
-  background: rgba(241, 245, 249, 0.95);
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link + .nav-dropdown__link {
+  border-top: 1px solid #f1f5f9;
+}
+
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link:hover {
+  background: rgba(0, 154, 73, 0.07);
   color: #0f172a;
 }
 
-.nav-dropdown__link--featured {
-  color: #ff7900;
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link.nav-dropdown__link--featured {
+  color: #b45309;
   font-weight: 700;
+  border-left-color: #ff7900;
+  background: rgba(255, 121, 0, 0.06);
 }
 
-.nav-dropdown__link.is-active {
-  background: rgba(0, 135, 90, 0.08);
-  color: var(--color-primary, #00875a);
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link.nav-dropdown__link--featured:hover {
+  background: rgba(255, 121, 0, 0.1);
+  color: #9a3412;
+}
+
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link.is-active {
+  background: rgba(0, 154, 73, 0.1);
+  color: #009a49;
   font-weight: 600;
+  border-left-color: #009a49;
+}
+
+.nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link.is-active:hover {
+  background: rgba(0, 154, 73, 0.14);
+  color: #007a3a;
 }
 
 /* Mobile-only CTA block — hidden on desktop */
@@ -486,43 +521,55 @@
   }
 
   .nav-dropdown--open .nav-dropdown__trigger {
-    background: #64c850;
+    background: #009a49;
     color: #fff !important;
     font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0, 154, 73, 0.3);
   }
 
   .nav-dropdown__panel {
     position: static;
     left: auto;
     top: auto;
+    display: none;
+    flex-direction: column;
     min-width: 0;
-    padding: 4px 0 6px;
-    margin: 0 4px 6px;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    background: transparent;
+    max-width: none;
+    padding: 6px 0 8px;
+    margin: 0 8px 8px;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 12px;
+    box-shadow: 0 8px 28px rgba(15, 23, 42, 0.08);
+    background: #fff;
     opacity: 1;
     visibility: visible;
     transform: none;
     pointer-events: auto;
-    display: none;
   }
 
   .nav-dropdown--open .nav-dropdown__panel {
-    display: block;
+    display: flex;
   }
 
-  .nav-dropdown__link {
-    margin: 2px 12px;
-    padding: 10px 14px;
-    border-radius: 10px;
-    background: rgba(248, 250, 252, 0.95);
-    border: 1px solid rgba(226, 232, 240, 0.85);
+  .nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link {
+    width: calc(100% - 16px);
+    margin: 0 8px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    border-left: 3px solid transparent;
+    background: rgba(248, 250, 252, 0.85);
   }
 
-  .nav-dropdown__link--featured {
-    color: #ff7900;
+  .nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link + .nav-dropdown__link {
+    border-top: none;
+    margin-top: 6px;
+  }
+
+  .nav-menu--inspo .nav-dropdown__panel .nav-dropdown__link.nav-dropdown__link--featured {
+    border: 1px solid rgba(255, 121, 0, 0.25);
+    border-left: 3px solid #ff7900;
+    background: rgba(255, 121, 0, 0.08);
   }
 
   /* Show mobile CTA */

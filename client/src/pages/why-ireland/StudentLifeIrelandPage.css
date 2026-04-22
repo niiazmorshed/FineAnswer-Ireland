@@ -1,0 +1,291 @@
+/* Student Life in Ireland — #009A49, #FF7900 */
+.sl-life {
+  --sl-green: #009a49;
+  --sl-orange: #ff7900;
+  --sl-ink: #0f172a;
+  --sl-muted: #475569;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 18px 72px;
+  font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
+  color: var(--sl-ink);
+}
+
+.sl-life__hero {
+  margin-bottom: 36px;
+  padding: 28px 22px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(0, 154, 73, 0.08) 0%, rgba(255, 121, 0, 0.06) 100%);
+  border: 1px solid rgba(0, 154, 73, 0.18);
+}
+
+.sl-life__title {
+  margin: 0 0 14px;
+  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--sl-ink);
+}
+
+.sl-life__subtitle {
+  margin: 0;
+  font-size: clamp(0.98rem, 1.12vw, 1.06rem);
+  line-height: 1.65;
+  color: var(--sl-muted);
+}
+
+.sl-life__section-title {
+  margin: 0 0 20px;
+  font-size: clamp(1.15rem, 2.2vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--sl-ink);
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--sl-green);
+  display: inline-block;
+}
+
+.sl-life__why {
+  margin-bottom: 32px;
+}
+
+.sl-life__cards {
+  display: grid;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+@media (min-width: 720px) {
+  .sl-life__cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.sl-life__card {
+  padding: 20px 18px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 6px 22px rgba(15, 23, 42, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sl-life__card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  background: rgba(0, 154, 73, 0.12);
+  color: var(--sl-green);
+  flex-shrink: 0;
+}
+
+.sl-life__card-icon--safe {
+  background: rgba(255, 121, 0, 0.14);
+  color: #c2410c;
+}
+
+.sl-life__card-icon--culture {
+  background: rgba(0, 154, 73, 0.1);
+  color: var(--sl-orange);
+}
+
+.sl-life__card-title {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 800;
+  color: var(--sl-ink);
+  line-height: 1.3;
+}
+
+.sl-life__card-text {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--sl-muted);
+}
+
+.sl-life__stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 36px;
+  padding: 20px 16px;
+  background: #fff;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.07);
+}
+
+@media (min-width: 640px) {
+  .sl-life__stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    padding: 24px 20px;
+  }
+}
+
+.sl-life__stat {
+  text-align: center;
+  padding: 12px 8px;
+  border-radius: 12px;
+  background: rgba(248, 250, 252, 0.95);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+}
+
+.sl-life__stat-num {
+  display: block;
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  font-weight: 800;
+  color: var(--sl-green);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.sl-life__stat-label {
+  display: block;
+  margin-top: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--sl-muted);
+  line-height: 1.45;
+}
+
+.sl-life__section {
+  margin-bottom: 32px;
+}
+
+.sl-life__section:last-of-type {
+  margin-bottom: 0;
+}
+
+.sl-life__bullets {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sl-life__bullet {
+  margin: 0;
+  padding: 16px 18px 16px 26px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--sl-muted);
+  position: relative;
+}
+
+.sl-life__bullet::before {
+  content: "";
+  position: absolute;
+  left: 12px;
+  top: 22px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--sl-green);
+}
+
+.sl-life__bullet strong {
+  color: var(--sl-ink);
+  font-weight: 700;
+}
+
+.sl-life__banner {
+  margin: 36px 0 32px;
+  margin-left: calc(-1 * max(18px, env(safe-area-inset-left, 0px)));
+  margin-right: calc(-1 * max(18px, env(safe-area-inset-right, 0px)));
+  width: calc(100% + 2 * max(18px, env(safe-area-inset-left, 0px)));
+  max-width: none;
+  padding: 32px 22px;
+  background: linear-gradient(120deg, rgba(0, 154, 73, 0.14) 0%, rgba(255, 121, 0, 0.1) 100%);
+  border-top: 1px solid rgba(0, 154, 73, 0.2);
+  border-bottom: 1px solid rgba(0, 154, 73, 0.2);
+  box-sizing: border-box;
+}
+
+@media (min-width: 1000px) {
+  .sl-life__banner {
+    margin-left: calc(50% - 50vw + 8px);
+    margin-right: calc(50% - 50vw + 8px);
+    width: calc(100vw - 16px);
+    padding: 40px max(24px, calc(50vw - 460px));
+  }
+}
+
+.sl-life__banner-inner {
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.sl-life__banner-title {
+  margin: 0 0 14px;
+  font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+  font-weight: 800;
+  color: var(--sl-ink);
+  letter-spacing: -0.02em;
+}
+
+.sl-life__banner-text {
+  margin: 0;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--sl-muted);
+}
+
+.sl-life__cta {
+  margin-top: 8px;
+  padding: 28px 22px;
+  border-radius: 18px;
+  background: linear-gradient(120deg, var(--sl-green) 0%, #007a3d 55%, var(--sl-orange) 160%);
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 154, 73, 0.25);
+}
+
+.sl-life__cta-text {
+  margin: 0 0 18px;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.sl-life__cta-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--sl-green) !important;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-decoration: none;
+  font-family: inherit;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.sl-life__cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  color: var(--sl-orange) !important;
+}
+
+@media (min-width: 768px) {
+  .sl-life {
+    padding: 32px 24px 88px;
+  }
+}
