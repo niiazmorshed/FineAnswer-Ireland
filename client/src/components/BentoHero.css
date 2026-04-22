@@ -367,6 +367,11 @@
 /* Taller right column when globe replaces photo */
 .job-hero__right--globe {
   min-height: 540px;
+  /* Fill the grid track so the globe centers in the column, not hugging the viewport edge */
+  justify-self: stretch;
+  width: 100%;
+  min-width: 0;
+  place-items: stretch;
 }
 
 /* Globe fills the entire right column — NO CSS transform on this wrapper */
@@ -377,6 +382,14 @@
   align-items: center;
   justify-content: center;
   line-height: 0;
+}
+
+/* Asymmetric padding: extra left inset shifts the centered globe slightly right, away from the search column */
+.job-hero__right--globe .job-hero__globeWrap {
+  justify-content: center;
+  padding-left: clamp(24px, 3.2vw, 56px);
+  padding-right: clamp(2px, 0.8vw, 12px);
+  box-sizing: border-box;
 }
 
 .job-hero__photo {
@@ -500,6 +513,12 @@
     min-height: 360px;
     justify-self: center;
   }
+
+  .job-hero__right--globe {
+    justify-self: stretch;
+    width: 100%;
+  }
+
   .job-hero__ring {
     right: 14px;
     top: 18px;

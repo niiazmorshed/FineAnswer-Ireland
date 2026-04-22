@@ -54,18 +54,41 @@ export default function LandingPage() {
       return;
     }
 
+    const reveal = (el) => {
+      if (!el.classList.contains("is-visible")) {
+        el.classList.add("is-visible");
+        obs.unobserve(el);
+      }
+    };
+
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (!e.isIntersecting) return;
-          e.target.classList.add("is-visible");
-          obs.unobserve(e.target);
+          if (e.isIntersecting) reveal(e.target);
         });
       },
-      { threshold: 0.16, rootMargin: "0px 0px -10% 0px" }
+      /**
+       * threshold 0 = reveal as soon as any pixel enters the viewport.
+       * A high threshold (e.g. 0.16) fails for very tall blocks (Services on mobile):
+       * visible height / section height can stay below the ratio, so content stays
+       * opacity:0 while still taking layout space — looks like a white gap on slow/prod paints.
+       */
+      { threshold: 0, rootMargin: "0px 0px 0px 0px" }
     );
 
     els.forEach((el) => obs.observe(el));
+
+    /** Catch IO edge cases (subpixel, late layout) so sections never stay invisible on-screen */
+    const revealAnyAlreadyInView = () => {
+      const vh = window.innerHeight;
+      els.forEach((el) => {
+        if (el.classList.contains("is-visible")) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < vh && r.bottom > 0) reveal(el);
+      });
+    };
+    requestAnimationFrame(revealAnyAlreadyInView);
+
     return () => obs.disconnect();
   }, []);
 
