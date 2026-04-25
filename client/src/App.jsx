@@ -1,5 +1,5 @@
-import React, { useEffect, useContext } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import React, { useEffect, useLayoutEffect, useContext } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import ReadMoreInfo from "./pages/ReadMoreInfo";
 import IrelandPage from "./IrelandPage";
@@ -46,6 +46,7 @@ import { PostStudyRouteLayout } from "./pages/PostStudyPage";
 import { PathwayRouteLayout } from "./pages/PathwayPage";
 import { Under18RouteLayout } from "./pages/Under18Page";
 import { EntryRequirementsRouteLayout } from "./pages/EntryRequirementsPage";
+import { forceNavigateScrollTop } from "./utils/documentScroll";
 
 import "./App.css";
 
@@ -94,9 +95,33 @@ class AppErrorBoundary extends React.Component {
 
 function AppRoutes() {
   const { user, isAdmin, loading } = useContext(AuthContext);
+  const { pathname, search } = useLocation();
+
+  useLayoutEffect(() => {
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+    forceNavigateScrollTop();
+    const raf1 = requestAnimationFrame(() => {
+      forceNavigateScrollTop();
+      requestAnimationFrame(forceNavigateScrollTop);
+    });
+    const timers = [0, 16, 50, 100, 200, 400, 600].map((ms) =>
+      window.setTimeout(forceNavigateScrollTop, ms)
+    );
+    return () => {
+      cancelAnimationFrame(raf1);
+      timers.forEach((id) => window.clearTimeout(id));
+    };
+  }, [pathname, search]);
 
   useEffect(() => {
-    gsap.utils.toArray(".reveal").forEach((elem) => {
+    forceNavigateScrollTop();
+    const t = window.setTimeout(forceNavigateScrollTop, 0);
+    return () => window.clearTimeout(t);
+  }, [pathname, search]);
+
+  useEffect(() => {
+    const elems = gsap.utils.toArray(".reveal");
+    elems.forEach((elem) => {
       gsap.from(elem, {
         opacity: 0,
         y: 50,
@@ -108,7 +133,10 @@ function AppRoutes() {
         },
       });
     });
-  }, []);
+    return () => {
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
+  }, [pathname]);
 
   return (
     <Routes>

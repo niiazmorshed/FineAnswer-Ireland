@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import {
   FaGraduationCap,
   FaRoute,
@@ -35,8 +34,6 @@ const LINKS = [
 ];
 
 export default function QuickLinks() {
-  const navigate = useNavigate();
-
   return (
     <section className="ql-section">
       <div className="ql-inner">
@@ -47,16 +44,19 @@ export default function QuickLinks() {
 
         <div className="ql-grid">
           {LINKS.map((l) => (
-            <button
+            <a
               key={l.title}
+              href={l.to}
               className="ql-card"
-              onClick={() => navigate(l.to)}
-              type="button"
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`${l.title} — opens in a new tab`}
+              aria-label={`${l.title} (opens in new tab)`}
             >
               <span className="ql-icon">{l.icon}</span>
               <span className="ql-card-title">{l.title}</span>
               <span className="ql-arrow">→</span>
-            </button>
+            </a>
           ))}
         </div>
       </div>
@@ -107,6 +107,8 @@ export default function QuickLinks() {
           font-family: var(--font-sans);
           text-align: left;
           box-shadow: var(--shadow-card);
+          text-decoration: none;
+          color: inherit;
         }
         .ql-card:hover {
           border-color: var(--color-primary);

@@ -13,18 +13,8 @@ export default function Navbar() {
   );
   const [menuOpen, setMenuOpen] = useState(false);
   const [whySubOpen, setWhySubOpen] = useState(false);
-  const [studySubOpen, setStudySubOpen] = useState(false);
-  const [studentVisaSubOpen, setStudentVisaSubOpen] = useState(false);
   const whyDropdownRef = useRef(null);
-  const studyDropdownRef = useRef(null);
-  const studentVisaDropdownRef = useRef(null);
   const whyIrelandActive = location.pathname.startsWith("/why-ireland");
-  const studyActive =
-    location.pathname === "/study" ||
-    location.pathname === "/pathway" ||
-    location.pathname === "/entry-requirements";
-  const studentVisaActive =
-    location.pathname === "/poststudy" || location.pathname === "/under18";
 
   useEffect(() => {
     setHash((location.hash || "").replace(/^#/, ""));
@@ -78,57 +68,34 @@ export default function Navbar() {
   const closeMenu = () => {
     setMenuOpen(false);
     setWhySubOpen(false);
-    setStudySubOpen(false);
-    setStudentVisaSubOpen(false);
   };
 
   useEffect(() => {
     setWhySubOpen(false);
-    setStudySubOpen(false);
-    setStudentVisaSubOpen(false);
   }, [location.pathname]);
 
   useEffect(() => {
-    if (!whySubOpen && !studySubOpen && !studentVisaSubOpen) return;
+    if (!whySubOpen) return;
     const onDoc = (e) => {
       if (
-        whySubOpen &&
         whyDropdownRef.current &&
         !whyDropdownRef.current.contains(e.target)
       ) {
         setWhySubOpen(false);
       }
-      if (
-        studySubOpen &&
-        studyDropdownRef.current &&
-        !studyDropdownRef.current.contains(e.target)
-      ) {
-        setStudySubOpen(false);
-      }
-      if (
-        studentVisaSubOpen &&
-        studentVisaDropdownRef.current &&
-        !studentVisaDropdownRef.current.contains(e.target)
-      ) {
-        setStudentVisaSubOpen(false);
-      }
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
-  }, [whySubOpen, studySubOpen, studentVisaSubOpen]);
+  }, [whySubOpen]);
 
   useEffect(() => {
-    if (!whySubOpen && !studySubOpen && !studentVisaSubOpen) return;
+    if (!whySubOpen) return;
     const onKey = (e) => {
-      if (e.key === "Escape") {
-        setWhySubOpen(false);
-        setStudySubOpen(false);
-        setStudentVisaSubOpen(false);
-      }
+      if (e.key === "Escape") setWhySubOpen(false);
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [whySubOpen, studySubOpen, studentVisaSubOpen]);
+  }, [whySubOpen]);
 
   const isWideNav = () => typeof window !== "undefined" && window.innerWidth > 900;
 
@@ -212,22 +179,9 @@ export default function Navbar() {
                 aria-expanded={whySubOpen}
                 aria-haspopup="true"
                 onMouseEnter={() => {
-                  if (isWideNav()) {
-                    setWhySubOpen(true);
-                    setStudySubOpen(false);
-                    setStudentVisaSubOpen(false);
-                  }
+                  if (isWideNav()) setWhySubOpen(true);
                 }}
-                onClick={() =>
-                  setWhySubOpen((o) => {
-                    const next = !o;
-                    if (next) {
-                      setStudySubOpen(false);
-                      setStudentVisaSubOpen(false);
-                    }
-                    return next;
-                  })
-                }
+                onClick={() => setWhySubOpen((o) => !o)}
               >
                 Why Ireland
                 <span className="nav-dropdown__caret" aria-hidden />
@@ -252,129 +206,9 @@ export default function Navbar() {
               </div>
             </div>
 
-            <div
-              ref={studyDropdownRef}
-              className={`nav-dropdown${studySubOpen ? " nav-dropdown--open" : ""}`}
-              onMouseLeave={() => {
-                if (isWideNav()) setStudySubOpen(false);
-              }}
-            >
-              <button
-                type="button"
-                className={`nav-dropdown__trigger${studyActive ? " active" : ""}`}
-                aria-expanded={studySubOpen}
-                aria-haspopup="true"
-                onMouseEnter={() => {
-                  if (isWideNav()) {
-                    setStudySubOpen(true);
-                    setWhySubOpen(false);
-                    setStudentVisaSubOpen(false);
-                  }
-                }}
-                onClick={() =>
-                  setStudySubOpen((o) => {
-                    const next = !o;
-                    if (next) {
-                      setWhySubOpen(false);
-                      setStudentVisaSubOpen(false);
-                    }
-                    return next;
-                  })
-                }
-              >
-                Study
-                <span className="nav-dropdown__caret" aria-hidden />
-              </button>
-              <div className="nav-dropdown__panel" role="menu" aria-label="Study">
-                <NavLink
-                  role="menuitem"
-                  to="/study"
-                  className={({ isActive }) =>
-                    `nav-dropdown__link${isActive ? " is-active" : ""}`
-                  }
-                  onClick={closeMenu}
-                >
-                  Study in Ireland
-                </NavLink>
-                <NavLink
-                  role="menuitem"
-                  to="/pathway"
-                  className={({ isActive }) =>
-                    `nav-dropdown__link${isActive ? " is-active" : ""}`
-                  }
-                  onClick={closeMenu}
-                >
-                  Foundation and Pathway Programs
-                </NavLink>
-                <NavLink
-                  role="menuitem"
-                  to="/entry-requirements"
-                  className={({ isActive }) =>
-                    `nav-dropdown__link${isActive ? " is-active" : ""}`
-                  }
-                  onClick={closeMenu}
-                >
-                  Entry Requirements
-                </NavLink>
-              </div>
-            </div>
-
-            <div
-              ref={studentVisaDropdownRef}
-              className={`nav-dropdown${studentVisaSubOpen ? " nav-dropdown--open" : ""}`}
-              onMouseLeave={() => {
-                if (isWideNav()) setStudentVisaSubOpen(false);
-              }}
-            >
-              <button
-                type="button"
-                className={`nav-dropdown__trigger${studentVisaActive ? " active" : ""}`}
-                aria-expanded={studentVisaSubOpen}
-                aria-haspopup="true"
-                onMouseEnter={() => {
-                  if (isWideNav()) {
-                    setStudentVisaSubOpen(true);
-                    setWhySubOpen(false);
-                    setStudySubOpen(false);
-                  }
-                }}
-                onClick={() =>
-                  setStudentVisaSubOpen((o) => {
-                    const next = !o;
-                    if (next) {
-                      setWhySubOpen(false);
-                      setStudySubOpen(false);
-                    }
-                    return next;
-                  })
-                }
-              >
-                Student Visa
-                <span className="nav-dropdown__caret" aria-hidden />
-              </button>
-              <div className="nav-dropdown__panel" role="menu" aria-label="Student Visa">
-                <NavLink
-                  role="menuitem"
-                  to="/poststudy"
-                  className={({ isActive }) =>
-                    `nav-dropdown__link${isActive ? " is-active" : ""}`
-                  }
-                  onClick={closeMenu}
-                >
-                  Post Study
-                </NavLink>
-                <NavLink
-                  role="menuitem"
-                  to="/under18"
-                  className={({ isActive }) =>
-                    `nav-dropdown__link${isActive ? " is-active" : ""}`
-                  }
-                  onClick={closeMenu}
-                >
-                  Under 18 Students
-                </NavLink>
-              </div>
-            </div>
+            <NavLink to="/study" onClick={closeMenu}>
+              Study in Ireland
+            </NavLink>
 
             <a
               href="/#about"
