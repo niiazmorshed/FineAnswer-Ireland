@@ -42,6 +42,10 @@ import SearchResults from "./pages/SearchResults";
 import JobDetail from "./pages/JobDetail";
 import WhyIrelandHub from "./pages/why-ireland/WhyIrelandHub";
 import { StudyInIrelandRouteLayout } from "./pages/why-ireland/StudyInIrelandPage";
+import { PostStudyRouteLayout } from "./pages/PostStudyPage";
+import { PathwayRouteLayout } from "./pages/PathwayPage";
+import { Under18RouteLayout } from "./pages/Under18Page";
+import { EntryRequirementsRouteLayout } from "./pages/EntryRequirementsPage";
 
 import "./App.css";
 
@@ -113,6 +117,10 @@ function AppRoutes() {
       <Route path="/" element={<LandingPage />} />
       <Route path="/ireland" element={<IrelandPage />} />
       <Route path="/study" element={<StudyInIrelandRouteLayout />} />
+      <Route path="/poststudy" element={<PostStudyRouteLayout />} />
+      <Route path="/pathway" element={<PathwayRouteLayout />} />
+      <Route path="/under18" element={<Under18RouteLayout />} />
+      <Route path="/entry-requirements" element={<EntryRequirementsRouteLayout />} />
       <Route path="/why-ireland/*" element={<WhyIrelandHub />} />
       {/* /australia and /uk redirect to home — pages removed */}
       <Route path="/australia" element={<Navigate to="/" replace />} />
