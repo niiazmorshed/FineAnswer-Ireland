@@ -155,7 +155,7 @@ export default function LandingPage() {
         <AboutUs />
       </div>
 
-      {/* 3. BROWSE BY SUBJECT */}
+      {/* 3. Choose an Area of Interest */}
       <div className="scroll-reveal">
         <BrowseBySubject />
       </div>

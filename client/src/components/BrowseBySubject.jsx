@@ -1,55 +1,44 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
+import React from "react";
+import { Briefcase, Cog, HeartPulse, Laptop, Scale, UsersRound } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import searchAnimation from "../assets/search.json";
-import {
-  FaCogs,
-  FaLaptopCode,
-  FaBriefcase,
-  FaBalanceScale,
-  FaCalculator,
-  FaUsers,
-  FaLanguage,
-  FaPalette,
-  FaHeartbeat,
-  FaLayerGroup,
-  FaFileInvoiceDollar,
-  FaFlask,
-} from "react-icons/fa";
+
+const ICON_SVG = { size: 30, strokeWidth: 1.65 };
 
 const SUBJECTS = [
   {
-    icon: <FaCogs />,
+    icon: <Cog {...ICON_SVG} />,
     label: "Engineering",
     desc: "Programs in computing, IT, and engineering.",
     category: "Computing, IT & Engineering",
   },
   {
-    icon: <FaLaptopCode />,
+    icon: <Laptop {...ICON_SVG} />,
     label: "Computing",
     desc: "Software, data, cloud, and AI pathways.",
     category: "Computing, IT & Engineering",
   },
   {
-    icon: <FaBriefcase />,
+    icon: <Briefcase {...ICON_SVG} />,
     label: "Business",
     desc: "Management, marketing, and entrepreneurship.",
     category: "Business, Management & Law",
   },
   {
-    icon: <FaBalanceScale />,
+    icon: <Scale {...ICON_SVG} />,
     label: "Law",
     desc: "Business law and governance tracks.",
     category: "Business, Management & Law",
   },
   {
-    icon: <FaHeartbeat />,
+    icon: <HeartPulse {...ICON_SVG} />,
     label: "Health",
     desc: "Life sciences and allied health programs.",
     category: "Life Sciences & Health",
   },
   {
-    icon: <FaUsers />,
+    icon: <UsersRound {...ICON_SVG} />,
     label: "Social Science",
     desc: "Humanities, policy, and social research.",
     category: "Social Sciences",
@@ -67,13 +56,13 @@ export default function BrowseBySubject() {
   };
 
   return (
-    <section className="bbs-section" aria-label="Browse by Subject">
+    <section className="bbs-section" aria-label="Choose an Area of Interest">
       <div className="bbs-inner">
         <div className="bbs-layout">
           <div className="bbs-content">
             <div className="bbs-header">
               <div className="bbs-kicker">Find your path</div>
-              <h2 className="bbs-title">Browse by Subject</h2>
+              <h2 className="bbs-title">Choose an Area of Interest</h2>
               <p className="bbs-subtitle">
                 Explore your desired subject—discover Irish courses aligned with your ambitions and move from browsing to
                 applying with clarity.
@@ -88,8 +77,8 @@ export default function BrowseBySubject() {
                   onClick={() => handleClick(s.category)}
                   type="button"
                 >
-                  <span className="bbs-icon" aria-hidden="true">
-                    {s.icon}
+                  <span className="bbs-iconWrap" aria-hidden="true">
+                    <span className="bbs-icon">{s.icon}</span>
                   </span>
                   <div className="bbs-cardText">
                     <div className="bbs-label">{s.label}</div>
@@ -249,50 +238,138 @@ export default function BrowseBySubject() {
         .bbs-card {
           display: flex;
           align-items: flex-start;
-          gap: 14px;
-          padding: 18px 16px;
-          background: rgba(255, 255, 255, 0.62);
-          border: 1px solid rgba(148, 163, 184, 0.30);
-          border-radius: 18px;
+          gap: 18px;
+          padding: 20px 18px;
+          background: linear-gradient(165deg, rgba(255, 255, 255, 0.98) 0%, rgba(248, 250, 252, 0.92) 100%);
+          border: 1px solid rgba(226, 232, 240, 0.95);
+          border-radius: 20px;
           cursor: pointer;
-          transition: all 0.25s ease;
+          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
           font-family: var(--font-sans);
-          box-shadow: 0 16px 44px rgba(15, 23, 42, 0.08);
+          box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.8) inset,
+            0 2px 4px rgba(15, 23, 42, 0.04),
+            0 18px 48px rgba(15, 23, 42, 0.07);
           text-align: left;
-          backdrop-filter: blur(10px);
+          backdrop-filter: blur(12px);
+          position: relative;
+        }
+        .bbs-card::before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 18px;
+          right: 18px;
+          height: 1px;
+          border-radius: 1px;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.9), transparent);
+          pointer-events: none;
         }
         .bbs-card:hover {
-          border-color: rgba(99, 102, 241, 0.35);
-          box-shadow: 0 22px 60px rgba(15, 23, 42, 0.12);
-          transform: translateY(-2px);
+          border-color: rgba(99, 102, 241, 0.25);
+          box-shadow:
+            0 0 0 1px rgba(255, 255, 255, 0.9) inset,
+            0 2px 4px rgba(15, 23, 42, 0.05),
+            0 24px 64px rgba(99, 102, 241, 0.12),
+            0 18px 48px rgba(15, 23, 42, 0.08);
+          transform: translateY(-3px);
         }
         .bbs-card:focus-visible{
           outline: none;
-          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.22), 0 22px 60px rgba(15, 23, 42, 0.12);
+          box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25), 0 24px 64px rgba(15, 23, 42, 0.1);
         }
-        .bbs-icon {
-          width: 48px;
-          height: 48px;
-          border-radius: 14px;
-          background: rgba(230, 240, 255, 0.95);
-          color: rgba(37, 99, 235, 0.95);
+        .bbs-iconWrap {
+          position: relative;
+          flex-shrink: 0;
+          width: 64px;
+          height: 64px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.2rem;
-          transition: all 0.25s ease;
-          flex-shrink: 0;
+          transition: transform 0.32s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
-        .bbs-card--a1 .bbs-icon{ background: rgba(254, 172, 30, 0.20); color: #9a5b00; }
-        .bbs-card--a2 .bbs-icon{ background: rgba(255, 241, 188, 0.75); color: #8a5a00; }
-        .bbs-card--a3 .bbs-icon{ background: rgba(114, 9, 183, 0.12); color: #7209b7; }
-        .bbs-card--a4 .bbs-icon{ background: rgba(46, 196, 182, 0.14); color: #0f766e; }
-        .bbs-card--a5 .bbs-icon{ background: rgba(230, 240, 255, 0.95); color: #2563eb; }
-        .bbs-card--a6 .bbs-icon{ background: rgba(76, 201, 240, 0.18); color: #0284c7; }
-
-        .bbs-card:hover .bbs-icon{
-          transform: translateY(-1px);
-          filter: saturate(1.05);
+        .bbs-icon {
+          position: relative;
+          width: 64px;
+          height: 64px;
+          border-radius: 18px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          overflow: hidden;
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.35) inset,
+            0 10px 28px rgba(0, 0, 0, 0.12);
+        }
+        .bbs-icon::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, transparent 52%);
+          pointer-events: none;
+        }
+        .bbs-icon::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 8%;
+          right: 8%;
+          height: 44%;
+          border-radius: 0 0 60% 60%;
+          background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 85%);
+          pointer-events: none;
+        }
+        .bbs-icon svg {
+          position: relative;
+          z-index: 1;
+          filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.12));
+        }
+        /* Distinct gradients — high-contrast, “jewel” feel */
+        .bbs-card--a1 .bbs-icon {
+          background: linear-gradient(145deg, #f97316 0%, #ea580c 40%, #c2410c 100%);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.3) inset,
+            0 14px 32px rgba(234, 88, 12, 0.38);
+        }
+        .bbs-card--a2 .bbs-icon {
+          background: linear-gradient(145deg, #3b82f6 0%, #2563eb 45%, #1d4ed8 100%);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.3) inset,
+            0 14px 32px rgba(37, 99, 235, 0.35);
+        }
+        .bbs-card--a3 .bbs-icon {
+          background: linear-gradient(145deg, #8b5cf6 0%, #7c3aed 45%, #5b21b6 100%);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.28) inset,
+            0 14px 32px rgba(124, 58, 237, 0.36);
+        }
+        .bbs-card--a4 .bbs-icon {
+          background: linear-gradient(145deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.3) inset,
+            0 14px 32px rgba(13, 148, 136, 0.34);
+        }
+        .bbs-card--a5 .bbs-icon {
+          background: linear-gradient(145deg, #ec4899 0%, #db2777 45%, #be185d 100%);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.28) inset,
+            0 14px 32px rgba(219, 39, 119, 0.34);
+        }
+        .bbs-card--a6 .bbs-icon {
+          background: linear-gradient(145deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
+          box-shadow:
+            0 1px 0 rgba(255, 255, 255, 0.3) inset,
+            0 14px 32px rgba(2, 132, 199, 0.34);
+        }
+        .bbs-card:hover .bbs-iconWrap {
+          transform: scale(1.06) translateY(-1px);
+        }
+        @media (max-width: 520px) {
+          .bbs-iconWrap,
+          .bbs-icon { width: 56px; height: 56px; border-radius: 16px; }
+          .bbs-icon svg { width: 26px; height: 26px; }
         }
         .bbs-cardText { min-width: 0; }
         .bbs-label {

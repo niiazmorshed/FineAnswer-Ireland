@@ -2,78 +2,80 @@ import React, { useEffect, useState } from "react";
 import "./Services.css";
 
 import {
-  FaComments,
-  FaPassport,
-  FaGraduationCap,
-  FaMicrophoneAlt,
-  FaShieldAlt,
-  FaHome,
-  FaPlaneDeparture,
-  FaUniversity,
-  FaSearch,
-  FaMapMarkerAlt,
-  FaClipboardList,
-  FaUserFriends,
-} from "react-icons/fa";
+  GraduationCap,
+  FileCheck2,
+  Award,
+  Languages,
+  ShieldPlus,
+  Building2,
+  PlaneLanding,
+  Landmark,
+  BookMarked,
+  Globe,
+  ClipboardCheck,
+  Users,
+} from "lucide-react";
+
+const ICON_PROPS = { size: 30, strokeWidth: 1.6 };
 
 const SERVICES = [
   {
-    icon: <FaComments />,
+    icon: <GraduationCap {...ICON_PROPS} />,
     label: "Admission Counseling",
     desc: "Personal guidance from course shortlisting through offer letters—so every choice feels confident.",
   },
   {
-    icon: <FaPassport />,
+    icon: <FileCheck2 {...ICON_PROPS} />,
     label: "Student Visa Assistance",
     desc: "Document preparation, timelines, and appointment support tailored to Irish immigration requirements.",
   },
   {
-    icon: <FaGraduationCap />,
+    icon: <Award {...ICON_PROPS} />,
     label: "Scholarships Abroad",
     desc: "Identify funding opportunities and strengthen applications with clear eligibility and deadlines.",
   },
   {
-    icon: <FaMicrophoneAlt />,
+    icon: <Languages {...ICON_PROPS} />,
     label: "English Test & Preparation",
     desc: "Structured prep for IELTS and similar tests with feedback that tracks your progress.",
   },
   {
-    icon: <FaShieldAlt />,
+    icon: <ShieldPlus {...ICON_PROPS} />,
     label: "International Health Cover",
     desc: "Compare compliant policies for study in Ireland so you arrive covered from day one.",
   },
   {
-    icon: <FaHome />,
+    icon: <Building2 {...ICON_PROPS} />,
     label: "Accommodation",
     desc: "Options near campus or city centres with budgeting tips for your first weeks abroad.",
   },
   {
-    icon: <FaPlaneDeparture />,
+    icon: <PlaneLanding {...ICON_PROPS} />,
     label: "Airport Pick Up",
     desc: "A smooth handover when you land—less stress after a long flight to a new country.",
   },
   {
-    icon: <FaUniversity />,
+    icon: <Landmark {...ICON_PROPS} />,
     label: "Fee & Banking",
     desc: "Tuition flows, forex, and Irish banking basics explained in plain language.",
   },
   {
-    icon: <FaSearch />,
+    icon: <BookMarked {...ICON_PROPS} />,
     label: "Course Selection",
     desc: "Match programmes to your goals, intake dates, and career outlook with structured filters.",
   },
   {
-    icon: <FaMapMarkerAlt />,
+    icon: <Globe {...ICON_PROPS} />,
     label: "Visit Ireland",
     desc: "Orientation on cities, transport, and culture so you know what to expect before you arrive.",
   },
   {
-    icon: <FaClipboardList />,
+    icon: <ClipboardCheck {...ICON_PROPS} />,
     label: "Application Tracking",
     desc: "Stay on top of deadlines and documents with a single view of your Ireland journey.",
   },
   {
-    icon: <FaUserFriends />,
+    icon: <Users {...ICON_PROPS} />,
     label: "Alumni Network",
     desc: "Connect with peers who have walked the path—insights you will not find in a brochure.",
   },
