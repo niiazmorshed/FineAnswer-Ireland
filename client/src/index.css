@@ -70,7 +70,8 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* `smooth` here breaks SPA navigations when leaving a long page (scrollTop clamps to new max → bottom). */
+  scroll-behavior: auto;
   color-scheme: light;
 }
 

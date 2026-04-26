@@ -14,8 +14,7 @@ export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [whySubOpen, setWhySubOpen] = useState(false);
   const whyDropdownRef = useRef(null);
-  const whyIrelandActive =
-    location.pathname.startsWith("/why-ireland") || location.pathname === "/study";
+  const whyIrelandActive = location.pathname.startsWith("/why-ireland");
 
   useEffect(() => {
     setHash((location.hash || "").replace(/^#/, ""));
@@ -78,7 +77,10 @@ export default function Navbar() {
   useEffect(() => {
     if (!whySubOpen) return;
     const onDoc = (e) => {
-      if (whyDropdownRef.current && !whyDropdownRef.current.contains(e.target)) {
+      if (
+        whyDropdownRef.current &&
+        !whyDropdownRef.current.contains(e.target)
+      ) {
         setWhySubOpen(false);
       }
     };
@@ -203,6 +205,10 @@ export default function Navbar() {
                 })}
               </div>
             </div>
+
+            <NavLink to="/study" onClick={closeMenu}>
+              Study in Ireland
+            </NavLink>
 
             <a
               href="/#about"
