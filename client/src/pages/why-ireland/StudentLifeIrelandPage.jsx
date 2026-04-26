@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaGraduationCap, FaShieldAlt, FaLandmark } from "react-icons/fa";
 import SEO from "../../components/SEO";
+import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./StudentLifeIrelandPage.css";
 
 const SUBTITLE =
@@ -16,12 +17,15 @@ export default function StudentLifeIrelandPage() {
         canonicalPath="/why-ireland/student-life"
       />
       <main className="sl-life">
-        <header className="sl-life__hero">
-          <h1 className="sl-life__title">
-            Experience the Best of Both Worlds: Academic Excellence and Vibrant Culture
-          </h1>
-          <p className="sl-life__subtitle">{SUBTITLE}</p>
-        </header>
+        <WhyIrelandBentoHero
+          title="Academic excellence, vibrant culture"
+          subtitle={SUBTITLE}
+          quickFacts={[
+            { label: "Student countries", value: "160+" },
+            { label: "Campus support", value: "Strong services" },
+            { label: "Travel", value: "Easy Europe trips" },
+          ]}
+        />
 
         <section className="sl-life__why" aria-labelledby="sl-why-heading">
           <h2 id="sl-why-heading" className="sl-life__section-title">

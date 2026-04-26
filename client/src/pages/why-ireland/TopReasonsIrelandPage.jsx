@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SEO from "../../components/SEO";
+import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./TopReasonsIrelandPage.css";
 
 const SUBTITLE =
@@ -26,10 +27,15 @@ export default function TopReasonsIrelandPage() {
         canonicalPath="/why-ireland/top-reasons"
       />
       <main className="tr-top">
-        <header className="tr-top__hero">
-          <h1 className="tr-top__title">Top Reasons to Study in Ireland</h1>
-          <p className="tr-top__subtitle">{SUBTITLE}</p>
-        </header>
+        <WhyIrelandBentoHero
+          title="Top Reasons to Study in Ireland"
+          subtitle={SUBTITLE}
+          quickFacts={[
+            { label: "Programs", value: "5,000+" },
+            { label: "Multinationals", value: "1,000+" },
+            { label: "Min wage", value: "€13.50/hr" },
+          ]}
+        />
 
         <section className="tr-top__card" aria-labelledby="tr-reason-1">
           <h2 id="tr-reason-1" className="tr-top__card-title">

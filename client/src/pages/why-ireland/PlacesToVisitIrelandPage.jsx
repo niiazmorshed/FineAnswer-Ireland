@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SEO from "../../components/SEO";
+import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./PlacesToVisitIrelandPage.css";
 
 const HERO_SUBTITLE =
@@ -39,9 +40,15 @@ export default function PlacesToVisitIrelandPage() {
         canonicalPath="/why-ireland/places-to-visit"
       />
       <main className="pv-page">
-        <header className="pv-hero">
-          <p className="pv-hero__subtitle">{HERO_SUBTITLE}</p>
-        </header>
+        <WhyIrelandBentoHero
+          title="Places to Visit in Ireland"
+          subtitle={HERO_SUBTITLE}
+          quickFacts={[
+            { label: "Best for", value: "Weekend trips" },
+            { label: "Style", value: "Nature + history" },
+            { label: "Tip", value: "Student travel deals" },
+          ]}
+        />
 
         <section className="pv-grid" aria-label="Photo gallery of places in Ireland">
           {PLACES.map((place, i) => (
