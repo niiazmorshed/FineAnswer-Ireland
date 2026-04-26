@@ -1,44 +1,48 @@
 import Lottie from "lottie-react";
 import React from "react";
-import { Briefcase, Cog, HeartPulse, Laptop, Scale, UsersRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import searchAnimation from "../assets/search.json";
 
-const ICON_SVG = { size: 30, strokeWidth: 1.65 };
+/* Icons8 OMG-IMG (3d-fluency) — free use requires a backlink: https://icons8.com/license */
+const ICONS8_3D = "3d-fluency";
+
+function icons8Url(slug, size) {
+  return `https://img.icons8.com/${ICONS8_3D}/${size}/${encodeURIComponent(slug)}.png`;
+}
 
 const SUBJECTS = [
   {
-    icon: <Cog {...ICON_SVG} />,
+    icons8Slug: "gear",
     label: "Engineering",
     desc: "Programs in computing, IT, and engineering.",
     category: "Computing, IT & Engineering",
   },
   {
-    icon: <Laptop {...ICON_SVG} />,
+    icons8Slug: "laptop",
     label: "Computing",
     desc: "Software, data, cloud, and AI pathways.",
     category: "Computing, IT & Engineering",
   },
   {
-    icon: <Briefcase {...ICON_SVG} />,
+    icons8Slug: "briefcase",
     label: "Business",
     desc: "Management, marketing, and entrepreneurship.",
     category: "Business, Management & Law",
   },
   {
-    icon: <Scale {...ICON_SVG} />,
+    icons8Slug: "scales",
     label: "Law",
     desc: "Business law and governance tracks.",
     category: "Business, Management & Law",
   },
   {
-    icon: <HeartPulse {...ICON_SVG} />,
+    icons8Slug: "stethoscope",
     label: "Health",
     desc: "Life sciences and allied health programs.",
     category: "Life Sciences & Health",
   },
   {
-    icon: <UsersRound {...ICON_SVG} />,
+    icons8Slug: "group",
     label: "Social Science",
     desc: "Humanities, policy, and social research.",
     category: "Social Sciences",
@@ -70,15 +74,26 @@ export default function BrowseBySubject() {
             </div>
 
             <div className="bbs-grid" aria-label="Subject categories">
-              {SUBJECTS.map((s, i) => (
+              {SUBJECTS.map((s) => (
                 <button
                   key={s.label}
-                  className={`bbs-card bbs-card--a${(i % 6) + 1}`}
+                  className="bbs-card"
                   onClick={() => handleClick(s.category)}
                   type="button"
                 >
                   <span className="bbs-iconWrap" aria-hidden="true">
-                    <span className="bbs-icon">{s.icon}</span>
+                    <span className="bbs-icon">
+                      <img
+                        src={icons8Url(s.icons8Slug, 64)}
+                        srcSet={`${icons8Url(s.icons8Slug, 64)} 64w, ${icons8Url(s.icons8Slug, 128)} 128w`}
+                        sizes="64px"
+                        width={64}
+                        height={64}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                    </span>
                   </span>
                   <div className="bbs-cardText">
                     <div className="bbs-label">{s.label}</div>
@@ -92,6 +107,12 @@ export default function BrowseBySubject() {
               <button className="bbs-more" type="button" onClick={() => navigate("/search-results?country=Ireland")}>
                 Explore more
               </button>
+              <p className="bbs-icons8-credit">
+                Subject icons by{" "}
+                <a href="https://icons8.com" target="_blank" rel="noopener noreferrer">
+                  Icons8
+                </a>
+              </p>
             </div>
           </div>
 
@@ -288,6 +309,7 @@ export default function BrowseBySubject() {
           justify-content: center;
           transition: transform 0.32s cubic-bezier(0.34, 1.2, 0.64, 1);
         }
+        /* Neutral “pedestal” so Icons8 3D assets read clearly */
         .bbs-icon {
           position: relative;
           width: 64px;
@@ -296,72 +318,19 @@ export default function BrowseBySubject() {
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #fff;
           overflow: hidden;
+          background: linear-gradient(165deg, #ffffff 0%, #f1f5f9 100%);
+          border: 1px solid rgba(226, 232, 240, 0.95);
           box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.35) inset,
-            0 10px 28px rgba(0, 0, 0, 0.12);
+            0 1px 0 rgba(255, 255, 255, 0.95) inset,
+            0 10px 24px rgba(15, 23, 42, 0.08);
         }
-        .bbs-icon::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          border-radius: inherit;
-          background: linear-gradient(135deg, rgba(255, 255, 255, 0.38) 0%, transparent 52%);
-          pointer-events: none;
-        }
-        .bbs-icon::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          left: 8%;
-          right: 8%;
-          height: 44%;
-          border-radius: 0 0 60% 60%;
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0.32), transparent 85%);
-          pointer-events: none;
-        }
-        .bbs-icon svg {
-          position: relative;
-          z-index: 1;
-          filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.12));
-        }
-        /* Distinct gradients — high-contrast, “jewel” feel */
-        .bbs-card--a1 .bbs-icon {
-          background: linear-gradient(145deg, #f97316 0%, #ea580c 40%, #c2410c 100%);
-          box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.3) inset,
-            0 14px 32px rgba(234, 88, 12, 0.38);
-        }
-        .bbs-card--a2 .bbs-icon {
-          background: linear-gradient(145deg, #3b82f6 0%, #2563eb 45%, #1d4ed8 100%);
-          box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.3) inset,
-            0 14px 32px rgba(37, 99, 235, 0.35);
-        }
-        .bbs-card--a3 .bbs-icon {
-          background: linear-gradient(145deg, #8b5cf6 0%, #7c3aed 45%, #5b21b6 100%);
-          box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.28) inset,
-            0 14px 32px rgba(124, 58, 237, 0.36);
-        }
-        .bbs-card--a4 .bbs-icon {
-          background: linear-gradient(145deg, #14b8a6 0%, #0d9488 50%, #0f766e 100%);
-          box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.3) inset,
-            0 14px 32px rgba(13, 148, 136, 0.34);
-        }
-        .bbs-card--a5 .bbs-icon {
-          background: linear-gradient(145deg, #ec4899 0%, #db2777 45%, #be185d 100%);
-          box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.28) inset,
-            0 14px 32px rgba(219, 39, 119, 0.34);
-        }
-        .bbs-card--a6 .bbs-icon {
-          background: linear-gradient(145deg, #0ea5e9 0%, #0284c7 50%, #0369a1 100%);
-          box-shadow:
-            0 1px 0 rgba(255, 255, 255, 0.3) inset,
-            0 14px 32px rgba(2, 132, 199, 0.34);
+        .bbs-icon img {
+          width: 88%;
+          height: 88%;
+          object-fit: contain;
+          display: block;
+          filter: drop-shadow(0 2px 4px rgba(15, 23, 42, 0.06));
         }
         .bbs-card:hover .bbs-iconWrap {
           transform: scale(1.06) translateY(-1px);
@@ -369,7 +338,7 @@ export default function BrowseBySubject() {
         @media (max-width: 520px) {
           .bbs-iconWrap,
           .bbs-icon { width: 56px; height: 56px; border-radius: 16px; }
-          .bbs-icon svg { width: 26px; height: 26px; }
+          .bbs-icon img { width: 86%; height: 86%; }
         }
         .bbs-cardText { min-width: 0; }
         .bbs-label {
@@ -385,9 +354,22 @@ export default function BrowseBySubject() {
         }
         .bbs-actions {
           display: flex;
-          gap: 14px;
-          justify-content: flex-start;
-          flex-wrap: wrap;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .bbs-icons8-credit {
+          margin: 0;
+          font-size: 0.7rem;
+          line-height: 1.4;
+          color: var(--color-text-secondary, #94a3b8);
+        }
+        .bbs-icons8-credit a {
+          color: rgba(99, 102, 241, 0.85);
+          text-decoration: none;
+        }
+        .bbs-icons8-credit a:hover {
+          text-decoration: underline;
         }
         .bbs-more {
           height: 40px;
