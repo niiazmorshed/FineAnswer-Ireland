@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SEO from "../../components/SEO";
+import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./TopReasonsIrelandPage.css";
 
 const SUBTITLE =
-  "Ireland is an island nation on the westernmost edge of Europe, offering world-class education, career opportunities, and an unmatched quality of life.";
+  "Ireland is an island nation on the westernmost edge of Europe, known for world-class education, strong graduate outcomes, and an excellent quality of life. From internationally respected universities to a vibrant innovation ecosystem, Ireland offers a study experience that combines academic depth with real-world relevance. Students benefit from an English-speaking environment, diverse communities, and access to global industries that make it easier to build a career after graduation.";
 
 const COURSE_CHIPS = [
   "Business Analytics",
@@ -26,10 +27,15 @@ export default function TopReasonsIrelandPage() {
         canonicalPath="/why-ireland/top-reasons"
       />
       <main className="tr-top">
-        <header className="tr-top__hero">
-          <h1 className="tr-top__title">Top Reasons to Study in Ireland</h1>
-          <p className="tr-top__subtitle">{SUBTITLE}</p>
-        </header>
+        <WhyIrelandBentoHero
+          title="Top Reasons to Study in Ireland"
+          subtitle={SUBTITLE}
+          quickFacts={[
+            { label: "Programs", value: "5,000+" },
+            { label: "Multinationals", value: "1,000+" },
+            { label: "Min wage", value: "€13.50/hr" },
+          ]}
+        />
 
         <section className="tr-top__card" aria-labelledby="tr-reason-1">
           <h2 id="tr-reason-1" className="tr-top__card-title">

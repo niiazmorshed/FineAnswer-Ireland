@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SEO from "../../components/SEO";
+import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./PlacesToVisitIrelandPage.css";
 
 const HERO_SUBTITLE =
-  "Here's our guide to the places that will make your educational trip to Ireland one to remember, for a long time.";
+  "Here’s our guide to the places that will make your educational trip to Ireland truly unforgettable. From iconic cliffs and coastal drives to historic cities, castles, islands, and UNESCO sites, these destinations are perfect for day trips and weekend breaks between classes. Use this list to plan your adventures, take amazing photos, and experience Ireland beyond the campus.";
 
 /** Stable placeholder images via picsum.photos (unique seed per place) */
 const imgSrc = (seed) => `https://picsum.photos/seed/${seed}/800/600`;
@@ -39,9 +40,15 @@ export default function PlacesToVisitIrelandPage() {
         canonicalPath="/why-ireland/places-to-visit"
       />
       <main className="pv-page">
-        <header className="pv-hero">
-          <p className="pv-hero__subtitle">{HERO_SUBTITLE}</p>
-        </header>
+        <WhyIrelandBentoHero
+          title="Places to Visit in Ireland"
+          subtitle={HERO_SUBTITLE}
+          quickFacts={[
+            { label: "Best for", value: "Weekend trips" },
+            { label: "Style", value: "Nature + history" },
+            { label: "Tip", value: "Student travel deals" },
+          ]}
+        />
 
         <section className="pv-grid" aria-label="Photo gallery of places in Ireland">
           {PLACES.map((place, i) => (

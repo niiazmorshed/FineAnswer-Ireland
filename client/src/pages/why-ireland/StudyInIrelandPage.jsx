@@ -1,13 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import SEO from "../../components/SEO";
+import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import TopUtilityBar from "../../components/TopUtilityBar";
 import Navbar3 from "../../components/navbar3";
 import Footer from "../../components/Footer";
 import "./StudyInIrelandPage.css";
 
 const HERO_TEXT =
-  "Ireland is known for its Academic excellence and internationally-recognized qualifications. It not only provides vibrant campus life, and abundant growth in research, but also immense employment opportunities.";
+  "Ireland is known for its academic excellence and internationally recognized qualifications. Beyond the classroom, you’ll experience vibrant campus life, strong student support, and a culture that welcomes people from around the world. With growing investment in research, innovation, and industry partnerships, Irish institutions help you build real-world skills. Ireland also offers strong employment pathways through internships, part-time work options, and opportunities in fast-growing sectors after graduation.";
 
 function StudyInIrelandMain() {
   const location = useLocation();
@@ -21,12 +22,15 @@ function StudyInIrelandMain() {
         canonicalPath={canonicalPath}
       />
       <main className="si-campus">
-        <header className="si-campus__hero">
-          <h1 className="si-campus__title">
-            Campus — <span>Study in Ireland</span>
-          </h1>
-          <p className="si-campus__hero-text">{HERO_TEXT}</p>
-        </header>
+        <WhyIrelandBentoHero
+          title="Campus — Study in Ireland"
+          subtitle={HERO_TEXT}
+          quickFacts={[
+            { label: "Typical tuition", value: "€6k–€25k / year" },
+            { label: "Popular intake", value: "September" },
+            { label: "Language", value: "English" },
+          ]}
+        />
 
         <section className="si-campus__section" aria-labelledby="si-levels-heading">
           <h2 id="si-levels-heading" className="si-campus__h2">

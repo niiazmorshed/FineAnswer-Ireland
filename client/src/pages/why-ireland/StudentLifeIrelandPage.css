@@ -4,35 +4,16 @@
   --sl-orange: #ff7900;
   --sl-ink: #0f172a;
   --sl-muted: #475569;
-  max-width: 960px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 24px 18px 72px;
+  padding: 24px 24px 72px;
   font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
   color: var(--sl-ink);
 }
 
-.sl-life__hero {
-  margin-bottom: 36px;
-  padding: 28px 22px;
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(0, 154, 73, 0.08) 0%, rgba(255, 121, 0, 0.06) 100%);
-  border: 1px solid rgba(0, 154, 73, 0.18);
-}
-
-.sl-life__title {
-  margin: 0 0 14px;
-  font-size: clamp(1.35rem, 3.2vw, 1.85rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1.2;
-  color: var(--sl-ink);
-}
-
-.sl-life__subtitle {
-  margin: 0;
-  font-size: clamp(0.98rem, 1.12vw, 1.06rem);
-  line-height: 1.65;
-  color: var(--sl-muted);
+/* Header replaced by shared bento hero */
+.sl-life .wy-bentoHero {
+  margin-bottom: 16px;
 }
 
 .sl-life__section-title {
