@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaUniversity, FaMapMarkerAlt } from "react-icons/fa";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
@@ -6,10 +6,32 @@ import "./SuccessStories.css";
 import { getSuccessStories } from "../services/successStoriesApi";
 import { resolveMediaUrl } from "../utils/resolveMediaUrl";
 
+const CAROUSEL_ID = "success-stories-carousel";
+const AUTOPLAY_MS = 6000;
+
+function getVisibleCount() {
+  if (typeof window === "undefined") return 1;
+  if (window.innerWidth >= 1200) return 3;
+  if (window.innerWidth >= 720) return 2;
+  return 1;
+}
+
+function useVisibleCount() {
+  const [v, setV] = useState(1);
+  useEffect(() => {
+    const onResize = () => setV(getVisibleCount());
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+  return v;
+}
+
 export default function SuccessStories() {
   const [stories, setStories] = useState([]);
   const [active, setActive] = useState(0);
-  const autoRef = useRef(null);
+  const [timerKey, setTimerKey] = useState(0);
+  const visibleCount = useVisibleCount();
 
   useEffect(() => {
     const fetch = async () => {
@@ -20,99 +42,134 @@ export default function SuccessStories() {
     fetch();
   }, []);
 
+  const n = stories.length;
+  const maxIndex = n ? Math.max(0, n - visibleCount) : 0;
+
+  const bumpTimer = useCallback(() => {
+    setTimerKey((k) => k + 1);
+  }, []);
+
+  // Keep window start index valid when n or column count changes
   useEffect(() => {
-    if (stories.length > 0) {
-      autoRef.current = setInterval(() => next(), 5000);
-    }
-    return () => clearInterval(autoRef.current);
-  }, [stories, active]);
+    setActive((a) => Math.min(a, maxIndex));
+  }, [n, visibleCount, maxIndex]);
 
-  const prev = () => {
-    clearInterval(autoRef.current);
-    setActive((p) => (p === 0 ? stories.length - 1 : p - 1));
-  };
+  const prev = useCallback(() => {
+    if (!n) return;
+    setActive((a) => Math.max(0, a - 1));
+    bumpTimer();
+  }, [n, bumpTimer]);
 
-  const next = () => {
-    clearInterval(autoRef.current);
-    setActive((p) => (p === stories.length - 1 ? 0 : p + 1));
-  };
+  const next = useCallback(() => {
+    if (!n) return;
+    setActive((a) => Math.min(maxIndex, a + 1));
+    bumpTimer();
+  }, [n, maxIndex, bumpTimer]);
 
-  if (!stories.length) return null;
+  useEffect(() => {
+    if (!n) return;
+    const id = setInterval(() => {
+      setActive((a) => (a >= maxIndex ? 0 : Math.min(maxIndex, a + 1)));
+    }, AUTOPLAY_MS);
+    return () => clearInterval(id);
+  }, [n, maxIndex, timerKey]);
+
+  if (!n) return null;
+
+  const trackPct = maxIndex > 0 ? (100 * active) / n : 0;
+  const startCard = active + 1;
+  const endCard = Math.min(active + visibleCount, n);
 
   return (
-    <div className="success-wrapper">
+    <section
+      className="success-wrapper"
+      id="success-stories"
+      aria-roledescription="carousel"
+    >
       <div className="success-header">
-        <h2 className="success-title">Success Stories</h2>
+        <h2 className="success-title" id="success-stories-title">
+          Success Stories
+        </h2>
         <p className="success-sub">Empowering students to achieve their global dreams</p>
       </div>
 
-      <div className="carousel-container">
-        {/* Modern Minimalist Buttons */}
-        {/* Modern Minimalist Arrows */}
-<button 
-  className="control-btn prev" 
-  onClick={prev} 
-  aria-label="Previous Story"
->
-  <FiArrowLeft />
-</button>
+      <div
+        className="carousel-container"
+        id={CAROUSEL_ID}
+        role="region"
+        aria-labelledby="success-stories-title"
+        aria-label="Success story testimonials"
+      >
+        <div className="carousel-stage">
+          <button type="button" className="control-btn prev" onClick={prev} aria-label="Previous stories">
+            <FiArrowLeft />
+          </button>
 
-<button 
-  className="control-btn next" 
-  onClick={next} 
-  aria-label="Next Story"
->
-  <FiArrowRight />
-</button>
+          <button type="button" className="control-btn next" onClick={next} aria-label="Next stories">
+            <FiArrowRight />
+          </button>
 
-        <div className="carousel-track">
-          {stories.map((story, i) => {
-            let offset = i - active;
-            if (offset < -stories.length / 2) offset += stories.length;
-            if (offset > stories.length / 2) offset -= stories.length;
+          <div
+            className="carousel-viewport"
+            style={{ "--ss-count": n, "--ss-visible": Math.min(visibleCount, n) }}
+          >
+            <div
+              className="carousel-track"
+              style={{ transform: `translate3d(-${trackPct}%, 0, 0)` }}
+            >
+              {stories.map((story, i) => {
+                const inView = i >= active && i < active + visibleCount;
+                return (
+                  <div
+                    key={story._id || `story-${i}`}
+                    className="carousel-slide"
+                    role="group"
+                    aria-label={`${i + 1} of ${n}`}
+                    aria-hidden={!inView}
+                  >
+                    <article className={`story-card${i === active ? " is-active" : ""}`}>
+                      <div className="user-profile">
+                        <img
+                          src={resolveMediaUrl(story.image)}
+                          alt={story.name}
+                          className="user-avatar"
+                          loading={i < 3 ? "eager" : "lazy"}
+                        />
+                      </div>
 
-            // Display more cards by increasing visibility range
-            const isVisible = Math.abs(offset) <= 2.5; 
-            const isActive = offset === 0;
+                      <div className="card-content">
+                        <h3 className="user-name">{story.name}</h3>
+                        <span className="user-program">{story.program}</span>
 
-            return (
-              <div
-                key={i}
-                className={`story-card-wrapper ${isActive ? "active" : ""}`}
-                style={{
-                  transform: `translateX(calc(-50% + ${offset * 320}px)) scale(${isActive ? 1 : 0.85})`,
-                  opacity: isActive ? 1 : isVisible ? 0.4 : 0,
-                  zIndex: 10 - Math.abs(offset),
-                  transition: isVisible ? "all 0.7s cubic-bezier(0.4, 0, 0.2, 1)" : "none",
-                  pointerEvents: isActive ? "all" : "none"
-                }}
-              >
-                <div className="story-card">
-                  <div className="user-profile">
-                    <img src={resolveMediaUrl(story.image)} alt={story.name} className="user-avatar" />
+                        <div className="user-meta">
+                          <span>
+                            <FaUniversity /> {story.university}
+                          </span>
+                          <span>
+                            <FaMapMarkerAlt /> {story.country}
+                          </span>
+                        </div>
+
+                        <p className="user-quote">"{story.story}"</p>
+
+                        <Link to={`/success-story/${story._id || i}`} className="action-link" state={{ story }}>
+                          Read full story
+                        </Link>
+                      </div>
+                    </article>
                   </div>
-                  
-                  <div className="card-content">
-                    <h3 className="user-name">{story.name}</h3>
-                    <span className="user-program">{story.program}</span>
-
-                    <div className="user-meta">
-                      <span><FaUniversity /> {story.university}</span>
-                      <span><FaMapMarkerAlt /> {story.country}</span>
-                    </div>
-
-                    <p className="user-quote">"{story.story}"</p>
-
-                    <Link to={`/success-story/${story._id || i}`} className="action-link">
-                      Read Full Story
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+                );
+              })}
+            </div>
+          </div>
         </div>
+
+        <p className="carousel-footer" aria-live="polite" aria-atomic="true">
+          <span className="carousel-range">
+            {startCard} – {endCard} of {n}
+          </span>
+        </p>
       </div>
-    </div>
+    </section>
   );
 }
