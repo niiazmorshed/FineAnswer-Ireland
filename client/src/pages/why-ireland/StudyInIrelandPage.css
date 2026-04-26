@@ -4,9 +4,9 @@
   --si-orange: #ff7900;
   --si-ink: #0f172a;
   --si-muted: #475569;
-  max-width: 920px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 24px 18px 72px;
+  padding: 24px 24px 72px;
   font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
   color: var(--si-ink);
 }

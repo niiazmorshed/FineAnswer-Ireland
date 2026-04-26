@@ -8,7 +8,7 @@ import Footer from "../../components/Footer";
 import "./StudyInIrelandPage.css";
 
 const HERO_TEXT =
-  "Ireland is known for its Academic excellence and internationally-recognized qualifications. It not only provides vibrant campus life, and abundant growth in research, but also immense employment opportunities.";
+  "Ireland is known for its academic excellence and internationally recognized qualifications. Beyond the classroom, you’ll experience vibrant campus life, strong student support, and a culture that welcomes people from around the world. With growing investment in research, innovation, and industry partnerships, Irish institutions help you build real-world skills. Ireland also offers strong employment pathways through internships, part-time work options, and opportunities in fast-growing sectors after graduation.";
 
 function StudyInIrelandMain() {
   const location = useLocation();

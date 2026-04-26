@@ -6,7 +6,7 @@ import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./StudentLifeIrelandPage.css";
 
 const SUBTITLE =
-  "Studying in Ireland offers more than just world-class education; it's an opportunity to immerse yourself in a rich culture, explore breathtaking landscapes, and create lifelong memories. As an international student, you'll find Ireland to be a welcoming and dynamic place that quickly feels like home.";
+  "Studying in Ireland offers more than just world-class education; it’s an opportunity to immerse yourself in a rich culture, explore breathtaking landscapes, and create lifelong memories. From lively student societies and sports to music, festivals, and weekend trips across the country, there’s always something to experience. As an international student, you’ll find Ireland welcoming and easy to settle into, with strong campus support and communities that help you feel at home from day one.";
 
 export default function StudentLifeIrelandPage() {
   return (

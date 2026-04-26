@@ -5,7 +5,7 @@ import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./PlacesToVisitIrelandPage.css";
 
 const HERO_SUBTITLE =
-  "Here's our guide to the places that will make your educational trip to Ireland one to remember, for a long time.";
+  "Here’s our guide to the places that will make your educational trip to Ireland truly unforgettable. From iconic cliffs and coastal drives to historic cities, castles, islands, and UNESCO sites, these destinations are perfect for day trips and weekend breaks between classes. Use this list to plan your adventures, take amazing photos, and experience Ireland beyond the campus.";
 
 /** Stable placeholder images via picsum.photos (unique seed per place) */
 const imgSrc = (seed) => `https://picsum.photos/seed/${seed}/800/600`;

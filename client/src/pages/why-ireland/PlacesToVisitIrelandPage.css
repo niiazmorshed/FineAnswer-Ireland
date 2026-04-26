@@ -3,9 +3,9 @@
   --pv-green: #009a49;
   --pv-orange: #ff7900;
   --pv-ink: #0f172a;
-  max-width: 1200px;
+  max-width: 1320px;
   margin: 0 auto;
-  padding: 24px 18px 72px;
+  padding: 24px 24px 72px;
   font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
   color: var(--pv-ink);
 }

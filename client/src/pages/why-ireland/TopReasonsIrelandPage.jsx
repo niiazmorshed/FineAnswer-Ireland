@@ -5,7 +5,7 @@ import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
 import "./TopReasonsIrelandPage.css";
 
 const SUBTITLE =
-  "Ireland is an island nation on the westernmost edge of Europe, offering world-class education, career opportunities, and an unmatched quality of life.";
+  "Ireland is an island nation on the westernmost edge of Europe, known for world-class education, strong graduate outcomes, and an excellent quality of life. From internationally respected universities to a vibrant innovation ecosystem, Ireland offers a study experience that combines academic depth with real-world relevance. Students benefit from an English-speaking environment, diverse communities, and access to global industries that make it easier to build a career after graduation.";
 
 const COURSE_CHIPS = [
   "Business Analytics",
