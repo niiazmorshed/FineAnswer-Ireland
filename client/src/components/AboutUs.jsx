@@ -1,78 +1,94 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
-import aboutImg1 from "../images/uni1.jpg";
-import aboutImg2 from "../images/uni2.jpg";
-import aboutImg3 from "../images/uni3.jpg";
+import aboutImg1 from "../assets/fine.jpg";
+import aboutImg2 from "../assets/Griffith.jpg";
+import aboutImg3 from "../assets/DBS.jpg";
+import aboutImg4 from "../assets/DCU.jpg";
 import mapAnimation from "../assets/map.json";
+
+const stats = [
+  { value: "4K+", label: "Satisfied Customers" },
+  { value: "1K+", label: "Successful Applications" },
+  { value: "24/7", label: "Customer Support" },
+  { value: "100%", label: "Dedication" },
+];
 
 export default function AboutUs() {
   const navigate = useNavigate();
   const sectionRef = useRef(null);
-  const [hasAnimated, setHasAnimated] = useState(false);
-  const [stats, setStats] = useState({ customersA: 0, customersB: 0, support: 0, dedication: 0 });
-
-  const target = useMemo(
-    () => ({ customersA: 4000, customersB: 1000, support: 24, dedication: 100 }),
-    [],
-  );
+  const [isVisible, setIsVisible] = useState(false);
+  const [shouldMountMap, setShouldMountMap] = useState(false);
+  const [shouldPlayMap, setShouldPlayMap] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   useEffect(() => {
-    if (!sectionRef.current || hasAnimated) return;
+    const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
+    if (!query) return undefined;
+
+    const update = () => setReduceMotion(query.matches);
+    update();
+    query.addEventListener?.("change", update);
+    return () => query.removeEventListener?.("change", update);
+  }, []);
+
+  useEffect(() => {
+    if (!sectionRef.current || isVisible) return;
 
     const el = sectionRef.current;
     const obs = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (!entry?.isIntersecting) return;
-        setHasAnimated(true);
+        setIsVisible(true);
+        obs.unobserve(el);
       },
-      { threshold: 0.25 },
+      { rootMargin: "160px 0px", threshold: 0.12 },
     );
 
     obs.observe(el);
     return () => obs.disconnect();
-  }, [hasAnimated]);
+  }, [isVisible]);
 
   useEffect(() => {
-    if (!hasAnimated) return;
+    if (!sectionRef.current || reduceMotion) {
+      setShouldPlayMap(false);
+      return undefined;
+    }
 
-    const start = performance.now();
-    const duration = 1200;
+    const el = sectionRef.current;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const shouldPlay = Boolean(entry?.isIntersecting);
+        if (shouldPlay) setShouldMountMap(true);
+        setShouldPlayMap(shouldPlay);
+      },
+      { rootMargin: "220px 0px", threshold: 0.01 },
+    );
 
-    const tick = (now) => {
-      const t = Math.min(1, (now - start) / duration);
-      const ease = 1 - Math.pow(1 - t, 3); // easeOutCubic
-
-      setStats({
-        customersA: Math.round(target.customersA * ease),
-        customersB: Math.round(target.customersB * ease),
-        support: Math.round(target.support * ease),
-        dedication: Math.round(target.dedication * ease),
-      });
-
-      if (t < 1) requestAnimationFrame(tick);
-    };
-
-    const raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [hasAnimated, target]);
-
-  const formatKPlus = (n) => {
-    if (n >= 1000) return `${Math.round(n / 1000)}K+`;
-    return `${n}+`;
-  };
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [reduceMotion]);
 
   return (
-    <section className="about-section-v2" id="about" ref={sectionRef}>
-      <div className="aboutv2-mapBg" aria-hidden="true">
-        <Lottie
-          animationData={mapAnimation}
-          loop
-          autoplay
-          style={{ width: "100%", height: "100%" }}
-          rendererSettings={{ preserveAspectRatio: "xMidYMid slice" }}
-        />
+    <section className={`about-section-v2${isVisible ? " about-section-v2--visible" : ""}`} id="about" ref={sectionRef}>
+      <div className={`aboutv2-mapBg${shouldMountMap ? " aboutv2-mapBg--motion" : ""}`} aria-hidden="true">
+        {shouldMountMap && !reduceMotion && (
+          <Lottie
+            animationData={mapAnimation}
+            loop
+            autoplay={false}
+            isPaused={!shouldPlayMap}
+            renderer="canvas"
+            rendererSettings={{
+              preserveAspectRatio: "xMidYMid slice",
+              progressiveLoad: true,
+              clearCanvas: true,
+            }}
+            style={{ width: "100%", height: "100%" }}
+          />
+        )}
       </div>
       <div className="aboutv2-container">
         <div className="aboutv2-grid">
@@ -91,16 +107,16 @@ export default function AboutUs() {
 
             <div className="aboutv2-photoGrid">
               <div className="aboutv2-photo aboutv2-photo--1">
-                <img src={aboutImg1} alt="" />
+                <img src={aboutImg1} alt="" loading="lazy" decoding="async" fetchPriority="low" />
               </div>
               <div className="aboutv2-photo aboutv2-photo--2">
-                <img src={aboutImg2} alt="" />
+                <img src={aboutImg2} alt="" loading="lazy" decoding="async" fetchPriority="low" />
               </div>
               <div className="aboutv2-photo aboutv2-photo--3">
-                <img src={aboutImg3} alt="" />
+                <img src={aboutImg3} alt="" loading="lazy" decoding="async" fetchPriority="low" />
               </div>
               <div className="aboutv2-photo aboutv2-photo--4">
-                <img src={aboutImg1} alt="" />
+                <img src={aboutImg4} alt="" loading="lazy" decoding="async" fetchPriority="low" />
               </div>
             </div>
 
@@ -122,28 +138,12 @@ export default function AboutUs() {
             </p>
 
             <div className="aboutv2-stats">
-              <div className="aboutv2-statCard">
-                <div className="aboutv2-statValue">{formatKPlus(stats.customersA)}</div>
-                <div className="aboutv2-statLabel">Satisfied Customers</div>
-              </div>
-              <div className="aboutv2-statCard">
-                <div className="aboutv2-statValue">{formatKPlus(stats.customersB)}</div>
-                <div className="aboutv2-statLabel">Satisfied Customers</div>
-              </div>
-              <div className="aboutv2-statCard">
-                <div className="aboutv2-statValue">
-                  {stats.support}
-                  <span className="aboutv2-statSuffix">/7</span>
+              {stats.map((item, index) => (
+                <div className="aboutv2-statCard" style={{ "--stat-delay": `${index * 70}ms` }} key={item.label}>
+                  <div className="aboutv2-statValue">{item.value}</div>
+                  <div className="aboutv2-statLabel">{item.label}</div>
                 </div>
-                <div className="aboutv2-statLabel">Customer Support</div>
-              </div>
-              <div className="aboutv2-statCard">
-                <div className="aboutv2-statValue">
-                  {stats.dedication}
-                  <span className="aboutv2-statSuffix">%</span>
-                </div>
-                <div className="aboutv2-statLabel">Dedication</div>
-              </div>
+              ))}
             </div>
 
             <div className="aboutv2-actions">
@@ -162,21 +162,60 @@ export default function AboutUs() {
           font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
           position: relative;
           overflow: hidden;
+          content-visibility: auto;
+          contain-intrinsic-size: 620px;
         }
         @media (max-width: 768px){
           .about-section-v2{ padding: var(--section-padding-mobile, 48px) 0; }
         }
         .aboutv2-mapBg{
           position: absolute;
-          inset: 0;
+          inset: 8% 0 0;
           z-index: 0;
           pointer-events: none;
-          opacity: 0.32;
-          filter: saturate(1.05) contrast(1.02);
+          opacity: 0.42;
+          background:
+            radial-gradient(circle at 18% 24%, rgba(100, 200, 80, 0.14) 0 2px, transparent 3px),
+            radial-gradient(circle at 72% 44%, rgba(37, 99, 235, 0.12) 0 2px, transparent 3px),
+            linear-gradient(120deg, transparent 0 18%, rgba(100, 200, 80, 0.08) 18% 18.6%, transparent 18.6% 43%, rgba(37, 99, 235, 0.07) 43% 43.5%, transparent 43.5% 100%);
+          background-size: 62px 62px, 74px 74px, 100% 100%;
+          mask-image: radial-gradient(ellipse at center, #000 0 58%, transparent 78%);
+          contain: paint;
+          transform: translateZ(0);
         }
-        .aboutv2-mapBg svg{
-          width: 100%;
-          height: 100%;
+        .aboutv2-mapBg--motion{
+          opacity: 0.3;
+          background: none;
+          mask-image: none;
+        }
+        .aboutv2-mapBg::before,
+        .aboutv2-mapBg::after{
+          content: "";
+          position: absolute;
+          border: 1px solid rgba(37, 99, 235, 0.14);
+          border-radius: 50%;
+          transform: rotate(-12deg);
+        }
+        .aboutv2-mapBg::before{
+          width: 480px;
+          height: 210px;
+          left: 8%;
+          top: 22%;
+        }
+        .aboutv2-mapBg::after{
+          width: 560px;
+          height: 240px;
+          right: 6%;
+          bottom: 12%;
+        }
+        .aboutv2-mapBg--motion::before,
+        .aboutv2-mapBg--motion::after{
+          display: none;
+        }
+        .aboutv2-mapBg canvas{
+          width: 100% !important;
+          height: 100% !important;
+          display: block;
         }
         .aboutv2-container{
           max-width: 1120px;
@@ -235,6 +274,13 @@ export default function AboutUs() {
           border-radius: 16px;
           padding: 14px 14px 12px;
           box-shadow: 0 10px 28px rgba(15,23,42,0.06);
+          opacity: 0;
+          transform: translate3d(0, 8px, 0);
+          transition: opacity 360ms ease var(--stat-delay, 0ms), transform 360ms ease var(--stat-delay, 0ms);
+        }
+        .about-section-v2--visible .aboutv2-statCard{
+          opacity: 1;
+          transform: translate3d(0, 0, 0);
         }
         .aboutv2-statValue{
           font-size: 1.25rem;
@@ -303,6 +349,7 @@ export default function AboutUs() {
           border: 1px solid rgba(212,233,244,0.9);
           box-shadow: 0 16px 40px rgba(15,23,42,0.10);
           aspect-ratio: 1 / 1;
+          contain: paint;
         }
         .aboutv2-photo img{
           width: 100%;
@@ -356,6 +403,13 @@ export default function AboutUs() {
           .aboutv2-stats{ max-width: none; }
           .aboutv2-photoGrid{ gap: 14px; }
           .aboutv2-chip--pin{ right: 120px; }
+        }
+        @media (prefers-reduced-motion: reduce){
+          .aboutv2-statCard{
+            opacity: 1;
+            transform: none;
+            transition: none;
+          }
         }
       `}</style>
     </section>

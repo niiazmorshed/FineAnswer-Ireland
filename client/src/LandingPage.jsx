@@ -26,9 +26,41 @@ import { AuthContext } from "./pages/Provider/ContextProvider";
 import SEO from "./components/SEO";
 import "./LandingPage.css";
 
+const getPageScrollY = () => {
+  const scrollingElement = document.scrollingElement || document.documentElement;
+  return Math.max(
+    0,
+    window.scrollY ||
+      scrollingElement?.scrollTop ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0
+  );
+};
+
+const getEventScrollY = (event) => {
+  const target = event?.target;
+  if (
+    target &&
+    target !== window &&
+    target !== document &&
+    target !== document.documentElement &&
+    target !== document.body &&
+    typeof target.scrollTop === "number"
+  ) {
+    return target.scrollTop;
+  }
+
+  return getPageScrollY();
+};
+
 export default function LandingPage() {
   const navigate = useNavigate();
   const { user, loading } = useContext(AuthContext);
+  const [headerHidden, setHeaderHidden] = useState(false);
+  const [headerScrolled, setHeaderScrolled] = useState(false);
+  const lastHeaderY = React.useRef(0);
+  const headerFrame = React.useRef(null);
 
 
   useEffect(() => {
@@ -43,6 +75,73 @@ export default function LandingPage() {
     onHash();
     window.addEventListener("hashchange", onHash);
     return () => window.removeEventListener("hashchange", onHash);
+  }, []);
+
+  useEffect(() => {
+    const revealAtTop = 80;
+    const directionThreshold = 4;
+
+    const applyScrollDirection = (y, delta) => {
+      setHeaderScrolled(y > 10);
+
+      if (y <= revealAtTop) {
+        setHeaderHidden(false);
+      } else if (Math.abs(delta) >= directionThreshold) {
+        setHeaderHidden(delta > 0);
+      }
+
+      lastHeaderY.current = y;
+    };
+
+    const scheduleFromScroll = (event) => {
+      if (headerFrame.current !== null) return;
+      headerFrame.current = window.requestAnimationFrame(() => {
+        headerFrame.current = null;
+        const y = getEventScrollY(event);
+        applyScrollDirection(y, y - lastHeaderY.current);
+      });
+    };
+
+    const onWheel = (event) => {
+      if (Math.abs(event.deltaY) < directionThreshold) return;
+      const y = getPageScrollY();
+      applyScrollDirection(y, event.deltaY);
+    };
+
+    let touchY = 0;
+    const onTouchStart = (event) => {
+      touchY = event.touches?.[0]?.clientY ?? 0;
+    };
+    const onTouchMove = (event) => {
+      const currentY = event.touches?.[0]?.clientY ?? touchY;
+      const delta = touchY - currentY;
+      if (Math.abs(delta) >= directionThreshold) {
+        applyScrollDirection(getPageScrollY(), delta);
+      }
+      touchY = currentY;
+    };
+
+    lastHeaderY.current = getPageScrollY();
+    setHeaderScrolled(lastHeaderY.current > 10);
+    setHeaderHidden(false);
+
+    window.addEventListener("scroll", scheduleFromScroll, { passive: true });
+    document.addEventListener("scroll", scheduleFromScroll, { passive: true, capture: true });
+    window.addEventListener("wheel", onWheel, { passive: true });
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", scheduleFromScroll);
+      document.removeEventListener("scroll", scheduleFromScroll, { capture: true });
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      if (headerFrame.current !== null) {
+        window.cancelAnimationFrame(headerFrame.current);
+        headerFrame.current = null;
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -105,6 +204,20 @@ export default function LandingPage() {
   useEffect(() => { if (user) setShowPopup(false); }, [user]);
 
   return (
+    <>
+    {/* landing-top is intentionally OUTSIDE .LandingPage.
+        .LandingPage uses isolation:isolate which traps position:fixed
+        descendants (Chrome/Brave bug), making them scroll with the page. */}
+    <div className={`landing-top landing-top--home${headerScrolled ? " is-scrolled" : ""}${headerHidden ? " is-hidden" : ""}`}>
+      <TopUtilityBar />
+      <Navbar3
+        autoHide={false}
+        withSpacer={false}
+        controlledScrolled={headerScrolled}
+        controlledHidden={false}
+      />
+    </div>
+    <div className="landing-top-spacer" aria-hidden="true" />
     <div className="LandingPage">
       <SEO
         title="Study in Ireland"
@@ -123,10 +236,6 @@ export default function LandingPage() {
         }}
       />
       <ParticlesBackground />
-      <div className="landing-top">
-        <TopUtilityBar />
-        <Navbar3 />
-      </div>
 
       <BentoHero
         useGlobeHero
@@ -245,5 +354,6 @@ export default function LandingPage() {
         </div>
       )}
     </div>
+    </>
   );
 }

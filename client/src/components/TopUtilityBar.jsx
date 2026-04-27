@@ -71,9 +71,13 @@ export default function TopUtilityBar() {
 
       <style>{`
         .utility-bar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          z-index: 1000;
           background-color: #491d6e;
           height: 40px;
-          width: 100%;
           display: flex;
           align-items: center;
         }

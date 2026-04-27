@@ -75,11 +75,10 @@
   font-size: 0.9rem;
   cursor: pointer;
   box-shadow: 0 12px 30px rgba(99, 102, 241, 0.22);
-  transition: transform 160ms ease, box-shadow 200ms ease, filter 200ms ease;
+  transition: transform 160ms ease, box-shadow 200ms ease;
 }
 
 .services-cta:hover {
-  filter: saturate(1.05) brightness(0.98);
   transform: translateY(-1px);
   box-shadow: 0 18px 44px rgba(99, 102, 241, 0.28);
 }

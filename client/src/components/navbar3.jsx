@@ -5,7 +5,25 @@ import { WHY_IRELAND_NAV } from "../pages/why-ireland/whyIrelandNav";
 import "../css/navbar3.css";
 import logo from "../images/logo.png";
 
-export default function Navbar() {
+const getScrollY = () => {
+  if (typeof window === "undefined") return 0;
+  const scrollingElement = document.scrollingElement || document.documentElement;
+  return Math.max(
+    0,
+    window.scrollY ||
+      scrollingElement?.scrollTop ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop ||
+      0
+  );
+};
+
+export default function Navbar({
+  autoHide = true,
+  withSpacer = true,
+  controlledScrolled,
+  controlledHidden,
+} = {}) {
   const navigate = useNavigate();
   const location = useLocation();
   const [hash, setHash] = useState(() =>
@@ -27,6 +45,9 @@ export default function Navbar() {
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
   const [scrolled, setScrolled] = useState(false);
+  const [show, setShow] = useState(true);
+  const lastY = useRef(getScrollY());
+  const scrollFrame = useRef(null);
   const [imgError, setImgError] = useState(false);
   const { user, isAdmin, loading } = useContext(AuthContext);
 
@@ -39,10 +60,48 @@ export default function Navbar() {
   }, [user?.picture, user?.photoURL]);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 10);
+    if (!autoHide) {
+      setShow(true);
+      return undefined;
+    }
+
+    const revealAtTop = 80;
+    const directionThreshold = 6;
+
+    const updateNavbarState = () => {
+      scrollFrame.current = null;
+      const y = getScrollY();
+      const prev = lastY.current;
+      const delta = y - prev;
+
+      setScrolled(y > 10);
+
+      if (menuOpen || y <= revealAtTop) {
+        setShow(true);
+      } else if (Math.abs(delta) >= directionThreshold) {
+        setShow(delta < 0);
+      }
+
+      lastY.current = y;
+    };
+
+    const onScroll = () => {
+      if (scrollFrame.current !== null) return;
+      scrollFrame.current = window.requestAnimationFrame(updateNavbarState);
+    };
+
+    updateNavbarState();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (scrollFrame.current !== null) {
+        window.cancelAnimationFrame(scrollFrame.current);
+        scrollFrame.current = null;
+      }
+    };
+  }, [autoHide, menuOpen]);
 
   useEffect(() => {
     const onResize = () => {
@@ -72,7 +131,12 @@ export default function Navbar() {
 
   useEffect(() => {
     setWhySubOpen(false);
-  }, [location.pathname]);
+    setShow(true);
+    lastY.current = getScrollY();
+  }, [location.pathname, location.hash]);
+
+  const isScrolled = controlledScrolled ?? scrolled;
+  const isHidden = controlledHidden ?? (autoHide && !show);
 
   useEffect(() => {
     if (!whySubOpen) return;
@@ -134,7 +198,9 @@ export default function Navbar() {
   );
 
   return (
-    <header className={`minimal-navbar minimal-navbar--inspo${scrolled ? " scrolled" : ""}`}>
+    <>
+    {withSpacer && <div className="nav-spacer" aria-hidden="true" />}
+    <header className={`minimal-navbar minimal-navbar--inspo${isScrolled ? " scrolled" : ""}${isHidden ? " nav-hidden" : ""}`}>
       <div className="minimal-navbar__bar">
         <div className="nav-inner nav-inner--inspo">
 
@@ -286,5 +352,6 @@ export default function Navbar() {
         </div>
       </div>
     </header>
+    </>
   );
 }
