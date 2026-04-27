@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
-import TopUtilityBar from "../components/TopUtilityBar";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import Footer from "../components/Footer";
 import "./PathwayPage.css";
 
@@ -247,14 +246,13 @@ function PathwayMain() {
 
 export function PathwayRouteLayout() {
   return (
-    <div className="LandingPage why-ireland-hub">
-      <div className="landing-top">
-        <TopUtilityBar />
-        <Navbar3 />
+    <>
+      <LandingHeader />
+      <div className="LandingPage why-ireland-hub">
+        <PathwayMain />
+        <Footer />
       </div>
-      <PathwayMain />
-      <Footer />
-    </div>
+    </>
   );
 }
 

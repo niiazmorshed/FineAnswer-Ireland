@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
 import { AuthContext } from "./Provider/ContextProvider";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import "./Payment.css";
 
 // amounts are in EUR cents (e.g. 20000 = €200.00)
@@ -115,8 +115,9 @@ export default function Payment() {
       : formatEUR(selectedOption.amount);
 
   return (
+    <>
+    <LandingHeader />
     <div className="payment-page">
-      <Navbar3 />
       <main className="payment-content">
         <section className="payment-card">
           <div className="payment-stripe-badge">
@@ -218,5 +219,6 @@ export default function Payment() {
         </section>
       </main>
     </div>
+    </>
   );
 }

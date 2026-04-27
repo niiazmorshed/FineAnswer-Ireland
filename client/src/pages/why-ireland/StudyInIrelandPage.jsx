@@ -2,8 +2,7 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import SEO from "../../components/SEO";
 import WhyIrelandBentoHero from "../../components/WhyIrelandBentoHero";
-import TopUtilityBar from "../../components/TopUtilityBar";
-import Navbar3 from "../../components/navbar3";
+import LandingHeader from "../../components/LandingHeader";
 import Footer from "../../components/Footer";
 import "./StudyInIrelandPage.css";
 
@@ -196,14 +195,13 @@ function StudyInIrelandMain() {
 /** Full page with header/footer — use for <Route path="/study" /> */
 export function StudyInIrelandRouteLayout() {
   return (
-    <div className="LandingPage why-ireland-hub">
-      <div className="landing-top">
-        <TopUtilityBar />
-        <Navbar3 />
+    <>
+      <LandingHeader />
+      <div className="LandingPage why-ireland-hub">
+        <StudyInIrelandMain />
+        <Footer />
       </div>
-      <StudyInIrelandMain />
-      <Footer />
-    </div>
+    </>
   );
 }
 

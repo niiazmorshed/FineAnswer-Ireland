@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import { API_BASE_URL } from "../config/api";
 import "./Payment.css";
 
@@ -21,8 +21,9 @@ export default function PaymentCancel() {
   }, [sessionId]);
 
   return (
+    <>
+    <LandingHeader />
     <div className="payment-page">
-      <Navbar3 />
       <main className="payment-content">
         <section className="payment-card payment-result-card cancel">
           <div className="payment-result-icon cancel-icon">✕</div>
@@ -38,5 +39,6 @@ export default function PaymentCancel() {
         </section>
       </main>
     </div>
+    </>
   );
 }

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
-import TopUtilityBar from "../components/TopUtilityBar";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import Footer from "../components/Footer";
 import "./PostStudyPage.css";
 
@@ -403,14 +402,13 @@ function PostStudyMain() {
 
 export function PostStudyRouteLayout() {
   return (
-    <div className="LandingPage why-ireland-hub">
-      <div className="landing-top">
-        <TopUtilityBar />
-        <Navbar3 />
+    <>
+      <LandingHeader />
+      <div className="LandingPage why-ireland-hub">
+        <PostStudyMain />
+        <Footer />
       </div>
-      <PostStudyMain />
-      <Footer />
-    </div>
+    </>
   );
 }
 

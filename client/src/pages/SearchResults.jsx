@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { searchPrograms } from "../services/programApi";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import "./SearchResults.css";
 
 const LEVELS = [
@@ -113,8 +113,9 @@ export default function SearchResults() {
   ].filter(Boolean);
 
   return (
+    <>
+    <LandingHeader />
     <div className="sr-page">
-      <Navbar3 />
 
       {/* ── SEARCH HERO ── */}
       <div className="sr-hero">
@@ -339,5 +340,6 @@ export default function SearchResults() {
         )}
       </div>
     </div>
+    </>
   );
 }

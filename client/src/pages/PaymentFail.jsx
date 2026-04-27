@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import "./Payment.css";
 
 export default function PaymentFail() {
   return (
+    <>
+    <LandingHeader />
     <div className="payment-page">
-      <Navbar3 />
       <main className="payment-content">
         <section className="payment-card payment-result-card fail">
           <div className="payment-result-icon fail-icon">✕</div>
@@ -22,5 +23,6 @@ export default function PaymentFail() {
         </section>
       </main>
     </div>
+    </>
   );
 }

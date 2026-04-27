@@ -2,7 +2,7 @@ import React from "react";
 
 import "./ireland.css";
 
-import Navbar from "./components/navbar2";
+import LandingHeader from "./components/LandingHeader";
 
 import BentoHero from "./components/BentoHero";
 
@@ -12,11 +12,9 @@ export default function IrelandPage() {
 
   return (
 
+    <>
+    <LandingHeader />
     <div className="ireland-page">
-
-      <Navbar />
-
-
 
       <BentoHero
 
@@ -130,6 +128,7 @@ export default function IrelandPage() {
       </section>
 
     </div>
+    </>
 
   );
 

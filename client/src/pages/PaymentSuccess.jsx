@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useSearchParams } from "react-router-dom";
 import axios from "axios";
-import Navbar3 from "../components/navbar3";
+import LandingHeader from "../components/LandingHeader";
 import { API_BASE_URL } from "../config/api";
 import "./Payment.css";
 
@@ -40,8 +40,9 @@ export default function PaymentSuccess() {
   };
 
   return (
+    <>
+    <LandingHeader />
     <div className="payment-page">
-      <Navbar3 />
       <main className="payment-content">
         <section className="payment-card payment-result-card success">
 
@@ -124,5 +125,6 @@ export default function PaymentSuccess() {
         </section>
       </main>
     </div>
+    </>
   );
 }

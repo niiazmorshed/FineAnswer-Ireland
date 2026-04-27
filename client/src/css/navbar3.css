@@ -4,6 +4,44 @@
    Hides on scroll-down, reveals on scroll-up.
 ===================================================================== */
 
+/* Utility bar + navbar stack used outside the landing page */
+.landing-top {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 1000;
+  transform: translate3d(0, 0, 0);
+  transition: transform 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.landing-top.is-hidden {
+  transform: translate3d(0, -100%, 0);
+}
+
+.landing-top-spacer {
+  height: 128px;
+}
+
+.landing-top .utility-bar {
+  position: static;
+}
+
+.landing-top .minimal-navbar--inspo {
+  position: relative;
+  top: auto;
+  z-index: auto;
+}
+
+.landing-top.is-scrolled .minimal-navbar--inspo .nav-inner--inspo {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+@media (max-width: 768px) {
+  .landing-top-spacer {
+    height: 80px;
+  }
+}
+
 /* Flow spacer — keeps content from sliding under the fixed navbar */
 .nav-spacer {
   display: block;
