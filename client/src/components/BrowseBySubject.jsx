@@ -107,12 +107,6 @@ export default function BrowseBySubject() {
               <button className="bbs-more" type="button" onClick={() => navigate("/search-results?country=Ireland")}>
                 Explore more
               </button>
-              <p className="bbs-icons8-credit">
-                Subject icons by{" "}
-                <a href="https://icons8.com" target="_blank" rel="noopener noreferrer">
-                  Icons8
-                </a>
-              </p>
             </div>
           </div>
 

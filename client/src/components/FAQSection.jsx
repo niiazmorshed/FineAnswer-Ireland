@@ -1,7 +1,5 @@
 import React, { useMemo, useState } from "react";
 import faqsIllustration from "../assets/FAQs-bro.svg";
-import Lottie from "lottie-react";
-import submittingAnim from "../assets/Submitting Loading Button.json";
 
 const FAQS = [
   {
@@ -53,39 +51,10 @@ FineAnswer Ireland provides end-to-end visa processing support.`,
 
 export default function FAQSection() {
   const [openIdx, setOpenIdx] = useState(null);
-  const [question, setQuestion] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState("");
-  const [submitAnimKey, setSubmitAnimKey] = useState(0);
 
   const toggle = (i) => setOpenIdx(openIdx === i ? null : i);
 
   const faqs = useMemo(() => FAQS, []);
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-    setError("");
-
-    const ANIM_MS = 7000;
-    setSubmitAnimKey((k) => k + 1);
-
-    if (!question.trim()) {
-      setIsSubmitting(true);
-      setError("Please write your question first.");
-      window.setTimeout(() => setIsSubmitting(false), 1100);
-      return;
-    }
-
-    setIsSubmitting(true);
-    window.setTimeout(() => {
-      setSubmitted(true);
-      setQuestion("");
-      window.setTimeout(() => setSubmitted(false), 2200);
-    }, ANIM_MS);
-    window.setTimeout(() => setIsSubmitting(false), ANIM_MS + 60);
-  };
 
   return (
     <section className="faq-section">
@@ -127,72 +96,6 @@ export default function FAQSection() {
             <div className="faq-illustrationWrap" aria-hidden="true">
               <img className="faq-illustration" src={faqsIllustration} alt="" />
             </div>
-
-            <div className="faq-askCard">
-              <div className="faq-askTitle">Ask Any Question</div>
-              <div className="faq-askSubtitle">
-                Feel free to ask any question you have; we&apos;re here to help.
-              </div>
-
-              <form className="faq-form" onSubmit={onSubmit}>
-                <label className="faq-label" htmlFor="faq-question-input">
-                  Your question
-                </label>
-                <div className="faq-inputRow">
-                  <input
-                    id="faq-question-input"
-                    className="faq-input"
-                    value={question}
-                    onChange={(e) => setQuestion(e.target.value)}
-                    placeholder="write here..."
-                    type="text"
-                    autoComplete="off"
-                    disabled={isSubmitting}
-                  />
-                  <button
-                    className="faq-submit"
-                    type="submit"
-                    disabled={isSubmitting}
-                    aria-busy={isSubmitting}
-                    aria-label={isSubmitting ? "Submitting" : "Submit"}
-                  >
-                    <span className="faq-submitInner" aria-hidden="true">
-                      <span className="faq-submitAnimWrap">
-                        <span className="faq-submitAnimBase">
-                          <Lottie
-                            animationData={submittingAnim}
-                            loop={false}
-                            autoplay={false}
-                            style={{ width: "100%", height: "100%" }}
-                            rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
-                          />
-                        </span>
-                        {isSubmitting ? (
-                          <span className="faq-submitAnimOverlay">
-                            <Lottie
-                              key={submitAnimKey}
-                              animationData={submittingAnim}
-                              loop
-                              autoplay
-                              style={{ width: "100%", height: "100%" }}
-                              rendererSettings={{ preserveAspectRatio: "xMidYMid meet" }}
-                            />
-                          </span>
-                        ) : null}
-                      </span>
-                    </span>
-                  </button>
-                </div>
-                {error ? (
-                  <div className="faq-error" role="status" aria-live="polite">
-                    {error}
-                  </div>
-                ) : null}
-                <div className={`faq-toast ${submitted ? "faq-toast--show" : ""}`} role="status" aria-live="polite">
-                  Successfully submitted. We&apos;ll get back to you soon.
-                </div>
-              </form>
-            </div>
           </div>
         </div>
       </div>
@@ -228,14 +131,19 @@ export default function FAQSection() {
           display: grid;
           grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
           gap: 28px;
-          align-items: start;
+          align-items: stretch;
         }
         @media (max-width: 980px){
           .faq-layout{ grid-template-columns: 1fr; }
         }
+        .faq-left{
+          display: flex;
+          min-width: 0;
+        }
         .faq-list {
           display: flex;
           flex-direction: column;
+          flex: 1 1 auto;
           background: rgba(255,255,255,0.75);
           border: 1px solid rgba(148,163,184,0.35);
           border-radius: 16px;
@@ -306,21 +214,35 @@ export default function FAQSection() {
           display: flex;
           flex-direction: column;
           gap: 16px;
+          min-width: 0;
         }
         .faq-illustrationWrap{
           background: rgba(255,255,255,0.55);
           border: 1px solid rgba(148,163,184,0.25);
           border-radius: 18px;
           box-shadow: var(--shadow-card);
-          padding: 18px;
+          padding: 24px;
+          flex: 1 1 auto;
+          min-height: 100%;
           display: grid;
           place-items: center;
           overflow: hidden;
         }
         .faq-illustration{
-          width: min(360px, 100%);
-          height: auto;
+          width: min(420px, 92%);
+          height: 100%;
+          max-height: 100%;
+          object-fit: contain;
           display: block;
+        }
+        @media (max-width: 980px){
+          .faq-left{ display: block; }
+          .faq-illustrationWrap{
+            min-height: 300px;
+          }
+          .faq-illustration{
+            height: auto;
+          }
         }
         .faq-askCard{
           background: rgba(255,255,255,0.75);

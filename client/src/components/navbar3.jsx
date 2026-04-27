@@ -161,8 +161,6 @@ export default function Navbar({
     return () => window.removeEventListener("keydown", onKey);
   }, [whySubOpen]);
 
-  const isWideNav = () => typeof window !== "undefined" && window.innerWidth > 900;
-
   const DashboardButton = ({ extraClass = "" }) => (
     <button
       type="button"
@@ -235,18 +233,12 @@ export default function Navbar({
             <div
               ref={whyDropdownRef}
               className={`nav-dropdown${whySubOpen ? " nav-dropdown--open" : ""}`}
-              onMouseLeave={() => {
-                if (isWideNav()) setWhySubOpen(false);
-              }}
             >
               <button
                 type="button"
                 className={`nav-dropdown__trigger${whyIrelandActive ? " active" : ""}`}
                 aria-expanded={whySubOpen}
                 aria-haspopup="true"
-                onMouseEnter={() => {
-                  if (isWideNav()) setWhySubOpen(true);
-                }}
                 onClick={() => setWhySubOpen((o) => !o)}
               >
                 Why Ireland

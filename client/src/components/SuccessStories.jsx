@@ -77,9 +77,6 @@ export default function SuccessStories() {
   if (!n) return null;
 
   const trackPct = maxIndex > 0 ? (100 * active) / n : 0;
-  const startCard = active + 1;
-  const endCard = Math.min(active + visibleCount, n);
-
   return (
     <section
       className="success-wrapper"
@@ -163,12 +160,6 @@ export default function SuccessStories() {
             </div>
           </div>
         </div>
-
-        <p className="carousel-footer" aria-live="polite" aria-atomic="true">
-          <span className="carousel-range">
-            {startCard} – {endCard} of {n}
-          </span>
-        </p>
       </div>
     </section>
   );

@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaCheck } from "react-icons/fa";
 import "./PackagesSection.css";
+import { API_BASE_URL } from "../config/api";
+import { AuthContext } from "../pages/Provider/ContextProvider";
 
 const PACKAGES = [
   {
@@ -12,6 +14,7 @@ const PACKAGES = [
     tagline: "Free Forever",
     priceDisplay: "Free",
     priceUnit: null,
+    priceCents: 0,
     cta: { label: "Get Started", variant: "outline", action: "register" },
     features: [
       "Free profile eligibility check",
@@ -33,9 +36,10 @@ const PACKAGES = [
     name: "Gold",
     nameAccent: "",
     tagline: "Most Popular",
-    priceDisplay: "Contact Us",
-    priceUnit: "Custom pricing per student",
-    cta: { label: "Apply for Gold", variant: "primary", action: "contact" },
+    priceDisplay: "€180",
+    priceUnit: "one-time guided support package",
+    priceCents: 18000,
+    cta: { label: "Pay for Gold", variant: "primary", action: "checkout" },
     features: [
       "Everything in Basic",
       "1-on-1 counseling (up to 3 sessions)",
@@ -59,9 +63,10 @@ const PACKAGES = [
     name: "Premium",
     nameAccent: "",
     tagline: "Full Service",
-    priceDisplay: "Contact Us",
-    priceUnit: "Full end-to-end service",
-    cta: { label: "Apply for Premium", variant: "outline", action: "contact" },
+    priceDisplay: "€300",
+    priceUnit: "one-time full service package",
+    priceCents: 30000,
+    cta: { label: "Pay for Premium", variant: "outline", action: "checkout" },
     features: [
       "Everything in Gold",
       "Unlimited counseling sessions",
@@ -83,20 +88,53 @@ const PACKAGES = [
   },
 ];
 
-function scrollToContact() {
-  const el = document.getElementById("contact");
-  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
-}
-
 export default function PackagesSection() {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
+  const [checkoutKey, setCheckoutKey] = useState(null);
+  const [error, setError] = useState("");
 
-  const handleCta = (action) => {
-    if (action === "register") {
+  const handleCta = async (plan) => {
+    setError("");
+
+    if (plan.cta.action === "register") {
       navigate("/register");
       return;
     }
-    scrollToContact();
+
+    if (plan.cta.action !== "checkout") return;
+
+    try {
+      setCheckoutKey(plan.key);
+      const token = localStorage.getItem("token");
+      const headers = {
+        "Content-Type": "application/json",
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
+      };
+
+      const res = await fetch(`${API_BASE_URL}/create-payment`, {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          amount: plan.priceCents,
+          currency: "EUR",
+          purpose: `${plan.name} Package`,
+          cus_name: user?.name || user?.displayName || user?.email?.split("@")[0] || "Customer",
+          cus_email: user?.email || undefined,
+          userId: user?._id || undefined,
+        }),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok || !data?.success || !data?.url) {
+        throw new Error(data?.message || "Could not start Stripe checkout.");
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      setError(err?.message || "Payment request failed. Please try again.");
+      setCheckoutKey(null);
+    }
   };
 
   return (
@@ -125,19 +163,20 @@ export default function PackagesSection() {
                 </div>
                 <div className="plan-tagline">{plan.tagline}</div>
 
+                <div className="plan-price">
+                  <span className="plan-priceValue">{plan.priceDisplay}</span>
+                  {plan.priceUnit ? <span className="plan-priceUnit">{plan.priceUnit}</span> : null}
+                </div>
+
                 <div className="plan-ctaRow">
                   <button
                     type="button"
                     className={`plan-cta ${plan.cta.variant === "primary" ? "plan-cta--primary" : "plan-cta--outline"}`}
-                    onClick={() => handleCta(plan.cta.action)}
+                    onClick={() => handleCta(plan)}
+                    disabled={checkoutKey === plan.key}
                   >
-                    {plan.cta.label}
+                    {checkoutKey === plan.key ? "Redirecting..." : plan.cta.label}
                   </button>
-
-                  <div className="plan-price">
-                    <span className="plan-priceValue">{plan.priceDisplay}</span>
-                    {plan.priceUnit ? <span className="plan-priceUnit">{plan.priceUnit}</span> : null}
-                  </div>
                 </div>
 
                 <div className="plan-divider" />
@@ -159,11 +198,10 @@ export default function PackagesSection() {
 
         <div className="packages-note">
           All plans include access to FineAnswer Ireland&apos;s partner network of 20+
-          Irish institutions. Prices for Gold and Premium are determined after a
-          free initial assessment.
+          Irish institutions. Gold and Premium payments are processed securely by Stripe.
         </div>
+        {error ? <div className="packages-error" role="status">{error}</div> : null}
       </div>
     </section>
   );
 }
-

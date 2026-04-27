@@ -169,12 +169,6 @@ const Services = () => {
                 );
               })}
             </div>
-            <p className="services-icons8-credit">
-              Service icons by{" "}
-              <a href="https://icons8.com" target="_blank" rel="noopener noreferrer">
-                Icons8
-              </a>
-            </p>
           </div>
         </div>
       </div>

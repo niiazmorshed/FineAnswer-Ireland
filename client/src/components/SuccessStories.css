@@ -1,7 +1,10 @@
 /* Success Stories — from last design + multi-card horizontal track */
 .success-wrapper {
   padding: var(--section-padding, 80px) 0;
-  background: var(--color-bg-white, #fff);
+  background:
+    radial-gradient(circle at 18% 12%, rgba(59, 130, 246, 0.08), transparent 32%),
+    radial-gradient(circle at 82% 18%, rgba(100, 200, 80, 0.08), transparent 30%),
+    var(--color-bg-white, #fff);
   overflow: hidden;
   font-family: var(--font-sans);
 }
@@ -13,7 +16,7 @@
 
 .success-header {
   text-align: center;
-  margin-bottom: 48px;
+  margin-bottom: 42px;
 }
 
 .success-title {
@@ -24,7 +27,7 @@
 }
 
 .success-sub {
-  color: var(--color-text-secondary, #555);
+  color: #64748b;
   font-size: 1rem;
   margin: 0;
 }
@@ -32,7 +35,7 @@
 .carousel-container {
   position: relative;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1220px;
   margin: 0 auto;
   padding: 0 0 8px;
   box-sizing: border-box;
@@ -41,7 +44,7 @@
 .carousel-stage {
   position: relative;
   width: 100%;
-  min-height: 500px;
+  min-height: 474px;
 }
 
 /* Viewport: shows exactly --ss-visible items per “page” (slide-by-slide) */
@@ -50,7 +53,7 @@
   width: 100%;
   border-radius: var(--radius-card, 8px);
   box-sizing: border-box;
-  padding: 0 2px;
+  padding: 0 42px;
 }
 
 .carousel-track {
@@ -70,36 +73,62 @@
   flex: 0 0 calc(100% / var(--ss-n));
   min-width: 0;
   box-sizing: border-box;
-  padding: 0 8px;
+  padding: 0 12px;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 
 .carousel-slide[aria-hidden="true"] {
   pointer-events: none;
 }
 
-/* Card — last-commit look (primary green, gold CTA) */
 .story-card {
-  background: var(--color-bg-white, #fff);
-  padding: 28px 20px 24px;
-  border-radius: var(--radius-card, 8px);
-  box-shadow: var(--shadow-card, 0 2px 12px rgba(0, 0, 0, 0.08));
+  position: relative;
+  isolation: isolate;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 252, 255, 0.96)),
+    var(--color-bg-white, #fff);
+  padding: 26px 22px 24px;
+  border-radius: 14px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 18px 48px rgba(15, 23, 42, 0.08);
   text-align: center;
-  border: 1px solid var(--color-border, #e0e0e0);
+  border: 1px solid rgba(59, 130, 246, 0.28);
   height: 100%;
-  min-height: 440px;
-  max-height: 500px;
+  min-height: 420px;
+  max-height: 470px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: box-shadow 0.3s, border-color 0.3s;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
   width: 100%;
+  max-width: 340px;
+}
+
+.story-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background:
+    linear-gradient(135deg, rgba(37, 99, 235, 0.14), transparent 34%),
+    linear-gradient(315deg, rgba(100, 200, 80, 0.12), transparent 32%);
+  opacity: 1;
+  transition: opacity 0.28s ease;
 }
 
 .story-card.is-active {
-  box-shadow: var(--shadow-card-hover, 0 8px 24px rgba(0, 135, 90, 0.15));
-  border-color: var(--color-primary, #00875a);
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.95) inset,
+    0 18px 48px rgba(15, 23, 42, 0.08);
+  border-color: rgba(59, 130, 246, 0.28);
+}
+
+.story-card.is-active::before {
+  opacity: 1;
 }
 
 .user-profile {
@@ -116,13 +145,16 @@
 }
 
 .user-avatar {
-  width: 80px;
-  height: 80px;
+  width: 74px;
+  height: 74px;
   border-radius: 50%;
   object-fit: cover;
   margin-bottom: 18px;
-  border: 3px solid var(--color-primary-light, #e6f7f0);
-  box-shadow: 0 6px 16px rgba(0, 135, 90, 0.12);
+  border: 3px solid #fff;
+  outline: 1px solid rgba(37, 99, 235, 0.34);
+  box-shadow:
+    0 0 0 7px rgba(37, 99, 235, 0.08),
+    0 12px 26px rgba(37, 99, 235, 0.16);
 }
 
 .user-name {
@@ -134,8 +166,8 @@
 }
 
 .user-program {
-  color: var(--color-primary, #00875a);
-  font-weight: 600;
+  color: #2563eb;
+  font-weight: 700;
   font-size: 0.8rem;
   line-height: 1.4;
   margin: 0 0 12px;
@@ -146,34 +178,39 @@
 .user-meta {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  font-size: 0.8rem;
-  color: var(--color-text-muted, #888);
-  margin: 0 0 16px;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0 0 18px;
   align-items: center;
   width: 100%;
   flex-shrink: 0;
 }
 
 .user-meta span {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
   text-align: center;
   line-height: 1.35;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(37, 99, 235, 0.055);
+  border: 1px solid rgba(37, 99, 235, 0.08);
 }
 
 .user-meta span svg {
   flex-shrink: 0;
-  color: var(--color-primary, #00875a);
+  color: #2563eb;
   opacity: 0.9;
 }
 
 .user-quote {
-  font-size: 0.9rem;
-  color: var(--color-text-secondary, #555);
-  line-height: 1.65;
+  position: relative;
+  font-size: 0.88rem;
+  color: #64748b;
+  line-height: 1.72;
   font-style: italic;
   display: -webkit-box;
   -webkit-line-clamp: 4;
@@ -185,6 +222,16 @@
   min-height: 0;
 }
 
+.user-quote::before {
+  content: "“";
+  display: block;
+  height: 16px;
+  color: rgba(37, 99, 235, 0.3);
+  font-size: 2.4rem;
+  line-height: 0.8;
+  font-style: normal;
+}
+
 .action-link {
   margin-top: auto;
   flex-shrink: 0;
@@ -192,26 +239,14 @@
   color: var(--color-text-primary, #1a1a1a);
   font-weight: 700;
   font-size: 0.875rem;
-  border-bottom: 2px solid var(--color-gold, #f5a623);
-  padding-bottom: 2px;
-  transition: color 0.2s;
+  border-bottom: 2px solid rgba(245, 166, 35, 0.9);
+  padding-bottom: 3px;
+  transition: color 0.2s, border-color 0.2s;
 }
 
 .action-link:hover {
-  color: var(--color-gold, #f5a623);
-}
-
-.carousel-footer {
-  text-align: center;
-  margin: 20px 0 0;
-  font-size: 0.9rem;
-  color: var(--color-text-muted, #666);
-  font-variant-numeric: tabular-nums;
-}
-
-.carousel-range {
-  font-weight: 600;
-  color: var(--color-text-secondary, #555);
+  color: #2563eb;
+  border-color: #2563eb;
 }
 
 /* Navigation arrows — restyled from last commit, inside padding */
@@ -219,8 +254,8 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: var(--color-bg-white, #fff);
-  border: 1px solid var(--color-border, #e0e0e0);
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(37, 99, 235, 0.18);
   border-radius: 50%;
   width: 44px;
   height: 44px;
@@ -235,11 +270,11 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  box-shadow: var(--shadow-card, 0 2px 12px rgba(0, 0, 0, 0.08));
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
 }
 .control-btn:hover {
-  background: var(--color-primary, #00875a);
-  border-color: var(--color-primary, #00875a);
+  background: #2563eb;
+  border-color: #2563eb;
   color: #fff;
   transform: translateY(-50%) scale(1.05);
 }
@@ -251,10 +286,10 @@
   outline-offset: 3px;
 }
 .control-btn.prev {
-  left: 8px;
+  left: 18px;
 }
 .control-btn.next {
-  right: 8px;
+  right: 18px;
 }
 
 @media (max-width: 768px) {
@@ -272,7 +307,11 @@
   .story-card {
     min-height: 400px;
     max-height: none;
+    max-width: 380px;
     padding: 24px 16px 20px;
+  }
+  .carousel-viewport {
+    padding: 0 28px;
   }
   .carousel-stage {
     min-height: 460px;

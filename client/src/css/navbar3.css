@@ -202,16 +202,12 @@
 }
 
 @media (min-width: 901px) {
-  .nav-dropdown:hover .nav-dropdown__trigger,
-  .nav-dropdown:focus-within .nav-dropdown__trigger,
   .nav-dropdown--open .nav-dropdown__trigger {
     color: #00875a;
     background: rgba(0, 135, 90, 0.08);
     font-weight: 600;
   }
 
-  .nav-dropdown:hover .nav-dropdown__caret,
-  .nav-dropdown:focus-within .nav-dropdown__caret,
   .nav-dropdown--open .nav-dropdown__caret {
     transform: rotate(180deg);
     opacity: 1;
@@ -249,8 +245,6 @@
 }
 
 @media (min-width: 901px) {
-  .nav-dropdown:hover .nav-dropdown__panel,
-  .nav-dropdown:focus-within .nav-dropdown__panel,
   .nav-dropdown--open .nav-dropdown__panel {
     opacity: 1;
     visibility: visible;
