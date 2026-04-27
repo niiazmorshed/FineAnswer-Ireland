@@ -32,7 +32,8 @@ export default function Navbar({
   const [menuOpen, setMenuOpen] = useState(false);
   const [whySubOpen, setWhySubOpen] = useState(false);
   const whyDropdownRef = useRef(null);
-  const whyIrelandActive = location.pathname.startsWith("/why-ireland");
+  const whyIrelandActive =
+    location.pathname.startsWith("/why-ireland") || location.pathname === "/study";
 
   useEffect(() => {
     setHash((location.hash || "").replace(/^#/, ""));
@@ -263,10 +264,6 @@ export default function Navbar({
                 })}
               </div>
             </div>
-
-            <NavLink to="/study" onClick={closeMenu}>
-              Study in Ireland
-            </NavLink>
 
             <a
               href="/#about"
