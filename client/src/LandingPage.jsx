@@ -61,6 +61,9 @@ export default function LandingPage() {
   const [headerScrolled, setHeaderScrolled] = useState(false);
   const lastHeaderY = React.useRef(0);
   const headerFrame = React.useRef(null);
+  const headerHiddenRef = React.useRef(false);
+  const headerScrolledRef = React.useRef(false);
+  const headerScrollIntent = React.useRef({ direction: 0, distance: 0 });
 
 
   useEffect(() => {
@@ -79,18 +82,56 @@ export default function LandingPage() {
 
   useEffect(() => {
     const revealAtTop = 80;
-    const directionThreshold = 4;
+    const noiseThreshold = 2;
+    const hideDistance = 22;
+    const showDistance = 8;
 
-    const applyScrollDirection = (y, delta) => {
-      setHeaderScrolled(y > 10);
+    const setHeaderScrolledStable = (next) => {
+      if (headerScrolledRef.current === next) return;
+      headerScrolledRef.current = next;
+      setHeaderScrolled(next);
+    };
+
+    const setHeaderHiddenStable = (next) => {
+      if (headerHiddenRef.current === next) return;
+      headerHiddenRef.current = next;
+      setHeaderHidden(next);
+    };
+
+    const resetIntent = () => {
+      headerScrollIntent.current = { direction: 0, distance: 0 };
+    };
+
+    const applyScrollPosition = (y) => {
+      const delta = y - lastHeaderY.current;
+      lastHeaderY.current = y;
+
+      setHeaderScrolledStable(y > 10);
 
       if (y <= revealAtTop) {
-        setHeaderHidden(false);
-      } else if (Math.abs(delta) >= directionThreshold) {
-        setHeaderHidden(delta > 0);
+        resetIntent();
+        setHeaderHiddenStable(false);
+        return;
       }
 
-      lastHeaderY.current = y;
+      if (Math.abs(delta) < noiseThreshold) return;
+
+      const direction = delta > 0 ? 1 : -1;
+      const intent = headerScrollIntent.current;
+      if (intent.direction !== direction) {
+        intent.direction = direction;
+        intent.distance = 0;
+      }
+
+      intent.distance += Math.abs(delta);
+
+      if (direction > 0 && !headerHiddenRef.current && intent.distance >= hideDistance) {
+        setHeaderHiddenStable(true);
+        resetIntent();
+      } else if (direction < 0 && headerHiddenRef.current && intent.distance >= showDistance) {
+        setHeaderHiddenStable(false);
+        resetIntent();
+      }
     };
 
     const scheduleFromScroll = (event) => {
@@ -98,45 +139,23 @@ export default function LandingPage() {
       headerFrame.current = window.requestAnimationFrame(() => {
         headerFrame.current = null;
         const y = getEventScrollY(event);
-        applyScrollDirection(y, y - lastHeaderY.current);
+        applyScrollPosition(y);
       });
     };
 
-    const onWheel = (event) => {
-      if (Math.abs(event.deltaY) < directionThreshold) return;
-      const y = getPageScrollY();
-      applyScrollDirection(y, event.deltaY);
-    };
-
-    let touchY = 0;
-    const onTouchStart = (event) => {
-      touchY = event.touches?.[0]?.clientY ?? 0;
-    };
-    const onTouchMove = (event) => {
-      const currentY = event.touches?.[0]?.clientY ?? touchY;
-      const delta = touchY - currentY;
-      if (Math.abs(delta) >= directionThreshold) {
-        applyScrollDirection(getPageScrollY(), delta);
-      }
-      touchY = currentY;
-    };
-
     lastHeaderY.current = getPageScrollY();
-    setHeaderScrolled(lastHeaderY.current > 10);
-    setHeaderHidden(false);
+    headerScrolledRef.current = lastHeaderY.current > 10;
+    headerHiddenRef.current = false;
+    setHeaderScrolled(headerScrolledRef.current);
+    setHeaderHiddenStable(false);
+    resetIntent();
 
     window.addEventListener("scroll", scheduleFromScroll, { passive: true });
     document.addEventListener("scroll", scheduleFromScroll, { passive: true, capture: true });
-    window.addEventListener("wheel", onWheel, { passive: true });
-    window.addEventListener("touchstart", onTouchStart, { passive: true });
-    window.addEventListener("touchmove", onTouchMove, { passive: true });
 
     return () => {
       window.removeEventListener("scroll", scheduleFromScroll);
       document.removeEventListener("scroll", scheduleFromScroll, { capture: true });
-      window.removeEventListener("wheel", onWheel);
-      window.removeEventListener("touchstart", onTouchStart);
-      window.removeEventListener("touchmove", onTouchMove);
       if (headerFrame.current !== null) {
         window.cancelAnimationFrame(headerFrame.current);
         headerFrame.current = null;
