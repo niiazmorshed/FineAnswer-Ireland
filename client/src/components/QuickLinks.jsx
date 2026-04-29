@@ -28,7 +28,7 @@ const LINKS = [
   {
     icon: <FaStethoscope />,
     title: "Study Medicine",
-    to: "/search-results?country=Ireland&category=Life+Sciences+%26+Health",
+    to: "/study-medicine",
   },
   { icon: <FaUserFriends />, title: "Dependent Visa", to: "/read-more-info" },
 ];
