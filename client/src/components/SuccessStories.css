@@ -1,4 +1,4 @@
-/* Success Stories — from last design + multi-card horizontal track */
+/* Success Stories — center-focused carousel, full-width, no horizontal crop */
 .success-wrapper {
   padding: var(--section-padding, 80px) 0;
   background:
@@ -32,28 +32,29 @@
   margin: 0;
 }
 
+/* Container spans full section width — no horizontal cap */
 .carousel-container {
   position: relative;
   width: 100%;
-  max-width: 1220px;
-  margin: 0 auto;
-  padding: 0 0 8px;
+  padding: 0;
   box-sizing: border-box;
 }
 
 .carousel-stage {
   position: relative;
   width: 100%;
-  min-height: 474px;
+  min-height: 540px;
 }
 
-/* Viewport: shows exactly --ss-visible items per “page” (slide-by-slide) */
+/*
+  Viewport: no horizontal padding so cards span edge-to-edge.
+  Vertical padding gives room for the center card's scale + lift.
+*/
 .carousel-viewport {
   overflow: hidden;
   width: 100%;
-  border-radius: var(--radius-card, 8px);
+  padding: 36px 0 48px;
   box-sizing: border-box;
-  padding: 0 42px;
 }
 
 .carousel-track {
@@ -73,16 +74,23 @@
   flex: 0 0 calc(100% / var(--ss-n));
   min-width: 0;
   box-sizing: border-box;
-  padding: 0 12px;
+  padding: 0 14px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+.carousel-slide.is-center-slide {
+  z-index: 3;
 }
 
 .carousel-slide[aria-hidden="true"] {
   pointer-events: none;
 }
 
+/* ── Story card — side cards are dimmed + shifted down ─────────────────────── */
 .story-card {
   position: relative;
   isolation: isolate;
@@ -90,21 +98,28 @@
     linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 252, 255, 0.96)),
     var(--color-bg-white, #fff);
   padding: 26px 22px 24px;
-  border-radius: 14px;
+  border-radius: 16px;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 18px 48px rgba(15, 23, 42, 0.08);
+    0 10px 28px rgba(15, 23, 42, 0.07);
   text-align: center;
-  border: 1px solid rgba(59, 130, 246, 0.28);
+  border: 1px solid rgba(59, 130, 246, 0.18);
   height: 100%;
   min-height: 420px;
-  max-height: 470px;
+  max-height: 480px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
   width: 100%;
-  max-width: 340px;
+
+  /* side-card dimming */
+  opacity: 0.78;
+  transform: scale(0.93) translateY(12px);
+  transition:
+    transform 0.55s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.55s ease,
+    border-color 0.55s ease,
+    opacity 0.55s ease;
 }
 
 .story-card::before {
@@ -114,23 +129,32 @@
   z-index: -1;
   border-radius: inherit;
   background:
-    linear-gradient(135deg, rgba(37, 99, 235, 0.14), transparent 34%),
-    linear-gradient(315deg, rgba(100, 200, 80, 0.12), transparent 32%);
-  opacity: 1;
-  transition: opacity 0.28s ease;
+    linear-gradient(135deg, rgba(37, 99, 235, 0.10), transparent 34%),
+    linear-gradient(315deg, rgba(100, 200, 80, 0.08), transparent 32%);
+  opacity: 0.6;
+  transition: opacity 0.55s ease;
 }
 
-.story-card.is-active {
+/* ── Center / focused card — elevated, full opacity ─────────────────────────── */
+.story-card.is-center {
+  opacity: 1;
+  transform: scale(1.05) translateY(-6px);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.95) inset,
-    0 18px 48px rgba(15, 23, 42, 0.08);
-  border-color: rgba(59, 130, 246, 0.28);
+    0 8px 20px rgba(37, 99, 235, 0.12),
+    0 28px 72px rgba(15, 23, 42, 0.18),
+    0 0 0 2px rgba(37, 99, 235, 0.22);
+  border-color: rgba(37, 99, 235, 0.45);
+  background:
+    linear-gradient(180deg, #ffffff, rgba(239, 246, 255, 0.98)),
+    var(--color-bg-white, #fff);
 }
 
-.story-card.is-active::before {
+.story-card.is-center::before {
   opacity: 1;
 }
 
+/* ── Card internals ──────────────────────────────────────────────────────────── */
 .user-profile {
   flex-shrink: 0;
 }
@@ -155,6 +179,15 @@
   box-shadow:
     0 0 0 7px rgba(37, 99, 235, 0.08),
     0 12px 26px rgba(37, 99, 235, 0.16);
+  transition: transform 0.55s ease, box-shadow 0.55s ease;
+}
+
+.is-center .user-avatar {
+  width: 82px;
+  height: 82px;
+  box-shadow:
+    0 0 0 8px rgba(37, 99, 235, 0.12),
+    0 14px 32px rgba(37, 99, 235, 0.22);
 }
 
 .user-name {
@@ -223,7 +256,7 @@
 }
 
 .user-quote::before {
-  content: "“";
+  content: "\201C";
   display: block;
   height: 16px;
   color: rgba(37, 99, 235, 0.3);
@@ -249,7 +282,7 @@
   border-color: #2563eb;
 }
 
-/* Navigation arrows — restyled from last commit, inside padding */
+/* ── Navigation arrows ───────────────────────────────────────────────────────── */
 .control-btn {
   position: absolute;
   top: 50%;
@@ -257,8 +290,8 @@
   background: rgba(255, 255, 255, 0.96);
   border: 1px solid rgba(37, 99, 235, 0.18);
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   color: var(--color-text-primary, #1a1a1a);
   font-size: 1.15rem;
   cursor: pointer;
@@ -270,13 +303,13 @@
   outline: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
-  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.14);
 }
 .control-btn:hover {
   background: #2563eb;
   border-color: #2563eb;
   color: #fff;
-  transform: translateY(-50%) scale(1.05);
+  transform: translateY(-50%) scale(1.06);
 }
 .control-btn:focus {
   outline: none;
@@ -286,16 +319,17 @@
   outline-offset: 3px;
 }
 .control-btn.prev {
-  left: 18px;
+  left: 12px;
 }
 .control-btn.next {
-  right: 18px;
+  right: 12px;
 }
 
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
 @media (max-width: 768px) {
   .control-btn {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     font-size: 1rem;
   }
   .control-btn.prev {
@@ -305,16 +339,25 @@
     right: 4px;
   }
   .story-card {
+    /* on mobile all cards shown are the active one — no dimming */
+    opacity: 1;
+    transform: none;
     min-height: 400px;
     max-height: none;
-    max-width: 380px;
     padding: 24px 16px 20px;
   }
-  .carousel-viewport {
-    padding: 0 28px;
+  .story-card.is-center {
+    transform: none;
+  }
+  .is-center .user-avatar {
+    width: 74px;
+    height: 74px;
   }
   .carousel-stage {
-    min-height: 460px;
+    min-height: 480px;
+  }
+  .carousel-viewport {
+    padding: 16px 0 24px;
   }
   .user-quote {
     -webkit-line-clamp: 3;
@@ -323,6 +366,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .carousel-track {
+    transition: none;
+  }
+  .story-card {
+    opacity: 1;
+    transform: none;
     transition: none;
   }
 }

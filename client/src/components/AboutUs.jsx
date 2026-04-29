@@ -5,7 +5,6 @@ import aboutImg1 from "../assets/fine.jpg";
 import aboutImg2 from "../assets/Griffith.jpg";
 import aboutImg3 from "../assets/DBS.jpg";
 import aboutImg4 from "../assets/DCU.jpg";
-import mapAnimation from "../assets/map.json";
 
 const stats = [
   { value: "4K+", label: "Satisfied Customers" },
@@ -21,6 +20,7 @@ export default function AboutUs() {
   const [shouldMountMap, setShouldMountMap] = useState(false);
   const [shouldPlayMap, setShouldPlayMap] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(false);
+  const [mapData, setMapData] = useState(null);
 
   useEffect(() => {
     const query = window.matchMedia?.("(prefers-reduced-motion: reduce)");
@@ -50,6 +50,15 @@ export default function AboutUs() {
     return () => obs.disconnect();
   }, [isVisible]);
 
+  // Lazy-load the heavy map JSON only when the section scrolls into view.
+  // This avoids bundling it in the initial JS payload and blocking scroll.
+  useEffect(() => {
+    if (!shouldMountMap || reduceMotion || mapData) return;
+    import("../assets/map.json").then((m) => {
+      setMapData(m.default ?? m);
+    });
+  }, [shouldMountMap, reduceMotion, mapData]);
+
   useEffect(() => {
     if (!sectionRef.current || reduceMotion) {
       setShouldPlayMap(false);
@@ -73,19 +82,19 @@ export default function AboutUs() {
 
   return (
     <section className={`about-section-v2${isVisible ? " about-section-v2--visible" : ""}`} id="about" ref={sectionRef}>
-      <div className={`aboutv2-mapBg${shouldMountMap ? " aboutv2-mapBg--motion" : ""}`} aria-hidden="true">
-        {shouldMountMap && !reduceMotion && (
+      <div className={`aboutv2-mapBg${mapData ? " aboutv2-mapBg--motion" : ""}`} aria-hidden="true">
+        {mapData && !reduceMotion && (
           <Lottie
-            animationData={mapAnimation}
+            animationData={mapData}
             loop
-            autoplay={false}
-            isPaused={!shouldPlayMap}
+            autoplay={shouldPlayMap}
             renderer="canvas"
             rendererSettings={{
               preserveAspectRatio: "xMidYMid slice",
               progressiveLoad: true,
               clearCanvas: true,
             }}
+            speed={0.55}
             style={{ width: "100%", height: "100%" }}
           />
         )}
@@ -180,7 +189,7 @@ export default function AboutUs() {
             linear-gradient(120deg, transparent 0 18%, rgba(100, 200, 80, 0.08) 18% 18.6%, transparent 18.6% 43%, rgba(37, 99, 235, 0.07) 43% 43.5%, transparent 43.5% 100%);
           background-size: 62px 62px, 74px 74px, 100% 100%;
           mask-image: radial-gradient(ellipse at center, #000 0 58%, transparent 78%);
-          contain: paint;
+          contain: layout paint style;
           transform: translateZ(0);
         }
         .aboutv2-mapBg--motion{

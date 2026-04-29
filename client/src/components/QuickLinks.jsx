@@ -19,7 +19,7 @@ const LINKS = [
     title: "Entry Requirements",
     to: "/entry-requirements",
   },
-  { icon: <FaShieldAlt />, title: "Health Insurance", to: "/read-more-info" },
+  { icon: <FaShieldAlt />, title: "Health Insurance", to: "/health-insurance" },
   {
     icon: <FaMicrophoneAlt />,
     title: "English Tests",

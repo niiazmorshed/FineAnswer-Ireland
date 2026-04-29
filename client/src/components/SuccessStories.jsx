@@ -77,6 +77,8 @@ export default function SuccessStories() {
   if (!n) return null;
 
   const trackPct = maxIndex > 0 ? (100 * active) / n : 0;
+  const focusedIndex = visibleCount >= 3 ? active + 1 : active;
+
   return (
     <section
       className="success-wrapper"
@@ -116,15 +118,16 @@ export default function SuccessStories() {
             >
               {stories.map((story, i) => {
                 const inView = i >= active && i < active + visibleCount;
+                const isCenterSlide = i === focusedIndex;
                 return (
                   <div
                     key={story._id || `story-${i}`}
-                    className="carousel-slide"
+                    className={`carousel-slide${isCenterSlide ? " is-center-slide" : ""}`}
                     role="group"
                     aria-label={`${i + 1} of ${n}`}
                     aria-hidden={!inView}
                   >
-                    <article className={`story-card${i === active ? " is-active" : ""}`}>
+                    <article className={`story-card${isCenterSlide ? " is-center" : ""}`}>
                       <div className="user-profile">
                         <img
                           src={resolveMediaUrl(story.image)}
