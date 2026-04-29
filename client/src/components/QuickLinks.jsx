@@ -23,7 +23,7 @@ const LINKS = [
   {
     icon: <FaMicrophoneAlt />,
     title: "English Tests",
-    to: "/dashboard/english-proficiency",
+    to: "/english-tests",
   },
   {
     icon: <FaStethoscope />,
