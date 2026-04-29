@@ -49,6 +49,7 @@ import { EntryRequirementsRouteLayout } from "./pages/EntryRequirementsPage";
 import { HealthInsuranceRouteLayout } from "./pages/HealthInsurancePage";
 import { EnglishTestsRouteLayout } from "./pages/EnglishProficiency";
 import { StudyMedicineRouteLayout } from "./pages/StudyMedicinePage";
+import { DependentVisaRouteLayout } from "./pages/DependentVisaPage";
 import { forceNavigateScrollTop } from "./utils/documentScroll";
 
 import "./App.css";
@@ -155,6 +156,7 @@ function AppRoutes() {
       <Route path="/health-insurance" element={<HealthInsuranceRouteLayout />} />
       <Route path="/english-tests" element={<EnglishTestsRouteLayout />} />
       <Route path="/study-medicine" element={<StudyMedicineRouteLayout />} />
+      <Route path="/dependent-visa" element={<DependentVisaRouteLayout />} />
       <Route path="/why-ireland/*" element={<WhyIrelandHub />} />
       {/* /australia and /uk redirect to home — pages removed */}
       <Route path="/australia" element={<Navigate to="/" replace />} />

@@ -30,7 +30,7 @@ const LINKS = [
     title: "Study Medicine",
     to: "/study-medicine",
   },
-  { icon: <FaUserFriends />, title: "Dependent Visa", to: "/read-more-info" },
+  { icon: <FaUserFriends />, title: "Dependent Visa", to: "/dependent-visa" },
 ];
 
 export default function QuickLinks() {
