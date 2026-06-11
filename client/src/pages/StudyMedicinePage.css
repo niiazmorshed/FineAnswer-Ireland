@@ -172,18 +172,29 @@
   font-size: clamp(1.05rem, 2vw, 1.25rem);
   font-weight: 700;
   line-height: 1.45;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
 }
 
 .sm-cta a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 22px;
+  padding: 14px 32px;
   border-radius: 999px;
   background: #fff;
-  color: var(--sm-green);
+  color: var(--sm-green) !important;
   text-decoration: none;
   font-weight: 800;
+  font-size: 0.95rem;
+  font-family: inherit;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.sm-cta a:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  color: var(--sm-orange) !important;
 }
 
 @media (min-width: 768px) {

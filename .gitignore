@@ -1,0 +1,7 @@
+# Agent / IDE tooling (local only — not part of app)
+.agents/
+.clinerules/
+.github/
+.opencode/
+.windsurf/
+.cursor/

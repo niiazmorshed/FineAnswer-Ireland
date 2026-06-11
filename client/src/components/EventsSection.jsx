@@ -7,7 +7,7 @@ export default function EventsSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/events`);
+        const res = await fetch(`${API_BASE_URL}/events`);
         const data = await res.json();
         const list = Array.isArray(data) ? data : data?.events ?? data?.data ?? [];
         setEvents(list.slice(0, 4));

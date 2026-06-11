@@ -11,7 +11,7 @@ export default function FeaturedCourses() {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/programs?limit=8&country=Ireland`);
+        const res = await fetch(`${API_BASE_URL}/programs/search?country=Ireland`);
         const data = await res.json();
         const list = Array.isArray(data) ? data : data?.programs ?? data?.data ?? [];
         setCourses(list.slice(0, 8));
