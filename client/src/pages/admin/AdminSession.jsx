@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaPlus, FaTimes, FaEdit, FaTrash, FaYoutube, FaSpinner, FaCalendarAlt } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import "./AdminSession.css";
 
 export default function AdminSession() {
@@ -139,7 +140,7 @@ export default function AdminSession() {
     setSubmitting(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const url = editingVideo
         ? `${API_BASE_URL}/videos/${editingVideo._id}`
         : `${API_BASE_URL}/videos`;
@@ -175,7 +176,7 @@ export default function AdminSession() {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/videos/${id}`, {
         method: "DELETE",
         headers: {
@@ -208,7 +209,7 @@ export default function AdminSession() {
     setEventSubmitting(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const url = editingEvent
         ? `${API_BASE_URL}/events/${editingEvent._id}`
         : `${API_BASE_URL}/events`;
@@ -244,7 +245,7 @@ export default function AdminSession() {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/events/${id}`, {
         method: "DELETE",
         headers: {

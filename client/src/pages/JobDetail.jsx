@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaArrowLeft, FaMapMarkerAlt, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
 import { AuthContext } from "./Provider/ContextProvider";
+import { getToken } from "../utils/tokenStorage";
 import "./admin/Career.css";
 
 export default function JobDetail() {
@@ -54,7 +55,7 @@ export default function JobDetail() {
     setApplying(true);
     setApplyError(null);
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) {
         setApplyError("Please log in to apply.");
         setApplying(false);

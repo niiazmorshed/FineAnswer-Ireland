@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaCalendar, FaEnvelope, FaEye, FaGraduationCap, FaPhone, FaTimes, FaUser } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import "./StudentsInfo.css";
 
 function StudentCard({ student, onViewDetails }) {
@@ -251,7 +252,7 @@ export default function StudentsInfo() {
       try {
         setLoading(true);
         setError(null);
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) {
           setError("Please log in to view students.");
           setLoading(false);

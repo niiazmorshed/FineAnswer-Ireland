@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../config/api";
+import { getToken } from "../utils/tokenStorage";
 import { AuthContext } from "./Provider/ContextProvider";
 import LandingHeader from "../components/LandingHeader";
 import "./Payment.css";
@@ -72,7 +73,7 @@ export default function Payment() {
         amountInCents = selectedOption.amount;
       }
 
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
       const payload = {

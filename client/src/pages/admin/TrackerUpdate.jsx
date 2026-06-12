@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaCheck, FaSave, FaSpinner } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import "../../components/ProgressTracker.css";
 import {
   getInitialTimeline,
@@ -25,7 +26,7 @@ export default function TrackerUpdate() {
     const fetchUsers = async () => {
       try {
         setUsersLoading(true);
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) {
           setUsers([]);
           setUsersLoading(false);
@@ -68,7 +69,7 @@ export default function TrackerUpdate() {
       try {
         setLoading(true);
         setError(null);
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) throw new Error("Authentication required");
 
         const data = await getUserProgressTracker(selectedUserId, token);
@@ -105,7 +106,7 @@ export default function TrackerUpdate() {
       setSaving(true);
       setError(null);
       setSuccess(null);
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) throw new Error("Authentication required");
 
       await updateUserProgressTracker(selectedUserId, timeline, token);
@@ -136,7 +137,7 @@ export default function TrackerUpdate() {
       setSaving(true);
       setError(null);
       setSuccess(null);
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) throw new Error("Authentication required");
 
       await updateUserProgressTracker(selectedUserId, newTimeline, token);

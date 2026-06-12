@@ -64,8 +64,8 @@ export default function FeaturedCourses() {
               <div className="fc-details">
                 <div className="fc-detail"><FaUniversity className="fc-detail-icon" /><span>{c.university || "University"}</span></div>
                 <div className="fc-detail"><FaClock className="fc-detail-icon" /><span>{c.duration || "1 Year"}</span></div>
-                <div className="fc-detail"><FaEuroSign className="fc-detail-icon" /><span>{c.fee || "Contact Us"}</span></div>
-                <div className="fc-detail"><FaCalendarAlt className="fc-detail-icon" /><span>{Array.isArray(c.intakes) ? c.intakes.join(", ") : c.intakes || "Sep 2025"}</span></div>
+                <div className="fc-detail"><FaEuroSign className="fc-detail-icon" /><span>{c.tuitionFees || c.fee || "Contact Us"}</span></div>
+                <div className="fc-detail"><FaCalendarAlt className="fc-detail-icon" /><span>{c.availableIntakes || (Array.isArray(c.intakes) ? c.intakes.join(", ") : c.intakes) || "Contact Us"}</span></div>
               </div>
 
               <button

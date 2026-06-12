@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import "./ProgressTracker.css";
 import { getMyProgressTracker } from "../services/progressTrackerApi";
+import { getToken } from "../utils/tokenStorage";
 import {
   getInitialTimeline,
   normalizeTimeline,
@@ -12,7 +13,7 @@ export default function ProgressTracker() {
   const [loading, setLoading] = useState(true);
 
   const fetchTracker = async () => {
-    const token = localStorage.getItem("token");
+    const token = getToken();
     if (!token) return;
 
     try {

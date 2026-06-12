@@ -7,6 +7,7 @@ import {
   FaExternalLinkAlt,
 } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import { IRELAND_JOB_LINKS } from "../../constants/irelandJobLinks";
 import "./Career.css";
 export default function AdminCareer() {
@@ -96,7 +97,7 @@ export default function AdminCareer() {
     setSubmitting(true);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const url = editingJob
         ? `${API_BASE_URL}/jobs/${editingJob._id}`
         : `${API_BASE_URL}/jobs`;
@@ -130,7 +131,7 @@ export default function AdminCareer() {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(`${API_BASE_URL}/jobs/${id}`, {
         method: "DELETE",
         headers: {
@@ -160,7 +161,7 @@ export default function AdminCareer() {
 
   const loadApplicants = async (job) => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(`${API_BASE_URL}/jobs/${job._id}/applications`, {
         headers: {
           Authorization: `Bearer ${token}`,

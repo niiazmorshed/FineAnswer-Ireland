@@ -10,6 +10,7 @@ import {
     FaUser,
 } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import { uploadImageToS3 } from "../../utils/s3Upload";
 import { resolveMediaUrl } from "../../utils/resolveMediaUrl";
 import "./Blog.css";
@@ -182,7 +183,7 @@ export default function Blog() {
         author: formData.author,
       };
 
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const editId = editingBlog && (editingBlog._id ?? editingBlog.id);
       const url = editId
         ? `${API_BASE_URL}/blogs/${editId}`
@@ -219,7 +220,7 @@ export default function Blog() {
     }
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
         method: "DELETE",
         headers: {

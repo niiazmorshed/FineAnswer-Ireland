@@ -4,6 +4,7 @@ import { FaCheck } from "react-icons/fa";
 import "./PackagesSection.css";
 import { API_BASE_URL } from "../config/api";
 import { AuthContext } from "../pages/Provider/ContextProvider";
+import { getToken } from "../utils/tokenStorage";
 
 const PACKAGES = [
   {
@@ -106,7 +107,7 @@ export default function PackagesSection() {
 
     try {
       setCheckoutKey(plan.key);
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const headers = {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),

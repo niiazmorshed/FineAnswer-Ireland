@@ -13,6 +13,7 @@ import { createContext, useCallback, useEffect, useState } from "react";
 
 import { API_BASE_URL } from "../../config/api";
 import auth from "../../Firebase/firebase.config";
+import { clearToken, getToken } from "../../utils/tokenStorage";
 
 export const AuthContext = createContext(null);
 const googleProvider = new GoogleAuthProvider();
@@ -23,43 +24,37 @@ const ContextProvider = ({ children }) => {
 
   // Creating The Function Of The USER
   const createUser = (email, password) => {
-    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   // Login Function
   const logIn = (email, password) => {
-    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // Google SignIn
   const googleSignIn = () => {
-    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
   // Logout Function
   const logOut = async () => {
     try {
-      setLoading(true);
       // Sign out from Firebase
       await signOut(auth);
-      // Clear token from localStorage
-      localStorage.removeItem("token");
+      // Clear token from both stores
+      clearToken();
       localStorage.removeItem("Access-Token");
       setUser(null);
       setIsAdmin(false);
-      setLoading(false);
     } catch (error) {
       console.error("Logout error:", error);
-      setLoading(false);
     }
   };
 
   // Get Current User from Backend
   const getCurrentUser = useCallback(async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) {
         setUser(null);
         setLoading(false);
@@ -74,7 +69,7 @@ const ContextProvider = ({ children }) => {
 
       if (!response.ok) {
         // Token invalid, clear it
-        localStorage.removeItem("token");
+        clearToken();
         setUser(null);
         setIsAdmin(false);
         setLoading(false);
@@ -98,7 +93,7 @@ const ContextProvider = ({ children }) => {
       return data;
     } catch (error) {
       console.error("Get current user error:", error);
-      localStorage.removeItem("token");
+      clearToken();
       setUser(null);
       setIsAdmin(false);
       setLoading(false);
@@ -123,30 +118,39 @@ const ContextProvider = ({ children }) => {
 
   // State Management - Get current user from backend on mount
   useEffect(() => {
-    const fetchUser = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        // If token exists, get user from backend
-        await getCurrentUser();
-      } else {
-        setLoading(false);
+    let cancelled = false;
+
+    const bootstrapAuth = async () => {
+      const token = getToken();
+      if (!token) {
+        if (!cancelled) {
+          setUser(null);
+          setIsAdmin(false);
+          setLoading(false);
+        }
+        return;
       }
+      await getCurrentUser();
     };
 
-    fetchUser();
+    bootstrapAuth();
 
-    // Also listen to Firebase auth state changes (for Google login)
-    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
-        // If Firebase user exists but no backend token, try to get user from backend
-        const token = localStorage.getItem("token");
-        if (token) {
-          await getCurrentUser();
-        }
-      }
+    // Never leave the app stuck on a spinner if /auth/me hangs
+    const timeoutId = window.setTimeout(() => {
+      if (!cancelled) setLoading(false);
+    }, 10000);
+
+    const unsubscribe = onAuthStateChanged(auth, async () => {
+      if (cancelled) return;
+      const token = getToken();
+      if (token) await getCurrentUser();
     });
 
-    return () => unsubscribe();
+    return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
+      unsubscribe();
+    };
   }, [getCurrentUser]);
 
   const authInfo = {
