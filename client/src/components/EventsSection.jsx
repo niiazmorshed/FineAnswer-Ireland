@@ -7,7 +7,7 @@ export default function EventsSection() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/events`);
+        const res = await fetch(`${API_BASE_URL}/events`);
         const data = await res.json();
         const list = Array.isArray(data) ? data : data?.events ?? data?.data ?? [];
         setEvents(list.slice(0, 4));
@@ -19,6 +19,12 @@ export default function EventsSection() {
   }, []);
 
   if (!events.length) return null;
+
+  const eventRegisterUrl = (ev) =>
+    ev.eventUrl || ev.registrationLink || ev.link || "/#contact";
+
+  const eventDate = (ev) =>
+    ev.startDate || ev.eventDate || ev.createdAt || null;
 
   const formatDate = (dateStr) => {
     if (!dateStr) return "";
@@ -43,8 +49,8 @@ export default function EventsSection() {
                 ) : (
                   <div className="ev-img-placeholder" />
                 )}
-                {ev.startDate && (
-                  <span className="ev-date-badge">{formatDate(ev.startDate)}</span>
+                {eventDate(ev) && (
+                  <span className="ev-date-badge">{formatDate(eventDate(ev))}</span>
                 )}
               </div>
               <div className="ev-body">
@@ -57,8 +63,8 @@ export default function EventsSection() {
                     : "Join our upcoming education event to connect with Irish institution representatives."}
                 </p>
                 <a
-                  href={ev.registrationLink || ev.link || "#contact"}
-                  target={ev.registrationLink ? "_blank" : undefined}
+                  href={eventRegisterUrl(ev)}
+                  target={eventRegisterUrl(ev).startsWith("http") ? "_blank" : undefined}
                   rel="noopener noreferrer"
                   className="ev-register-btn"
                 >

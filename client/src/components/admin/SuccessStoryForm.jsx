@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { FaTimes, FaCloudUploadAlt, FaSpinner } from "react-icons/fa";
 import { uploadImageToS3 } from "../../utils/s3Upload";
+import { getToken } from "../../utils/tokenStorage";
 import { createSuccessStory, updateSuccessStory } from "../../services/successStoriesApi";
 import "./SuccessStoryForm.css";
 
@@ -82,7 +83,7 @@ export default function SuccessStoryForm({ isOpen, onClose, onSuccess, initialSt
 
     setUploading(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) {
         throw new Error("Authentication required");
       }

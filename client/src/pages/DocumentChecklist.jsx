@@ -9,6 +9,7 @@ import {
   FaEye,
 } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
+import { getToken } from "../utils/tokenStorage";
 import { uploadDocumentToS3 } from "../utils/s3Upload";
 import "../css/documentChecklist.css";
 
@@ -109,7 +110,7 @@ export default function DocumentChecklist() {
 
   const fetchDocuments = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(`${API_BASE_URL}/documents`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -149,7 +150,7 @@ export default function DocumentChecklist() {
       const url = await uploadDocumentToS3(file);
 
       // Save/update in backend
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const method = documents._id ? "PUT" : "POST";
       const res = await fetch(`${API_BASE_URL}/documents`, {
         method,

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FaFileAlt, FaEye, FaSpinner, FaDownload, FaTrash } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import "./Documents.css";
 
 const DOC_FIELDS = [
@@ -44,7 +45,7 @@ export default function AdminDocuments() {
 
   const fetchDocuments = async () => {
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(`${API_BASE_URL}/admin/documents`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -83,7 +84,7 @@ export default function AdminDocuments() {
 
     setDeletingId(doc._id);
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const res = await fetch(`${API_BASE_URL}/admin/documents/${userId}`, {
         method: "DELETE",
         headers: {
@@ -150,7 +151,7 @@ export default function AdminDocuments() {
     if (!selectedDoc?.userId) return;
     setSubmittingFeedback(true);
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       const userId =
         selectedDoc.userId?.toString?.() ?? String(selectedDoc.userId || "");
       const res = await fetch(`${API_BASE_URL}/admin/documents/feedback`, {

@@ -1,3 +1,6 @@
 node_modules
 .env
 fineanswer-sheets-integration-c29908b1decf.json
+.agents 
+.clinerules
+

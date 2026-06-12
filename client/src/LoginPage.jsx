@@ -4,6 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 import { API_BASE_URL } from "./config/api";
 import "./LoginPage.css";
 import { AuthContext } from "./pages/Provider/ContextProvider";
+import { setToken } from "./utils/tokenStorage";
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ export default function LoginPage() {
 
   const [currentImage, setCurrentImage] = useState(0);
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [rememberMe, setRememberMe] = useState(false);
   const [message, setMessage] = useState(null);
 
   // Image slideshow
@@ -54,9 +56,9 @@ export default function LoginPage() {
       }
 
       const { token, isAdmin: adminStatus, data } = result;
-      
-      // Store only token in localStorage - user data comes from backend
-      localStorage.setItem("token", token);
+
+      // Persist per "Remember me": localStorage if checked, else sessionStorage
+      setToken(token, rememberMe);
       const isAdminFromResponse =
         typeof adminStatus === "boolean"
           ? adminStatus
@@ -124,8 +126,8 @@ export default function LoginPage() {
 
       const { token, isAdmin: adminStatus, data } = apiResult;
 
-      // Store only token in localStorage - user data comes from backend
-      localStorage.setItem("token", token);
+      // Persist per "Remember me": localStorage if checked, else sessionStorage
+      setToken(token, rememberMe);
       const isAdminFromResponse =
         typeof adminStatus === "boolean"
           ? adminStatus
@@ -214,7 +216,12 @@ export default function LoginPage() {
               </div>
               <div className="options">
                 <label>
-                  <input type="checkbox" /> Remember me
+                  <input
+                    type="checkbox"
+                    checked={rememberMe}
+                    onChange={(e) => setRememberMe(e.target.checked)}
+                  />{" "}
+                  Remember me
                 </label>
                 <Link to="/forgot-password">Forgot password?</Link>
               </div>

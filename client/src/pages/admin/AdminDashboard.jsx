@@ -2,6 +2,7 @@ import { useContext, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../Provider/ContextProvider";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import "./AdminDashboard.css";
 
 export default function AdminDashboard() {
@@ -29,7 +30,7 @@ export default function AdminDashboard() {
         setLoading(true);
         setError(null);
 
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) {
           setError("Please log in to view the admin dashboard.");
           return;

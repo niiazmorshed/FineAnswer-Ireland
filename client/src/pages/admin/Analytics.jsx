@@ -15,6 +15,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { API_BASE_URL } from "../../config/api";
+import { getToken } from "../../utils/tokenStorage";
 import "./Analytics.css";
 
 const COLORS = ["var(--color-primary-light)", "var(--color-primary)", "var(--color-primary)", "#0ea5e9", "var(--color-primary-light)", "#bae6fd"];
@@ -30,7 +31,7 @@ export default function Analytics() {
       try {
         setLoading(true);
         setError(null);
-        const token = localStorage.getItem("token");
+        const token = getToken();
         if (!token) {
           setError("Please log in to view analytics.");
           setLoading(false);

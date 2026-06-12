@@ -118,6 +118,71 @@ a {
 }
 a:hover { color: var(--color-primary-dark); }
 
+/* Gradient CTA bands — global p/a colors must not bleed on green backgrounds */
+.dv-cta p,
+.u18-cta p,
+.u18-cta__text,
+.ps-cta p,
+.ps-cta__text,
+.path-cta p,
+.path-cta__text,
+.er-cta p,
+.er-cta__text,
+.hi-cta p,
+.hi-cta__text,
+.ep-cta p,
+.ep-cta__text,
+.sm-cta p,
+.sl-life__cta p,
+.sl-life__cta-text,
+.si-campus__cta p,
+.si-campus__cta-text,
+.pv-cta p,
+.pv-cta__text,
+.tr-top__cta p,
+.tr-top__cta-text,
+.scholarship-cta__content p,
+.ep-banner p,
+.profile-header p,
+.profile-left h3 {
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.profile-left p {
+  color: rgba(255, 255, 255, 0.82);
+  text-shadow: none;
+}
+
+.dv-cta-btn,
+.u18-cta__btn,
+.ps-cta__btn,
+.path-cta__btn,
+.er-cta__btn,
+.sl-life__cta-btn,
+.si-campus__cta-btn,
+.pv-cta__btn,
+.tr-top__cta-btn,
+.ep-cta a,
+.sm-cta a {
+  color: #009a49 !important;
+  text-decoration: none;
+}
+
+.dv-cta-btn:hover,
+.u18-cta__btn:hover,
+.ps-cta__btn:hover,
+.path-cta__btn:hover,
+.er-cta__btn:hover,
+.sl-life__cta-btn:hover,
+.si-campus__cta-btn:hover,
+.pv-cta__btn:hover,
+.tr-top__cta-btn:hover,
+.ep-cta a:hover,
+.sm-cta a:hover {
+  color: #ff7900 !important;
+}
+
 img { max-width: 100%; height: auto; display: block; }
 
 /* ── Section utilities ─────────────────────────────────────── */

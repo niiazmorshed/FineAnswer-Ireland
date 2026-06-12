@@ -182,6 +182,7 @@ html, body, #root {
   font-size: 1.1rem;
   line-height: 1.6;
   margin-bottom: 20px;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .testimonial h4 {

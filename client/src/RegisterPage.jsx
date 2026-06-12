@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "./config/api";
 import { AuthContext } from "./pages/Provider/ContextProvider";
+import { setToken } from "./utils/tokenStorage";
 import "./RegisterPage.css";
 
 export default function RegisterPage() {
@@ -44,7 +45,7 @@ export default function RegisterPage() {
 
       // Registration successful: store token, refresh auth state, then redirect to dashboard
       if (result.token) {
-        localStorage.setItem("token", result.token);
+        setToken(result.token, true);
       }
 
       // Refresh auth context so ProtectedRoute sees the user and doesn't redirect to login

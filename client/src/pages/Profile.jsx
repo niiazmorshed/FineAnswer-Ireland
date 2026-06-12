@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { FaCamera, FaGraduationCap, FaSave, FaUser } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
+import { getToken } from "../utils/tokenStorage";
 import "./Profile.css";
 import { AuthContext } from "./Provider/ContextProvider";
 
@@ -69,7 +70,7 @@ export default function Profile() {
     setMessage(null);
 
     try {
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) {
         setMessage({ type: "error", text: "Please log in to save your profile." });
         setSaving(false);

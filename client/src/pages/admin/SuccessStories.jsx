@@ -3,6 +3,7 @@ import { FaPlus, FaTrash, FaEdit, FaSpinner } from "react-icons/fa";
 import SuccessStoryForm from "../../components/admin/SuccessStoryForm";
 import { getSuccessStories, deleteSuccessStory } from "../../services/successStoriesApi";
 import { resolveMediaUrl } from "../../utils/resolveMediaUrl";
+import { getToken } from "../../utils/tokenStorage";
 import "./SuccessStories.css";
 
 export default function SuccessStories() {
@@ -47,7 +48,7 @@ export default function SuccessStories() {
 
     try {
       setDeleting(id);
-      const token = localStorage.getItem("token");
+      const token = getToken();
       if (!token) {
         throw new Error("Authentication required");
       }
