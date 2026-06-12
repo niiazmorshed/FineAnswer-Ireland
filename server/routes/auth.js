@@ -78,17 +78,11 @@ router.post(
         .json({ success: false, message: "Invalid email or password" });
     }
 
-    if (user.authProvider !== "email") {
+    if (!user.password) {
       return res.status(400).json({
         success: false,
         message: "This email is registered with Google. Please use Google login.",
       });
-    }
-
-    if (!user.password) {
-      return res
-        .status(401)
-        .json({ success: false, message: "Invalid email or password" });
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -140,15 +134,6 @@ router.post(
 
     const user = await collections.users.findOne({ email });
     if (!user) return res.status(200).json(successResponse);
-
-    if (user.authProvider !== "email" || !user.password) {
-      return res.status(200).json({
-        success: true,
-        googleAccount: true,
-        message:
-          "This account uses Google Sign-In. To change your password, go to your Google Account settings (myaccount.google.com).",
-      });
-    }
 
     const otp = String(Math.floor(100000 + Math.random() * 900000));
     const resetOtpExpiry = new Date(Date.now() + 10 * 60 * 1000);
