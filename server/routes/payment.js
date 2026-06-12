@@ -8,7 +8,13 @@ const { asyncHandler, JWT_SECRET } = require("../middleware/auth");
 const router = express.Router();
 
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:5173";
+const FRONTEND_URL = process.env.VERCEL
+  ? (process.env.FRONTEND_URL || "https://fine-answer-ireland-plhp.vercel.app").replace(/\/$/, "")
+  : (
+      process.env.LOCAL_FRONTEND_URL ||
+      process.env.FRONTEND_URL ||
+      "http://localhost:5173"
+    ).replace(/\/$/, "");
 
 // ── Helper: extract authenticated user ID from optional Bearer token ──────────
 const getUserIdFromToken = async (authHeader) => {
