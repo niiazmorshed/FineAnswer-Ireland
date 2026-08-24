@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AboutUs from "./components/AboutUs";
+import AboutUsIntro from "./components/AboutUsIntro";
 import BentoHero from "./components/BentoHero";
 import BrowseBySubject from "./components/BrowseBySubject";
 import CEOQuote from "./components/CEOQuote";
@@ -278,7 +279,12 @@ export default function LandingPage() {
         }}
       />
 
-      {/* 2. ABOUT US */}
+      {/* 2. ABOUT US — PLACEHOLDER COPY, awaiting final text */}
+      <div className="scroll-reveal">
+        <AboutUsIntro />
+      </div>
+
+      {/* 3. UNLOCK YOUR DREAM DESTINATION + STATS */}
       <div className="scroll-reveal">
         <AboutUs />
       </div>
