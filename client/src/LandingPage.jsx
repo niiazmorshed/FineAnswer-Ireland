@@ -306,6 +306,11 @@ export default function LandingPage() {
         <PartnerLogos />
       </div>
 
+      {/* 6. SCHOLARSHIP CTA — directly under Partner Institutes */}
+      <div className="scroll-reveal">
+        <ScholarshipCTA />
+      </div>
+
       {/* 7. QUICK LINKS */}
       <div className="scroll-reveal">
         <QuickLinks />
@@ -353,10 +358,6 @@ export default function LandingPage() {
         <div className="scroll-reveal">
           <ContactSection />
         </div>
-      </div>
-      {/* 5. SCHOLARSHIP CTA */}
-      <div className="scroll-reveal">
-        <ScholarshipCTA />
       </div>
 
       {/* FOOTER */}
