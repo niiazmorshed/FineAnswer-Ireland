@@ -18,6 +18,7 @@ import PartnerBank from "./components/PartnerBank";
 import PartnerLogos from "./components/PartnerLogos";
 import QuickLinks from "./components/QuickLinks";
 import ScholarshipCTA from "./components/ScholarshipCTA";
+import ScholarshipsSection from "./components/ScholarshipsSection";
 import Services from "./components/Services";
 import SuccessStories from "./components/SuccessStories";
 import TopUtilityBar from "./components/TopUtilityBar";
@@ -306,7 +307,12 @@ export default function LandingPage() {
         <PartnerLogos />
       </div>
 
-      {/* 6. SCHOLARSHIP CTA — directly under Partner Institutes */}
+      {/* 6. SCHOLARSHIPS — admin-managed listing, directly under Partner Institutes */}
+      <div className="scroll-reveal">
+        <ScholarshipsSection />
+      </div>
+
+      {/* 7. SCHOLARSHIP CTA */}
       <div className="scroll-reveal">
         <ScholarshipCTA />
       </div>

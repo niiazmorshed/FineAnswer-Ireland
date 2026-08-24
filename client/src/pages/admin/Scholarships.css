@@ -1,0 +1,322 @@
+.scholarship-page {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.scholarship-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.scholarship-header h2 {
+  font-size: 2rem;
+  color: #2d3748;
+  font-weight: 600;
+}
+
+.scholarship-create-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.scholarship-create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+/* ── States ───────────────────────────────────────────────────────────── */
+.scholarship-loading,
+.scholarship-empty {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: #718096;
+}
+
+.scholarship-empty svg {
+  font-size: 3rem;
+  color: #cbd5e0;
+  margin-bottom: 1rem;
+}
+
+.scholarship-empty h3 {
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.scholarship-loading-spinner {
+  font-size: 2rem;
+  color: #667eea;
+  animation: scholarship-spin 1s linear infinite;
+}
+
+@keyframes scholarship-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.scholarship-error,
+.scholarship-form-error {
+  background: #fed7d7;
+  color: #9b2c2c;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+/* ── List ─────────────────────────────────────────────────────────────── */
+.scholarship-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.scholarship-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-left: 5px solid #667eea;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.scholarship-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.scholarship-card-main {
+  min-width: 0;
+  flex: 1;
+}
+
+.scholarship-card-title {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.25rem;
+}
+
+.scholarship-card-provider {
+  color: #718096;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+.scholarship-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.scholarship-tag {
+  display: inline-block;
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: #edf2f7;
+  color: #4a5568;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.scholarship-tag--amount {
+  background: #e6fffa;
+  color: #234e52;
+}
+
+.scholarship-card-eligibility {
+  color: #4a5568;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.6rem;
+}
+
+.scholarship-card-link {
+  font-size: 0.85rem;
+  color: #667eea;
+  word-break: break-all;
+}
+
+.scholarship-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.scholarship-card-actions .edit-btn,
+.scholarship-card-actions .delete-btn {
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.scholarship-card-actions .edit-btn {
+  background: #ebf4ff;
+  color: #3182ce;
+}
+
+.scholarship-card-actions .edit-btn:hover {
+  background: #3182ce;
+  color: #fff;
+}
+
+.scholarship-card-actions .delete-btn {
+  background: #fff5f5;
+  color: #e53e3e;
+}
+
+.scholarship-card-actions .delete-btn:hover {
+  background: #e53e3e;
+  color: #fff;
+}
+
+/* ── Modal form ───────────────────────────────────────────────────────── */
+.scholarship-form-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 1rem;
+}
+
+.scholarship-form-container {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.scholarship-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.scholarship-form-header h3 {
+  font-size: 1.4rem;
+  color: #2d3748;
+}
+
+.scholarship-form-header .close-modal-btn {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: #718096;
+  cursor: pointer;
+}
+
+.scholarship-form .form-group {
+  margin-bottom: 1.25rem;
+}
+
+.scholarship-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 640px) {
+  .scholarship-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scholarship-form label {
+  display: block;
+  margin-bottom: 0.45rem;
+  font-weight: 600;
+  color: #2d3748;
+  font-size: 0.9rem;
+}
+
+.scholarship-form input,
+.scholarship-form select,
+.scholarship-form textarea {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: #2d3748;
+  background: #fff;
+}
+
+.scholarship-form textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.scholarship-form input:focus,
+.scholarship-form select:focus,
+.scholarship-form textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.scholarship-form .form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.scholarship-form .cancel-btn,
+.scholarship-form .submit-btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+}
+
+.scholarship-form .cancel-btn {
+  background: #edf2f7;
+  color: #4a5568;
+}
+
+.scholarship-form .submit-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+}
+
+.scholarship-form .submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

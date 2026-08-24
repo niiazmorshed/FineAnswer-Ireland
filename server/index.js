@@ -14,6 +14,7 @@ const videosRouter = require("./routes/videos");
 const eventsRouter = require("./routes/events");
 const jobsRouter = require("./routes/jobs");
 const documentsRouter = require("./routes/documents");
+const scholarshipsRouter = require("./routes/scholarships");
 const adminRouter = require("./routes/admin");
 const paymentRouter = require("./routes/payment");
 const messagesRouter = require("./routes/messages");
@@ -71,6 +72,7 @@ const ready = connectDB()
     app.use("/api/events", eventsRouter);
     app.use("/api/jobs", jobsRouter);
     app.use("/api/documents", documentsRouter);
+    app.use("/api/scholarships", scholarshipsRouter);
     app.use("/api/admin", adminRouter);
     app.use("/api", paymentRouter);         // /api/create-payment, /api/payment/*
     app.use("/api/send-message", messagesRouter);
