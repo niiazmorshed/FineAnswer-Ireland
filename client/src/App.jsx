@@ -30,6 +30,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthContext } from "./pages/Provider/ContextProvider";
 import PublicBlog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
+import PublicScholarships from "./pages/Scholarships";
 import Career from "./pages/Career";
 import Payment from "./pages/Payment";
 import EnglishProficiency from "./pages/EnglishProficiency";
@@ -164,6 +165,7 @@ function AppRoutes() {
       <Route path="/uk" element={<Navigate to="/" replace />} />
       <Route path="/blog" element={<PublicBlog />} />
       <Route path="/blog/:id" element={<BlogDetail />} />
+      <Route path="/scholarships" element={<PublicScholarships />} />
       <Route path="/success-story/:id" element={<SuccessStoryDetail />} />
       <Route path="/career" element={<Career />} />
       <Route path="/jobs/:id" element={<JobDetail />} />

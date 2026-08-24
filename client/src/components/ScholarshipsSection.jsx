@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { FaAward, FaCalendarAlt, FaGraduationCap } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
+
+import kylemoreAbbey from "../assets/ireland/kylemore-abbey.webp";
 
 /**
  * Scholarships listing — sits directly under the partner-universities section.
@@ -42,13 +45,19 @@ export default function ScholarshipsSection({ limit = 6 }) {
   return (
     <section className="schol" id="scholarships">
       <div className="schol-inner">
-        <div className="schol-head">
-          <span className="section-badge">Funding</span>
-          <h2 className="schol-title">Scholarships for International Students</h2>
-          <p className="schol-subtitle">
-            Funding options we track for students heading to Ireland. Check each
-            provider&apos;s page for the full terms before applying.
-          </p>
+        <div className="schol-intro">
+          <div className="schol-head">
+            <span className="section-badge">Funding</span>
+            <h2 className="schol-title">Scholarships for International Students</h2>
+            <p className="schol-subtitle">
+              Funding options we track for students heading to Ireland. Check each
+              provider&apos;s page for the full terms before applying.
+            </p>
+          </div>
+
+          {/* Decorative Ireland imagery — Kylemore Abbey. Presentational only,
+              hence a background-image on an aria-hidden div, not an <img>. */}
+          <div className="schol-media" aria-hidden="true" />
         </div>
 
         <ul className="schol-grid">
@@ -98,6 +107,15 @@ export default function ScholarshipsSection({ limit = 6 }) {
             </li>
           ))}
         </ul>
+
+        {/* Only worth showing once the listing is actually truncated. */}
+        {scholarships.length > visible.length && (
+          <div className="schol-more">
+            <Link to="/scholarships" className="schol-moreLink">
+              View all {scholarships.length} scholarships →
+            </Link>
+          </div>
+        )}
       </div>
 
       <style>{`
@@ -114,10 +132,49 @@ export default function ScholarshipsSection({ limit = 6 }) {
           margin: 0 auto;
           padding: 0 24px;
         }
-        .schol-head{
-          max-width: 640px;
+        .schol-intro{
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 40px;
+          align-items: center;
           margin-bottom: 32px;
         }
+        @media (max-width: 960px){
+          .schol-intro{ grid-template-columns: 1fr; gap: 24px; }
+        }
+        .schol-head{
+          max-width: 640px;
+        }
+        .schol-media{
+          min-height: 320px;
+          background-image: url(${kylemoreAbbey});
+          /* Portrait source in a landscape box: 42% keeps the abbey and its
+             reflection in frame and crops the empty sky instead. */
+          background-position: center 42%;
+          background-size: cover;
+          background-repeat: no-repeat;
+          border-radius: var(--radius-card, 16px);
+        }
+        @media (min-width: 1200px){
+          .schol-media{ min-height: 420px; }
+        }
+        @media (max-width: 960px){
+          .schol-media{ min-height: 240px; }
+        }
+        .schol-more{
+          margin-top: 26px;
+        }
+        .schol-moreLink{
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.94rem;
+          font-weight: 700;
+          color: var(--color-primary-dark, #52a63f);
+          text-decoration: none;
+        }
+        .schol-moreLink:hover{ text-decoration: underline; }
+
         .schol-title{
           font-size: var(--text-h2, 2rem);
           font-weight: var(--weight-bold, 700);
