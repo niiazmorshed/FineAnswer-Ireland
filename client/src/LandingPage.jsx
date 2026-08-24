@@ -279,7 +279,7 @@ export default function LandingPage() {
         }}
       />
 
-      {/* 2. ABOUT US — PLACEHOLDER COPY, awaiting final text */}
+      {/* 2. ABOUT US */}
       <div className="scroll-reveal">
         <AboutUsIntro />
       </div>
