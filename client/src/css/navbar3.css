@@ -155,7 +155,7 @@
   display: inline-flex;
   align-items: center;
   padding: 6px 12px;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: #4b5563;
   text-decoration: none;
@@ -205,7 +205,7 @@
   align-items: center;
   gap: 6px;
   padding: 6px 12px;
-  font-size: 0.875rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   color: #4b5563;
   background: none;
@@ -559,7 +559,7 @@
     margin: 2px 8px;
     padding: 10px 14px;
     border-radius: 9px;
-    font-size: 0.925rem;
+    font-size: 0.975rem;
   }
 
   /* No underline indicator on mobile */
@@ -578,7 +578,7 @@
     padding: 10px 14px;
     justify-content: space-between;
     border-radius: 9px;
-    font-size: 0.925rem;
+    font-size: 0.975rem;
   }
 
   .nav-dropdown__trigger.active {
