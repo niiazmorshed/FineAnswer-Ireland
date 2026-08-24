@@ -3,16 +3,16 @@ import "./Globe.css";
 
 // ══ ORIGIN COUNTRIES ═══════════════════════════════════════════
 const ORIGINS = [
-  { name: "Dhaka", countryName: "Bangladesh", stat: "120+ Students", lat: 23.7, lng: 90.4, color: "#64c850", flag: "🇧🇩", code: "BD" },
-  { name: "Mumbai", countryName: "India", stat: "Top origin", lat: 19.1, lng: 72.9, color: "#ff9933", flag: "🇮🇳", code: "IN" },
-  { name: "Karachi", countryName: "Pakistan", stat: "98+ Students", lat: 24.9, lng: 67.0, color: "#4ade80", flag: "🇵🇰", code: "PK" },
-  { name: "Dubai", countryName: "UAE", stat: "86+ Students", lat: 25.2, lng: 55.3, color: "#ffda32", flag: "🇦🇪", code: "AE" },
-  { name: "Riyadh", countryName: "Saudi Arabia", stat: "45+ Students", lat: 24.7, lng: 46.7, color: "#fbbf24", flag: "🇸🇦", code: "SA" },
-  { name: "Kuwait City", countryName: "Kuwait", stat: "32+ Students", lat: 29.4, lng: 47.9, color: "#38bdf8", flag: "🇰🇼", code: "KW" },
-  { name: "Doha", countryName: "Qatar", stat: "28+ Students", lat: 25.3, lng: 51.5, color: "#c084fc", flag: "🇶🇦", code: "QA" },
-  { name: "Manama", countryName: "Bahrain", stat: "19+ Students", lat: 26.2, lng: 50.6, color: "#fb923c", flag: "🇧🇭", code: "BH" },
-  { name: "New York", countryName: "United States", stat: "41+ Students", lat: 40.7, lng: -74.0, color: "#e879f9", flag: "🇺🇸", code: "US" },
-  { name: "London", countryName: "United Kingdom", stat: "67+ Students", lat: 51.5, lng: -0.12, color: "#a3cfff", flag: "🇬🇧", code: "UK" },
+  { name: "Dhaka", countryName: "Bangladesh", lat: 23.7, lng: 90.4, color: "#64c850", flag: "🇧🇩", code: "BD" },
+  { name: "Mumbai", countryName: "India", lat: 19.1, lng: 72.9, color: "#ff9933", flag: "🇮🇳", code: "IN" },
+  { name: "Karachi", countryName: "Pakistan", lat: 24.9, lng: 67.0, color: "#4ade80", flag: "🇵🇰", code: "PK" },
+  { name: "Dubai", countryName: "UAE", lat: 25.2, lng: 55.3, color: "#ffda32", flag: "🇦🇪", code: "AE" },
+  { name: "Riyadh", countryName: "Saudi Arabia", lat: 24.7, lng: 46.7, color: "#fbbf24", flag: "🇸🇦", code: "SA" },
+  { name: "Kuwait City", countryName: "Kuwait", lat: 29.4, lng: 47.9, color: "#38bdf8", flag: "🇰🇼", code: "KW" },
+  { name: "Doha", countryName: "Qatar", lat: 25.3, lng: 51.5, color: "#c084fc", flag: "🇶🇦", code: "QA" },
+  { name: "Manama", countryName: "Bahrain", lat: 26.2, lng: 50.6, color: "#fb923c", flag: "🇧🇭", code: "BH" },
+  { name: "São Paulo", countryName: "Brazil", lat: -23.5, lng: -46.6, color: "#e879f9", flag: "🇧🇷", code: "BR" },
+  { name: "Beijing", countryName: "China", lat: 39.9, lng: 116.4, color: "#a3cfff", flag: "🇨🇳", code: "CN" },
 ];
 
 const DUBLIN = { lat: 53.33, lng: -6.25 };
@@ -424,7 +424,6 @@ export default function Globe({ size = 500 }) {
           >
             <span className="globe-node-card__flag">{orig.flag}</span>
             <div className="globe-node-card__name">{orig.countryName}</div>
-            <div className="globe-node-card__stat">{orig.stat}</div>
           </div>
         ))}
         <div
@@ -434,7 +433,6 @@ export default function Globe({ size = 500 }) {
         >
           <span className="globe-node-card__flag">🇮🇪</span>
           <div className="globe-node-card__name">Dublin, Ireland</div>
-          <div className="globe-node-card__stat">Hub · 500+ guided</div>
         </div>
       </div>
     </div>

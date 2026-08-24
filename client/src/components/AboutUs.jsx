@@ -7,10 +7,10 @@ import aboutImg3 from "../assets/DBS.jpg";
 import aboutImg4 from "../assets/DCU.jpg";
 
 const stats = [
-  { value: "4K+", label: "Satisfied Customers" },
+  { value: "100+", label: "Satisfied Customers" },
   { value: "1K+", label: "Successful Applications" },
   { value: "24/7", label: "Customer Support" },
-  { value: "100%", label: "Dedication" },
+  { value: "8", label: "Countries Served" },
 ];
 
 export default function AboutUs() {

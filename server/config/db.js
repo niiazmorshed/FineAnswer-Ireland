@@ -27,6 +27,7 @@ const collections = {
   careerApplications: null,
   documents: null,
   payment: null,
+  scholarships: null,
 };
 
 const connectWithRetry = async (attempts = 5, baseDelay = 1000) => {
@@ -63,6 +64,7 @@ const connectDB = async () => {
   collections.careerApplications = db.collection("careerApplications");
   collections.documents          = db.collection("documentsCollection");
   collections.payment            = db.collection("paymentCollection");
+  collections.scholarships       = db.collection("scholarships");
 };
 
 module.exports = { client, collections, connectDB };

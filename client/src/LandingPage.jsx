@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import AboutUs from "./components/AboutUs";
+import AboutUsIntro from "./components/AboutUsIntro";
 import BentoHero from "./components/BentoHero";
 import BrowseBySubject from "./components/BrowseBySubject";
 import CEOQuote from "./components/CEOQuote";
@@ -17,6 +18,7 @@ import PartnerBank from "./components/PartnerBank";
 import PartnerLogos from "./components/PartnerLogos";
 import QuickLinks from "./components/QuickLinks";
 import ScholarshipCTA from "./components/ScholarshipCTA";
+import ScholarshipsSection from "./components/ScholarshipsSection";
 import Services from "./components/Services";
 import SuccessStories from "./components/SuccessStories";
 import TopUtilityBar from "./components/TopUtilityBar";
@@ -280,6 +282,11 @@ export default function LandingPage() {
 
       {/* 2. ABOUT US */}
       <div className="scroll-reveal">
+        <AboutUsIntro />
+      </div>
+
+      {/* 3. UNLOCK YOUR DREAM DESTINATION + STATS */}
+      <div className="scroll-reveal">
         <AboutUs />
       </div>
 
@@ -298,6 +305,16 @@ export default function LandingPage() {
       {/* 5. PARTNER INSTITUTES — directly under Services */}
       <div className="scroll-reveal">
         <PartnerLogos />
+      </div>
+
+      {/* 6. SCHOLARSHIPS — admin-managed listing, directly under Partner Institutes */}
+      <div className="scroll-reveal">
+        <ScholarshipsSection />
+      </div>
+
+      {/* 7. SCHOLARSHIP CTA */}
+      <div className="scroll-reveal">
+        <ScholarshipCTA />
       </div>
 
       {/* 7. QUICK LINKS */}
@@ -347,10 +364,6 @@ export default function LandingPage() {
         <div className="scroll-reveal">
           <ContactSection />
         </div>
-      </div>
-      {/* 5. SCHOLARSHIP CTA */}
-      <div className="scroll-reveal">
-        <ScholarshipCTA />
       </div>
 
       {/* FOOTER */}

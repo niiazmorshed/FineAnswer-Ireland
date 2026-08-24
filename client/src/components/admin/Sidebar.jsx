@@ -11,6 +11,7 @@ import {
   FaVideo,
   FaUsers,
   FaFileAlt,
+  FaAward,
   FaSignOutAlt,
   FaChevronLeft,
   FaChevronRight,
@@ -98,6 +99,10 @@ export default function Sidebar({
 
           <NavLink to="/admin/documents" title="Documents">
             <FaFileAlt /> <span>Documents</span>
+          </NavLink>
+
+          <NavLink to="/admin/scholarships" title="Scholarships">
+            <FaAward /> <span>Scholarships</span>
           </NavLink>
         </nav>
 

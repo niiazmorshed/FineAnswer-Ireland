@@ -15,23 +15,6 @@ import dcuLogo from "../assets/dcu logo.png";
 import tud from "../assets/TUD.png";
 import ucd from "../assets/ucd.jpg";
 
-import three from "../assets/uk/bangor.png";
-import four from "../assets/uk/aston.jpg";
-import five from "../assets/uk/green.png";
-import six from "../assets/uk/portsm.jpg";
-import seven from "../assets/uk/NTU.png";
-import eight from "../assets/uk/conven.png";
-
-import nine from "../assets/aus/monash.png";
-import ten from "../assets/aus/unsw.png";
-import eleven from "../assets/aus/ade.png";
-import twelve from "../assets/aus/mac.png";
-import thirteen from "../assets/aus/tas.png";
-import fourteen from "../assets/aus/Curtin.png";
-
-
-
-
 const LogoRow = ({ logos, direction, speed = 40 }) => (
   <div className="partner-logo-row">
     <Marquee
@@ -73,24 +56,6 @@ const PartnerLogos = () => {
     { name: "UCD", url: ucd },
   ];
 
-  const row3 = [
-    { name: "three", url: three },
-    { name: "four", url: four },
-    { name: "five", url: five },
-    { name: "six", url: six },
-    { name: "seven", url: seven },
-    { name: "eight", url: eight },
-  ];
-
-  const row4 = [
-    { name: "nine", url: nine },
-    { name: "ten", url: ten },
-    { name: "eleven", url: eleven },
-    { name: "twelve", url: twelve },
-    { name: "thirteen", url: thirteen },
-    { name: "fourteen", url: fourteen },
-  ];
-
   return (
     <section className="partners-section">
       <div className="partners-caption">
@@ -103,10 +68,6 @@ const PartnerLogos = () => {
 
         {/* Row 2: left to right */}
         <LogoRow logos={row2} direction="right" speed={50} />
-
-        {/* Row 3: left to right */}
-        <LogoRow logos={row3} direction="left" speed={50} />
-        <LogoRow logos={row4} direction="right" speed={50} />
       </div>
     </section>
   );

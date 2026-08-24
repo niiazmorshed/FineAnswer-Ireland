@@ -161,9 +161,9 @@ export default function Messages() {
               >
                 <option value="">Select country</option>
                 <option value="Australia">Australia</option>
-                <option value="UK">UK</option>
+                <option value="China">China</option>
                 <option value="Canada">Canada</option>
-                <option value="USA">USA</option>
+                <option value="Brazil">Brazil</option>
                 <option value="Ireland">Ireland</option>
               </select>
             </div>

@@ -1,24 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import britishCouncil from "../assets/british.png";
-import bylc from "../assets/bylc.png";
-import cityBank from "../assets/city-bank-logo.webp";
-import nrbcBank from "../assets/nrbc.webp";
-import premierBank from "../assets/pp.webp";
 import heroPerson from "../assets/student.jpg";
-import studyProtect from "../assets/studyp.png";
 import "./BentoHero.css";
 import { ResponsiveGlobe } from "./Globe";
-
-/** Same strategic partners as PartnerBank — keeps hero strip aligned with the section below */
-const TRUSTED_PARTNERS = [
-  { name: "City Bank", logo: cityBank },
-  { name: "NRBC Bank", logo: nrbcBank },
-  { name: "British Council", logo: britishCouncil },
-  { name: "Premier Bank", logo: premierBank },
-  { name: "BYLC", logo: bylc },
-  { name: "Study Global", logo: studyProtect },
-];
 
 const COUNTRY = "Ireland";
 
@@ -230,17 +214,6 @@ export default function BentoHero({
                 </div>
               </div>
             ) : null}
-
-            <div className="job-hero__trusted">
-              <span className="job-hero__trustedLabel">We are trusted by:</span>
-              <ul className="job-hero__trustedLogos" aria-label="Strategic partner logos">
-                {TRUSTED_PARTNERS.map((p) => (
-                  <li key={p.name} className="job-hero__trustedLogo">
-                    <img src={p.logo} alt={p.name} loading="lazy" width={40} height={40} />
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             <div className="job-hero__ctaRow">{ctaEl}</div>
           </div>
