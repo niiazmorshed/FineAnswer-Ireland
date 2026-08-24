@@ -11,8 +11,8 @@ const ORIGINS = [
   { name: "Kuwait City", countryName: "Kuwait", lat: 29.4, lng: 47.9, color: "#38bdf8", flag: "🇰🇼", code: "KW" },
   { name: "Doha", countryName: "Qatar", lat: 25.3, lng: 51.5, color: "#c084fc", flag: "🇶🇦", code: "QA" },
   { name: "Manama", countryName: "Bahrain", lat: 26.2, lng: 50.6, color: "#fb923c", flag: "🇧🇭", code: "BH" },
-  { name: "New York", countryName: "United States", lat: 40.7, lng: -74.0, color: "#e879f9", flag: "🇺🇸", code: "US" },
-  { name: "London", countryName: "United Kingdom", lat: 51.5, lng: -0.12, color: "#a3cfff", flag: "🇬🇧", code: "UK" },
+  { name: "São Paulo", countryName: "Brazil", lat: -23.5, lng: -46.6, color: "#e879f9", flag: "🇧🇷", code: "BR" },
+  { name: "Beijing", countryName: "China", lat: 39.9, lng: 116.4, color: "#a3cfff", flag: "🇨🇳", code: "CN" },
 ];
 
 const DUBLIN = { lat: 53.33, lng: -6.25 };
