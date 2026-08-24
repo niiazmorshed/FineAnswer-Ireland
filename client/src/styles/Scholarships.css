@@ -1,0 +1,207 @@
+/* Public scholarships listing (/scholarships).
+   Prefix schp- rather than schol- so it cannot collide with the landing
+   page's ScholarshipsSection, which ships its own scoped styles. */
+
+.schp-page {
+  min-height: 100vh;
+  background: var(--color-bg-page, #f7f8fc);
+  font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
+  padding-bottom: 72px;
+}
+
+.schp-nav {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 24px 0;
+}
+
+.schp-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  font: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-text-secondary, #64748b);
+  background: #fff;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.schp-back:hover {
+  color: var(--color-text-primary, #0f172a);
+  border-color: #cbd5e1;
+}
+.schp-arrow {
+  font-size: 1.05rem;
+  line-height: 1;
+}
+
+.schp-header {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 36px 24px 8px;
+}
+.schp-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  margin-bottom: 14px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-primary-dark, #52a63f);
+  background: var(--color-primary-light, #eef8ec);
+  border-radius: 999px;
+}
+.schp-header h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  color: var(--color-text-primary, #0f172a);
+}
+.schp-header p {
+  margin: 14px 0 0;
+  max-width: 46rem;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: var(--color-text-secondary, #64748b);
+}
+
+.schp-container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 32px 24px 0;
+}
+
+.schp-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+}
+@media (max-width: 1024px) {
+  .schp-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 680px) {
+  .schp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.schp-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--color-border, #e2e8f0);
+  border-radius: var(--radius-card, 16px);
+  padding: 22px;
+  box-shadow: var(--shadow-card, 0 10px 28px rgba(15, 23, 42, 0.06));
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.schp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover, 0 18px 38px rgba(15, 23, 42, 0.12));
+}
+
+.schp-card-head {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.schp-card-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  display: grid;
+  place-items: center;
+  border-radius: 10px;
+  color: var(--color-primary-dark, #52a63f);
+  background: var(--color-primary-light, #eef8ec);
+}
+.schp-card-name {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--color-text-primary, #0f172a);
+}
+.schp-card-provider {
+  margin: 3px 0 0;
+  font-size: 0.86rem;
+  color: var(--color-text-secondary, #64748b);
+}
+
+.schp-card-amount {
+  margin-top: 16px;
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: var(--color-primary-dark, #52a63f);
+}
+
+.schp-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+.schp-card-metaItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: 0.8rem;
+  color: var(--color-text-secondary, #64748b);
+  background: #f1f5f9;
+  border-radius: 999px;
+}
+
+.schp-card-eligibility {
+  margin: 14px 0 0;
+  font-size: 0.89rem;
+  line-height: 1.65;
+  color: var(--color-text-secondary, #64748b);
+}
+
+.schp-card-link {
+  /* margin-top:auto pins the link to the bottom so cards of differing text
+     length still line their CTAs up across a row. */
+  margin-top: auto;
+  padding-top: 18px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-primary-dark, #52a63f);
+  text-decoration: none;
+}
+.schp-card-link:hover {
+  text-decoration: underline;
+}
+
+.schp-loader,
+.schp-empty {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 80px 24px;
+  text-align: center;
+  font-size: 1rem;
+  color: var(--color-text-secondary, #64748b);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .schp-card {
+    transition: none;
+  }
+  .schp-card:hover {
+    transform: none;
+  }
+}

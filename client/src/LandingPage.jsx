@@ -259,12 +259,15 @@ export default function LandingPage() {
       <ParticlesBackground />
 
       <BentoHero
-        useGlobeHero
+        cinematic
         ariaLabel="FineAnswer Ireland"
+        eyebrow="Study Abroad Consultants · Ireland"
         title={
           <>
             We take care of your <br />
-            Ireland Journey step by step
+            <span className="ireland-hero-title__accent">
+              Ireland journey, step by step.
+            </span>
           </>
         }
         subtitle="Search courses, plan your application, and get visa-ready with a guided, modern experience designed to keep everything simple and trackable."

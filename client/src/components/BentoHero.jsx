@@ -1,10 +1,93 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import heroPerson from "../assets/student.jpg";
 import "./BentoHero.css";
 import { ResponsiveGlobe } from "./Globe";
 
 const COUNTRY = "Ireland";
+
+/* Served from public/, so these are plain static files rather than bundled
+   modules — the browser streams the mp4 instead of it inflating the JS chunk. */
+const HERO_VIDEO_SRC = "/video/campus-hero.mp4";
+const HERO_VIDEO_POSTER = "/video/campus-hero-poster.jpg";
+
+/**
+ * Decorative hero background.
+ *
+ * The poster paints immediately as a CSS background; the <video> is only
+ * created later, and only where it is worth the bytes. Nothing here blocks
+ * first paint: the element does not exist until an idle callback fires, so
+ * the mp4 is never in flight while the page is still laying out.
+ *
+ * Skipped entirely on narrow viewports (phones pay the most and see the
+ * least), when the viewer prefers reduced motion, and on metered or slow
+ * connections. Those cases keep the poster still, which is a complete-looking
+ * hero rather than a fallback.
+ */
+function HeroBackdrop() {
+  const [mounted, setMounted] = useState(false);
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    const wideEnough = window.matchMedia("(min-width: 768px)").matches;
+    const reducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const conn =
+      navigator.connection ||
+      navigator.mozConnection ||
+      navigator.webkitConnection;
+    const constrained =
+      Boolean(conn?.saveData) ||
+      /(^|-)2g$|^3g$/.test(conn?.effectiveType || "");
+
+    if (!wideEnough || reducedMotion || constrained) return undefined;
+
+    let cancelled = false;
+    const mount = () => {
+      if (!cancelled) setMounted(true);
+    };
+
+    // requestIdleCallback keeps this off the critical path; the timeout stops
+    // a permanently busy main thread from starving it, and setTimeout covers
+    // Safari, which still lacks rIC.
+    const idle = window.requestIdleCallback;
+    const handle = idle
+      ? idle(mount, { timeout: 2500 })
+      : setTimeout(mount, 1200);
+
+    return () => {
+      cancelled = true;
+      if (idle && window.cancelIdleCallback) window.cancelIdleCallback(handle);
+      else clearTimeout(handle);
+    };
+  }, []);
+
+  return (
+    <div className="hero-backdrop" aria-hidden="true">
+      <div
+        className="hero-backdrop__poster"
+        style={{ backgroundImage: `url(${HERO_VIDEO_POSTER})` }}
+      />
+      {mounted && (
+        <video
+          className={`hero-backdrop__video${ready ? " is-ready" : ""}`}
+          src={HERO_VIDEO_SRC}
+          poster={HERO_VIDEO_POSTER}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="none"
+          tabIndex={-1}
+          onCanPlay={() => setReady(true)}
+        />
+      )}
+      <div className="hero-backdrop__scrim" />
+    </div>
+  );
+}
 
 const LEVELS = [
   { label: "Postgraduate", value: "Master's (Postgraduate)" },
@@ -44,6 +127,13 @@ export default function BentoHero({
   showHeroSearch = true,
   heroImageSrc = heroPerson,
   useGlobeHero = false,
+  /**
+   * Full-bleed video hero: no right-hand column at all, dark scrim, light type.
+   * The globe and the floating cards are both suppressed — the footage is the
+   * whole composition.
+   */
+  cinematic = false,
+  eyebrow,
   onSearch,
 }) {
   const [selectedLevel, setSelectedLevel] = useState("");
@@ -83,7 +173,13 @@ export default function BentoHero({
     );
 
   return (
-    <section className="ireland-hero-bento" aria-label={ariaLabel} id="search">
+    <section
+      className={`ireland-hero-bento${cinematic ? " ireland-hero-bento--cinematic" : ""}`}
+      aria-label={ariaLabel}
+      id="search"
+    >
+      <HeroBackdrop />
+
       <div className="ireland-hero-bento__inner">
         {showBackLink ? (
           <Link to={backTo} className="ireland-hero-back">
@@ -91,12 +187,19 @@ export default function BentoHero({
           </Link>
         ) : null}
 
-        <div className="job-hero">
+        <div className={`job-hero${cinematic ? " job-hero--cinematic" : ""}`}>
           <div className="job-hero__left">
-            <div className="job-hero__pill">
-              <span className="job-hero__pillTag">NEW</span>
-              <span>Stay on track for your next step with FineAnswer</span>
-            </div>
+            {cinematic ? (
+              <p className="job-hero__eyebrow">
+                <span className="job-hero__eyebrowRule" aria-hidden="true" />
+                {eyebrow}
+              </p>
+            ) : (
+              <div className="job-hero__pill">
+                <span className="job-hero__pillTag">NEW</span>
+                <span>Stay on track for your next step with FineAnswer</span>
+              </div>
+            )}
 
             <h1 className="ireland-hero-title">{title}</h1>
             <p className="ireland-hero-sub">{subtitle}</p>
@@ -218,6 +321,7 @@ export default function BentoHero({
             <div className="job-hero__ctaRow">{ctaEl}</div>
           </div>
 
+          {!cinematic && (
           <div
             className={`job-hero__right${useGlobeHero ? " job-hero__right--globe" : ""}`}
             aria-hidden="true"
@@ -257,6 +361,7 @@ export default function BentoHero({
               </>
             )}
           </div>
+          )}
         </div>
       </div>
     </section>
