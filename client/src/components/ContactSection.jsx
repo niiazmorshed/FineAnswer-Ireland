@@ -5,7 +5,6 @@ import {
   FaInstagram,
   FaYoutube,
   FaWhatsapp,
-  FaPhone,
   FaEnvelope,
   FaMapMarkerAlt,
 } from "react-icons/fa";
@@ -99,16 +98,6 @@ export default function ContactSection() {
 
             <div className="contact-info">
               <div className="contact-infoItem">
-                <span className="contact-infoIcon" aria-hidden="true">
-                  <FaPhone />
-                </span>
-                <div className="contact-infoText">
-                  <div className="contact-infoLabel">Call Us</div>
-                  <div className="contact-infoValue">+880 1725-980472, +880 1725-971833</div>
-                </div>
-              </div>
-
-              <div className="contact-infoItem">
                 <span className="contact-infoIcon contact-infoIcon--whatsapp" aria-hidden="true">
                   <FaWhatsapp />
                 </span>
@@ -121,7 +110,7 @@ export default function ContactSection() {
                     className="contact-infoLink"
                     aria-label="Ireland & Abroad Hotline on WhatsApp"
                   >
-                    +353 (89) 951 9986
+                    +353 89 951 9986
                   </a>
                 </div>
               </div>
@@ -142,7 +131,7 @@ export default function ContactSection() {
                 </span>
                 <div className="contact-infoText">
                   <div className="contact-infoLabel">Address</div>
-                  <div className="contact-infoValue">House 76/A, Road 11, Banani, Dhaka 1213, Bangladesh</div>
+                  <div className="contact-infoValue">River Walk, City West Business Campus, Dublin, Ireland</div>
                 </div>
               </div>
             </div>

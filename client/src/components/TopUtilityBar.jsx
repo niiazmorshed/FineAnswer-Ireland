@@ -8,14 +8,14 @@ export default function TopUtilityBar() {
         {/* Left: contact info */}
         <div className="utility-bar__left">
           <a
-            href="https://wa.me/353899893525"
+            href="https://wa.me/353899519986"
             target="_blank"
             rel="noopener noreferrer"
             className="utility-bar__link"
             aria-label="WhatsApp"
           >
             <FaWhatsapp size={14} />
-            <span>+353 899 893 525</span>
+            <span>+353 89 951 9986</span>
           </a>
           <span className="utility-bar__sep">|</span>
           <a

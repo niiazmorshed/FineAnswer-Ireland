@@ -34,7 +34,7 @@ const socialLinks = [
   { icon: <FaInstagram size={15} />, href: "https://www.instagram.com/fineanswer/",          label: "Instagram" },
   { icon: <FaLinkedinIn size={15} />, href: "https://www.linkedin.com/company/fineanswer/",  label: "LinkedIn" },
   { icon: <FaYoutube size={16} />,   href: "https://www.youtube.com/@FineAnswerStudyAbroad", label: "YouTube" },
-  { icon: <FaWhatsapp size={15} />,  href: "https://wa.me/353899893525",                     label: "WhatsApp" },
+  { icon: <FaWhatsapp size={15} />,  href: "https://wa.me/353899519986",                     label: "WhatsApp" },
 ];
 
 export default function Footer() {
@@ -52,9 +52,9 @@ export default function Footer() {
           </p>
 
           <div className="footer-contact-list">
-            <a href="tel:+353899893525" className="footer-contact-item">
+            <a href="tel:+353899519986" className="footer-contact-item">
               <FaPhone size={13} />
-              <span>+353 899 893 525</span>
+              <span>+353 89 951 9986</span>
             </a>
             <a href="mailto:info@fineanswer.ie" className="footer-contact-item">
               <FaEnvelope size={13} />
@@ -62,7 +62,7 @@ export default function Footer() {
             </a>
             <div className="footer-contact-item footer-contact-item--addr">
               <FaMapMarkerAlt size={14} />
-              <span>Dublin, Ireland</span>
+              <span>River Walk, City West Business Campus, Dublin, Ireland</span>
             </div>
           </div>
 

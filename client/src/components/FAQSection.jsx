@@ -21,7 +21,7 @@ Example: For a one-year Master's at Dublin Business School costing €14,500, wi
   {
     q: "Where to Contact for Further Information?",
     a: `For guidance and free counselling, you can contact us at:
-• WhatsApp: +353 899 893 525
+• WhatsApp: +353 89 951 9986
 • Email: info@fineanswer.ie
 • Visit our contact section below to submit an enquiry`,
   },
