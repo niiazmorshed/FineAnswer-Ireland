@@ -121,7 +121,7 @@ export default function ContactSection() {
                 </span>
                 <div className="contact-infoText">
                   <div className="contact-infoLabel">Email Us</div>
-                  <div className="contact-infoValue">studyabroad@fineanswer.net</div>
+                  <div className="contact-infoValue">info@fineanswer.ie</div>
                 </div>
               </div>
 
