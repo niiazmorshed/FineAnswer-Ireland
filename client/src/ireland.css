@@ -76,7 +76,7 @@
 }
 
 .apply-btn {
-  background: var(--color-primary);
+  background: var(--color-accent-strong, #4c54a2);
   color: white;
   border: none;
   padding: 12px 25px;
@@ -87,7 +87,7 @@
 }
 
 .apply-btn:hover {
-  background: #003a8c;
+  background: var(--color-accent-hover, #3f4791);
 }
 
 /* STUDY DETAILS */

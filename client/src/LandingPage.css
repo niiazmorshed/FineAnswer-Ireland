@@ -7,7 +7,6 @@
   --color-primary: #64c850;
   --color-primary-dark: #52a63f;
   --color-primary-light: #eef8ec;
-  --color-accent: #ffda32;
   --color-text-primary: #1e293b;
   --color-text-secondary: #64748b;
   --color-text-muted: #94a3b8;
@@ -243,13 +242,13 @@
 }
 
 .search-btn-new {
-  background: var(--color-primary); color: #fff;
+  background: var(--color-accent-strong, #4c54a2); color: #fff;
   padding: 0 34px; border-radius: 0 var(--radius-card) var(--radius-card) 0;
   border: none; font-size: 15px; font-weight: 700;
   cursor: pointer; flex-shrink: 0;
   transition: background 0.2s; white-space: nowrap; font-family: inherit;
 }
-.search-btn-new:hover { background: var(--color-primary-dark); }
+.search-btn-new:hover { background: var(--color-accent-hover, #3f4791); }
 
 /* =========================================================
    3. MODAL POPUP & OVERLAY
@@ -286,7 +285,7 @@
 .modern-btn {
   width: 100%;
   padding: 12px;
-  background: var(--color-primary);
+  background: var(--color-accent-strong, #4c54a2);
   color: #fff;
   border: none;
   border-radius: var(--radius-btn);

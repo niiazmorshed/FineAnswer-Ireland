@@ -356,7 +356,7 @@ export default function BrowseBySubject() {
           margin: 0;
           font-size: 0.7rem;
           line-height: 1.4;
-          color: var(--color-text-secondary, #94a3b8);
+          color: var(--color-text-secondary, #64748b);
         }
         .bbs-icons8-credit a {
           color: rgba(99, 102, 241, 0.85);

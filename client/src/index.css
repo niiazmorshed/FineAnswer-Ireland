@@ -16,6 +16,12 @@
   --color-gold:          #F5A623;
   --color-gold-hover:    #D4891A;
 
+  /* Accent Indigo — hero accents and primary actions. Same pair the About
+     section already uses for its buttons, so they match. */
+  --color-accent:        #4c54a2;
+  --color-accent-strong: #4c54a2;
+  --color-accent-hover:  #3f4791;
+
   /* Text */
   --color-text-primary:   #1A1A1A;
   --color-text-secondary: #64748b;
@@ -202,7 +208,7 @@ img { max-width: 100%; height: auto; display: block; }
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--color-primary);
+  background-color: var(--color-accent-strong, #4c54a2);
   color: #fff !important;
   padding: 14px 32px;
   border-radius: var(--radius-btn);
@@ -215,8 +221,8 @@ img { max-width: 100%; height: auto; display: block; }
   text-decoration: none;
 }
 .btn-primary:hover {
-  background-color: var(--color-primary-dark);
-  border-color: var(--color-primary-dark);
+  background-color: var(--color-accent-hover, #3f4791);
+  border-color: var(--color-accent-hover, #3f4791);
   color: #fff !important;
   transform: translateY(-1px);
 }
@@ -226,43 +232,46 @@ img { max-width: 100%; height: auto; display: block; }
   align-items: center;
   gap: 8px;
   background-color: transparent;
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark, #52a63f) !important;
   padding: 14px 32px;
   border-radius: var(--radius-btn);
   font-weight: var(--weight-semibold);
   font-size: var(--text-body);
   font-family: var(--font-sans);
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-primary, #64c850);
   cursor: pointer;
   transition: all var(--transition-fast);
   text-decoration: none;
 }
 .btn-outline:hover {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary, #64c850);
   color: #fff !important;
   transform: translateY(-1px);
 }
 
-.btn-gold {
+/* Button for use on a saturated CTA band — white fill, band-coloured label.
+   Matches .jp-cta__btn, .ps-cta__btn and the why-ireland CTA buttons. */
+.btn-on-band {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background-color: var(--color-gold);
-  color: #fff !important;
+  background-color: #fff;
+  color: var(--color-primary-dark, #52a63f) !important;
   padding: 14px 32px;
   border-radius: var(--radius-btn);
   font-weight: var(--weight-semibold);
   font-size: var(--text-body);
   font-family: var(--font-sans);
-  border: 2px solid var(--color-gold);
+  border: 2px solid #fff;
   cursor: pointer;
-  transition: background-color var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast), transform var(--transition-fast),
+    color var(--transition-fast);
   text-decoration: none;
 }
-.btn-gold:hover {
-  background-color: var(--color-gold-hover);
-  border-color: var(--color-gold-hover);
-  color: #fff !important;
+.btn-on-band:hover {
+  background-color: #fff;
+  border-color: #fff;
+  color: var(--color-accent-strong, #4c54a2) !important;
   transform: translateY(-1px);
 }
 

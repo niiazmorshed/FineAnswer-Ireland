@@ -20,6 +20,13 @@ const FIELDS = [
   "deadline",
   "eligibility",
   "link",
+  // Both optional, and both are S3 display URLs produced by the admin uploader
+  // (`/api/upload/serve?key=images/...`) — the same path Success Stories use.
+  // `image` is the card's photo header; the client falls back to bundled
+  // university photography when it is unset, so a listing never renders empty.
+  // `logo` is the provider's mark, shown beside the scholarship name.
+  "image",
+  "logo",
 ];
 
 const trimmed = (value) =>

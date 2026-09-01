@@ -16,7 +16,7 @@ export default function ScholarshipCTA() {
             and other organisations.
           </p>
           <button
-            className="btn-gold"
+            className="btn-on-band"
             onClick={() => navigate("/scholarships")}
           >
             View Scholarships →

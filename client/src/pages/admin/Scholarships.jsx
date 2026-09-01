@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import {
   FaAward,
+  FaCloudUploadAlt,
   FaEdit,
   FaPlus,
   FaSpinner,
@@ -9,6 +10,8 @@ import {
 } from "react-icons/fa";
 import { API_BASE_URL } from "../../config/api";
 import { getToken } from "../../utils/tokenStorage";
+import { uploadImageToS3 } from "../../utils/s3Upload";
+import { scholarshipImage } from "../../utils/scholarshipImage";
 import "./Scholarships.css";
 
 // Mirrors the canonical levels used by the programs search so the public
@@ -29,6 +32,8 @@ const EMPTY_FORM = {
   deadline: "",
   eligibility: "",
   link: "",
+  image: "",
+  logo: "",
 };
 
 export default function Scholarships() {
@@ -40,6 +45,20 @@ export default function Scholarships() {
   const [formData, setFormData] = useState(EMPTY_FORM);
   const [submitting, setSubmitting] = useState(false);
   const [formError, setFormError] = useState(null);
+
+  /**
+   * Picked files live outside formData because they are File objects, not the
+   * URL strings the record stores. They are uploaded on submit and only then
+   * become URLs — the same two-step Success Stories uses, so nothing reaches S3
+   * for a form the admin abandons.
+   *
+   * The preview is a local data URL for a fresh pick, or the stored S3 URL when
+   * editing a record that already has one.
+   */
+  const [imageFile, setImageFile] = useState(null);
+  const [logoFile, setLogoFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
+  const [logoPreview, setLogoPreview] = useState(null);
 
   useEffect(() => {
     fetchScholarships();
@@ -70,11 +89,19 @@ export default function Scholarships() {
         deadline: scholarship.deadline || "",
         eligibility: scholarship.eligibility || "",
         link: scholarship.link || "",
+        image: scholarship.image || "",
+        logo: scholarship.logo || "",
       });
+      setImagePreview(scholarship.image || null);
+      setLogoPreview(scholarship.logo || null);
     } else {
       setEditing(null);
       setFormData(EMPTY_FORM);
+      setImagePreview(null);
+      setLogoPreview(null);
     }
+    setImageFile(null);
+    setLogoFile(null);
     setFormError(null);
     setShowForm(true);
   };
@@ -83,7 +110,46 @@ export default function Scholarships() {
     setShowForm(false);
     setEditing(null);
     setFormData(EMPTY_FORM);
+    setImageFile(null);
+    setLogoFile(null);
+    setImagePreview(null);
+    setLogoPreview(null);
     setFormError(null);
+  };
+
+  /** Validates locally and shows an instant preview; the upload waits for submit. */
+  const handleFileChange = (event, setFile, setPreview) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      setFormError("Please choose an image file.");
+      return;
+    }
+    // Matches the 5 MB ceiling the presigned-url endpoint enforces, so an
+    // oversized file is rejected here rather than after a failed round trip.
+    if (file.size > 5 * 1024 * 1024) {
+      setFormError("Image is too large. Maximum size is 5 MB.");
+      return;
+    }
+
+    setFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => setPreview(reader.result);
+    reader.readAsDataURL(file);
+    setFormError(null);
+  };
+
+  const clearImage = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    setFormData((prev) => ({ ...prev, image: "" }));
+  };
+
+  const clearLogo = () => {
+    setLogoFile(null);
+    setLogoPreview(null);
+    setFormData((prev) => ({ ...prev, logo: "" }));
   };
 
   const handleInputChange = (e) => {
@@ -103,13 +169,22 @@ export default function Scholarships() {
         ? `${API_BASE_URL}/scholarships/${editId}`
         : `${API_BASE_URL}/scholarships`;
 
+      // Upload only what was newly picked; an untouched field keeps whatever URL
+      // the record already held.
+      const [imageUrl, logoUrl] = await Promise.all([
+        imageFile ? uploadImageToS3(imageFile) : Promise.resolve(formData.image),
+        logoFile ? uploadImageToS3(logoFile) : Promise.resolve(formData.logo),
+      ]);
+
+      const payload = { ...formData, image: imageUrl, logo: logoUrl };
+
       const response = await fetch(url, {
         method: editId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       });
 
       const data = await response.json();
@@ -183,8 +258,25 @@ export default function Scholarships() {
             const id = item._id ?? item.id;
             return (
               <div key={id} className="scholarship-card">
+                <img
+                  className="scholarship-card-thumb"
+                  src={scholarshipImage(item)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
                 <div className="scholarship-card-main">
-                  <h3 className="scholarship-card-title">{item.name}</h3>
+                  <h3 className="scholarship-card-title">
+                    {item.logo && (
+                      <img
+                        className="scholarship-card-logo"
+                        src={item.logo}
+                        alt=""
+                        loading="lazy"
+                      />
+                    )}
+                    {item.name}
+                  </h3>
                   <p className="scholarship-card-provider">{item.provider}</p>
 
                   <div className="scholarship-card-meta">
@@ -349,6 +441,87 @@ export default function Scholarships() {
                 />
               </div>
 
+              <div className="form-row">
+                <div className="form-group">
+                  <label htmlFor="logo">Scholarship Logo</label>
+                  <div className="upload-field">
+                    <input
+                      type="file"
+                      id="logo"
+                      accept="image/*"
+                      className="upload-input"
+                      onChange={(e) =>
+                        handleFileChange(e, setLogoFile, setLogoPreview)
+                      }
+                    />
+                    <label htmlFor="logo" className="upload-label">
+                      <FaCloudUploadAlt />
+                      <span>{logoPreview ? "Change logo" : "Choose logo"}</span>
+                    </label>
+                    {logoPreview && (
+                      <div className="upload-preview upload-preview--logo">
+                        <img src={logoPreview} alt="" />
+                        <button
+                          type="button"
+                          className="upload-clear"
+                          onClick={clearLogo}
+                        >
+                          Remove
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                  <small className="form-hint">
+                    The provider&apos;s mark, shown beside the scholarship name.
+                    PNG with a transparent background works best.
+                  </small>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="image">Card Photo</label>
+                  <div className="upload-field">
+                    <input
+                      type="file"
+                      id="image"
+                      accept="image/*"
+                      className="upload-input"
+                      onChange={(e) =>
+                        handleFileChange(e, setImageFile, setImagePreview)
+                      }
+                    />
+                    <label htmlFor="image" className="upload-label">
+                      <FaCloudUploadAlt />
+                      <span>{imagePreview ? "Change photo" : "Choose photo"}</span>
+                    </label>
+                    <div className="upload-preview">
+                      <img
+                        src={
+                          imagePreview ||
+                          scholarshipImage({
+                            ...formData,
+                            _id: editing?._id ?? editing?.id,
+                          })
+                        }
+                        alt=""
+                      />
+                      {imagePreview && (
+                        <button
+                          type="button"
+                          className="upload-clear"
+                          onClick={clearImage}
+                        >
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                  <small className="form-hint">
+                    Banner across the top of the card. Leave empty to use one of
+                    the built-in university photos, shown above.
+                  </small>
+                </div>
+              </div>
+
               {formError && (
                 <div className="scholarship-form-error">{formError}</div>
               )}
@@ -367,7 +540,9 @@ export default function Scholarships() {
                   disabled={submitting}
                 >
                   {submitting
-                    ? "Saving..."
+                    ? imageFile || logoFile
+                      ? "Uploading..."
+                      : "Saving..."
                     : editing
                       ? "Update Scholarship"
                       : "Add Scholarship"}

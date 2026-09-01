@@ -313,7 +313,7 @@ export default function AboutUs() {
         .aboutv2-actions{ margin-top: 18px; }
         .aboutv2-btn{
           border: none;
-          background: var(--color-primary, #64c850);
+          background: var(--color-accent-strong, #4c54a2);
           color: #fff;
           padding: 12px 18px;
           border-radius: 999px;
@@ -324,8 +324,8 @@ export default function AboutUs() {
           font-family: var(--font-sans, inherit);
         }
         .aboutv2-btn:hover{
-          background: #ffda32;
-          color: #0f172a;
+          background: var(--color-accent-hover, #3f4791);
+          color: #fff;
           transform: translateY(-1px);
         }
 
