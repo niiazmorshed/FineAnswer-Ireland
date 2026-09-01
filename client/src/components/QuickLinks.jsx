@@ -2,35 +2,36 @@ import React from "react";
 import {
   FaGraduationCap,
   FaRoute,
-  FaChild,
   FaClipboardCheck,
   FaShieldAlt,
   FaMicrophoneAlt,
   FaStethoscope,
   FaUserFriends,
+  FaSuitcaseRolling,
+  FaPlaneArrival,
+  FaPassport,
+  FaFileSignature,
 } from "react-icons/fa";
 
+/**
+ * Order is set by the client and follows the application itself: qualify, pick a
+ * route, apply, bring family, fly, land, then work. Everything after Stamp 1G is
+ * reference material rather than a step, so it trails behind in that order.
+ */
 const LINKS = [
-  { icon: <FaGraduationCap />, title: "Post Study", to: "/poststudy" },
+  { icon: <FaClipboardCheck />, title: "Entry Requirements", to: "/entry-requirements" },
   { icon: <FaRoute />, title: "Pathways", to: "/pathway" },
-  { icon: <FaChild />, title: "Under 18 Students", to: "/under18" },
-  {
-    icon: <FaClipboardCheck />,
-    title: "Entry Requirements",
-    to: "/entry-requirements",
-  },
-  { icon: <FaShieldAlt />, title: "Health Insurance", to: "/health-insurance" },
-  {
-    icon: <FaMicrophoneAlt />,
-    title: "English Tests",
-    to: "/english-tests",
-  },
-  {
-    icon: <FaStethoscope />,
-    title: "Study Medicine",
-    to: "/study-medicine",
-  },
+  { icon: <FaFileSignature />, title: "Admission", to: "/admission" },
   { icon: <FaUserFriends />, title: "Dependent Visa", to: "/dependent-visa" },
+  { icon: <FaSuitcaseRolling />, title: "Pre Departure", to: "/pre-departure" },
+  { icon: <FaPlaneArrival />, title: "Post Arrival", to: "/post-arrival" },
+  { icon: <FaPassport />, title: "Stamp 1G", to: "/stamp-1g" },
+
+  // Reference, not steps
+  { icon: <FaMicrophoneAlt />, title: "English Tests", to: "/english-tests" },
+  { icon: <FaStethoscope />, title: "Study Medicine", to: "/study-medicine" },
+  { icon: <FaShieldAlt />, title: "Health Insurance", to: "/health-insurance" },
+  { icon: <FaGraduationCap />, title: "Post Study", to: "/poststudy" },
 ];
 
 export default function QuickLinks() {

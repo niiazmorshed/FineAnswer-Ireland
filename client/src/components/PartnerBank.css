@@ -89,47 +89,68 @@
 }
 
 /* ===============================
-   RIGHT VISUAL (DESKTOP)
+   RIGHT VISUAL — FLOATING BUBBLES
 ================================ */
 
 .partner-visual {
-  flex: 1.2;
+  flex: 1.1;
   position: relative;
-  height: 520px;
+  /* Just taller than the lowest bubble (256px offset + 152px bubble), so the
+     section carries no dead band underneath. */
+  height: 412px;
+  min-width: 0;
 }
 
 .bubbles-wrapper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   position: relative;
   width: 100%;
   height: 100%;
 }
 
-/* Bubble Base */
 .bank-bubble {
   position: absolute;
-  background: #fff;
-  border-radius: 50%;
+  width: 152px;
+  height: 152px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 16px;
-  cursor: pointer;
+  padding: 14px;
 
+  background: #fff;
+  border-radius: 50%;
   border: 2px solid #eef1ff;
   box-shadow: 0 10px 30px rgba(79, 95, 179, 0.15);
 
   animation: float 6s ease-in-out infinite;
-  transition: all 0.35s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease,
+    border-color 0.35s ease;
 }
 
+/* Every bubble is the same size, so one cap gives every wordmark the same
+   scale. max-height is in px, not %, because a percentage resolves against the
+   padded content box and quietly shrank these to about two-thirds the intended
+   size. At 44px tall the widest logo spans ~110px, well inside the 145px chord
+   the circle offers at that height. */
 .bank-bubble img {
-  width: 80%;
+  width: auto;
   height: auto;
+  max-width: 92%;
+  max-height: 44px;
   object-fit: contain;
 }
 
+/* Long, thin wordmarks (Swisscare) read as heavier at a given height, so they
+   run shorter and a touch wider. */
+.bank-bubble--wide img {
+  max-width: 96%;
+  max-height: 30px;
+}
+
 .bank-bubble:hover {
-  transform: scale(1.1);
+  transform: scale(1.08);
   border-color: var(--color-primary);
   box-shadow: 0 20px 40px rgba(79, 95, 179, 0.25);
   z-index: 10;
@@ -139,29 +160,32 @@
    BUBBLE POSITIONS (DESKTOP)
 ================================ */
 
-.p1 { width:140px; height:140px; top:5%;  left:45%;  animation-delay:0s; }
-.p2 { width:130px; height:130px; top:25%; left:75%;  animation-delay:1s; }
-.p3 { width:120px; height:120px; bottom:20%; left:25%; animation-delay:2s; }
-.p4 { width:140px; height:140px; top:35%; right:35%; animation-delay:.5s; }
-.p5 { width:100px; height:100px; top:25%; left:30%; animation-delay:1.5s; }
-.p6 { width:135px; height:135px; bottom:10%; right:20%; animation-delay:2.5s; }
-
-
-/* ===============================
-   FLOAT ANIMATION
-================================ */
+/* Two columns of two, the right column dropped by 56px so the cluster reads as
+   floating rather than as a grid.
+   
+   Positioned off the container's centre line rather than its edges: percentage
+   insets made the horizontal gap grow with the viewport, so the pair drifted
+   apart on wide screens. A 32px margin either side of 50% holds a 64px gap at
+   every width, and keeps the cluster centred. Vertical gaps are 44px; the two
+   bubbles in a column float on different delays, so worst case they close to
+   24px and never touch. */
+.p1 { top: 4px;   right: 50%; margin-right: 32px; animation-delay: 0s; }
+.p2 { top: 60px;  left: 50%;  margin-left: 32px;  animation-delay: 1.4s; }
+.p3 { top: 200px; right: 50%; margin-right: 32px; animation-delay: 2.6s; }
+.p4 { top: 256px; left: 50%;  margin-left: 32px;  animation-delay: 0.7s; }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-15px);
+    transform: translateY(-10px);
   }
 }
 
 /* ===============================
-   TABLET RESPONSIVE
+   TABLET
 ================================ */
 
 @media (max-width: 1024px) {
@@ -176,7 +200,8 @@
 
   .partner-visual {
     width: 100%;
-    height: 460px;
+    max-width: 560px;
+    margin: 0 auto;
   }
 
   .partner-stats {
@@ -185,7 +210,7 @@
 }
 
 /* ===============================
-   MOBILE RESPONSIVE (KEY FIX)
+   MOBILE
 ================================ */
 
 @media (max-width: 767px) {
@@ -197,6 +222,7 @@
     font-size: 2.1rem;
   }
 
+  /* No room to float at this width: the bubbles become an even 2x2. */
   .partner-visual {
     height: auto;
   }
@@ -205,23 +231,46 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
+    place-items: center;
     position: static;
     padding-top: 30px;
   }
 
   .bank-bubble {
     position: static;
-    width: 110px;
-    height: 110px;
-    margin: 0 auto;
+    width: 128px;
+    height: 128px;
     animation: none;
   }
 
-  /* Remove desktop offsets */
-  .p1,.p2,.p3,.p4,.p5,.p6,.p7,.p8 {
+  .bank-bubble img {
+    max-height: 36px;
+  }
+
+  .bank-bubble--wide img {
+    max-height: 26px;
+  }
+
+  /* Clear the desktop offsets, margins included — the centre-line positioning
+     would otherwise push the grid items sideways. */
+  .p1,
+  .p2,
+  .p3,
+  .p4 {
     top: auto;
     left: auto;
     right: auto;
     bottom: auto;
+    margin: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bank-bubble {
+    animation: none;
+    transition: none;
+  }
+  .bank-bubble:hover {
+    transform: none;
   }
 }

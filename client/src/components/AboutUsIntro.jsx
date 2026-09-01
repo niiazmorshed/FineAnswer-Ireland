@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useNavigate } from "react-router-dom";
 
-import kilkennyCastle from "../assets/ireland/kilkenny-castle.webp";
+import graduation from "../assets/university/graduation.webp";
+import campusPlaza from "../assets/university/campus-plaza.webp";
+import libraryStudy from "../assets/university/library-study.webp";
 
 /**
  * About Us — intro section.
@@ -25,6 +27,36 @@ import kilkennyCastle from "../assets/ireland/kilkenny-castle.webp";
  */
 const VIDEO_ID = "41B23vpQsIk";
 const VIDEO_EMBED_URL = `https://www.youtube-nocookie.com/embed/${VIDEO_ID}?autoplay=1&rel=0`;
+
+/**
+ * The band under the copy — what a modern university actually looks like from
+ * the inside: the campus you walk across, the library you work in, the day it
+ * all pays off.
+ *
+ * These replaced a set of landmark photographs (a castle, a stadium) that read
+ * as tourism rather than study. Licensed for commercial use with no attribution
+ * required, so unlike those there is no credit line under the band.
+ */
+const PLACES = [
+  {
+    src: campusPlaza,
+    alt: "Students talking outside a modern university building",
+    name: "Campus life",
+    meta: "Modern, purpose-built campuses",
+  },
+  {
+    src: libraryStudy,
+    alt: "Students working together at a table in a bright university library",
+    name: "Study spaces",
+    meta: "Libraries open through exams",
+  },
+  {
+    src: graduation,
+    alt: "Graduates throwing their caps on the steps of a university building",
+    name: "Graduation",
+    meta: "Where the journey lands",
+  },
+];
 
 const STATS = [
   { value: "100+", label: "Happy Students" },
@@ -108,10 +140,25 @@ export default function AboutUsIntro() {
         </ul>
       </div>
 
-      {/* Decorative Ireland imagery — Kilkenny Castle. Purely presentational,
-          so it is a background-image on an aria-hidden div rather than an
-          <img> needing alt text. */}
-      <div className="aboutIntro-media" aria-hidden="true" />
+      <ul className="aboutIntro-places">
+        {PLACES.map((place) => (
+          <li className="aboutIntro-place" key={place.name}>
+            <img
+              className="aboutIntro-placeImg"
+              src={place.src}
+              alt={place.alt}
+              loading="lazy"
+              decoding="async"
+              width="1400"
+              height="788"
+            />
+            <div className="aboutIntro-placeCaption">
+              <span className="aboutIntro-placeName">{place.name}</span>
+              <span className="aboutIntro-placeMeta">{place.meta}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
 
       {/* Portalled to <body> on purpose. .LandingPage sets isolation:isolate,
           which traps position:fixed descendants so the backdrop covers only
@@ -155,7 +202,7 @@ export default function AboutUsIntro() {
 
       <style>{`
         .aboutIntro{
-          --aboutIntro-accent: #4c54a2;
+          --aboutIntro-accent: var(--color-accent-strong, #4c54a2);
           --aboutIntro-ink: #1f2748;
           --aboutIntro-muted: #5c6580;
           padding: var(--section-padding, 80px) 0;
@@ -222,8 +269,8 @@ export default function AboutUsIntro() {
           color: #fff;
         }
         .aboutIntro-btn--solid:hover{
-          background: #3f4791;
-          border-color: #3f4791;
+          background: var(--color-accent-hover, #3f4791);
+          border-color: var(--color-accent-hover, #3f4791);
           transform: translateY(-1px);
           box-shadow: 0 10px 22px rgba(76, 84, 162, 0.24);
         }
@@ -288,21 +335,76 @@ export default function AboutUsIntro() {
           color: var(--aboutIntro-muted);
         }
 
-        .aboutIntro-media{
+        .aboutIntro-places{
           /* 1132 = the container's 1180 max-width minus its 2x24px padding,
              and the 48px width inset reproduces that padding as a gutter, so
              the band's edges line up with the copy above it at every width. */
           width: calc(100% - 48px);
           max-width: 1132px;
           margin: 56px auto 0;
-          height: clamp(200px, 28vw, 360px);
-          background-image: url(${kilkennyCastle});
-          background-size: cover;
-          background-position: center 62%;
-          border-radius: 14px;
+          padding: 0;
+          list-style: none;
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
         }
         @media (max-width: 960px){
-          .aboutIntro-media{ margin-top: 32px; }
+          .aboutIntro-places{ margin-top: 32px; }
+        }
+        @media (max-width: 720px){
+          /* Three across would leave each tile too small to read; two up with
+             the last one spanning the full width keeps every face legible. */
+          .aboutIntro-places{ grid-template-columns: repeat(2, 1fr); gap: 14px; }
+          .aboutIntro-place:last-child{ grid-column: 1 / -1; }
+        }
+        @media (max-width: 460px){
+          .aboutIntro-places{ grid-template-columns: 1fr; }
+        }
+
+        .aboutIntro-place{
+          position: relative;
+          overflow: hidden;
+          border-radius: 14px;
+          box-shadow: 0 14px 34px rgba(31, 39, 72, 0.1);
+          aspect-ratio: 3 / 2;
+        }
+        .aboutIntro-placeImg{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.45s ease;
+        }
+        .aboutIntro-place:hover .aboutIntro-placeImg{ transform: scale(1.045); }
+
+        .aboutIntro-placeCaption{
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          padding: 34px 16px 14px;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          color: #fff;
+          /* The photos are bright at the bottom edge, so the caption carries
+             its own gradient rather than relying on the image behind it. */
+          background: linear-gradient(
+            180deg,
+            rgba(15, 23, 42, 0) 0%,
+            rgba(15, 23, 42, 0.72) 62%,
+            rgba(15, 23, 42, 0.88) 100%
+          );
+        }
+        .aboutIntro-placeName{
+          font-size: 0.92rem;
+          font-weight: 700;
+          line-height: 1.25;
+        }
+        .aboutIntro-placeMeta{
+          font-size: 0.78rem;
+          font-weight: 500;
+          opacity: 0.82;
         }
 
         .aboutIntro-modal{
@@ -378,9 +480,11 @@ export default function AboutUsIntro() {
         @media (prefers-reduced-motion: reduce){
           .aboutIntro-modal{ animation: none; }
           .aboutIntro-btn,
-          .aboutIntro-statCard{ transition: none; }
+          .aboutIntro-statCard,
+          .aboutIntro-placeImg{ transition: none; }
           .aboutIntro-btn:hover,
           .aboutIntro-statCard:hover{ transform: none; }
+          .aboutIntro-place:hover .aboutIntro-placeImg{ transform: none; }
         }
       `}</style>
     </section>

@@ -113,6 +113,34 @@
   box-shadow: var(--shadow-card-hover, 0 18px 38px rgba(15, 23, 42, 0.12));
 }
 
+.schp-card-media {
+  /* Cancels the card's 22px padding so the photo meets its edges, matching the
+     landing page's .schol-card-media. */
+  margin: -22px -22px 18px;
+  height: 148px;
+  overflow: hidden;
+  border-radius: calc(var(--radius-card, 16px) - 1px)
+    calc(var(--radius-card, 16px) - 1px) 0 0;
+  background: rgba(15, 23, 42, 0.05);
+}
+.schp-card-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.schp-card:hover .schp-card-media img {
+  transform: scale(1.05);
+}
+@media (prefers-reduced-motion: reduce) {
+  .schp-card-media img,
+  .schp-card:hover .schp-card-media img {
+    transition: none;
+    transform: none;
+  }
+}
+
 .schp-card-head {
   display: flex;
   gap: 12px;
@@ -128,6 +156,18 @@
   color: var(--color-primary-dark, #52a63f);
   background: var(--color-primary-light, #eef8ec);
 }
+.schp-card-icon--logo {
+  background: #fff;
+  border: 1px solid var(--color-border, #e2e8f0);
+  padding: 4px;
+}
+.schp-card-icon--logo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
 .schp-card-name {
   margin: 0;
   font-size: 1.02rem;

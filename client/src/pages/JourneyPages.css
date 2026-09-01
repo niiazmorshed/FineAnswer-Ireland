@@ -1,0 +1,475 @@
+/* Shared styling for the three journey pages — Pre Departure, Post Arrival and
+   Stamp 1G. They are the same kind of document (a long checklist-shaped guide),
+   so they share one stylesheet rather than carrying three near-identical copies.
+
+   Visual language deliberately matches PostStudyPage.css, which these pages sit
+   alongside in Quick Links: same greens and oranges, same card and note shapes. */
+.jp-page {
+  --jp-green: #009a49;
+  --jp-orange: #ff7900;
+  --jp-ink: #0f172a;
+  --jp-muted: #475569;
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 24px 18px 72px;
+  font-family: var(--font-sans, "Mulish", system-ui, sans-serif);
+  color: var(--jp-ink);
+}
+
+@media (min-width: 768px) {
+  .jp-page {
+    padding: 32px 24px 88px;
+  }
+}
+
+/* --- Hero ---------------------------------------------------------------- */
+
+.jp-hero {
+  margin-bottom: 36px;
+  padding: 28px 22px;
+  border-radius: 18px;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 154, 73, 0.08) 0%,
+    rgba(255, 121, 0, 0.06) 100%
+  );
+  border: 1px solid rgba(0, 154, 73, 0.18);
+}
+
+.jp-hero__eyebrow {
+  margin: 0 0 10px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--jp-green);
+}
+
+.jp-hero__title {
+  margin: 0 0 14px;
+  font-size: clamp(1.45rem, 3.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--jp-ink);
+}
+
+.jp-hero__subtitle {
+  margin: 0;
+  font-size: clamp(1rem, 1.15vw, 1.08rem);
+  line-height: 1.65;
+  color: var(--jp-muted);
+}
+
+/* --- Type ---------------------------------------------------------------- */
+
+.jp-section {
+  margin-bottom: 40px;
+}
+
+.jp-h2 {
+  margin: 0 0 14px;
+  font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+  font-weight: 800;
+  color: var(--jp-ink);
+  letter-spacing: -0.02em;
+  padding-bottom: 8px;
+  border-bottom: 3px solid var(--jp-green);
+  display: inline-block;
+}
+
+.jp-h3 {
+  margin: 20px 0 10px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--jp-orange);
+}
+
+.jp-p {
+  margin: 0 0 12px;
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--jp-muted);
+}
+
+.jp-bullets {
+  margin: 10px 0 0;
+  /* Explicit: a site-wide reset strips list markers, which turns these into
+     unindented paragraphs. These lists are read as lists, so they keep theirs. */
+  list-style: disc outside;
+  padding-left: 1.2rem;
+  color: var(--jp-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.jp-bullets li {
+  margin-bottom: 8px;
+}
+
+/* --- Notes --------------------------------------------------------------- */
+
+.jp-note {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  background: rgba(0, 154, 73, 0.09);
+  border-left: 4px solid var(--jp-green);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--jp-ink);
+}
+
+.jp-note--warn {
+  background: rgba(255, 121, 0, 0.1);
+  border-left-color: var(--jp-orange);
+}
+
+/* --- Checklist ----------------------------------------------------------- */
+
+.jp-checklist {
+  list-style: none;
+  margin: 16px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+@media (min-width: 720px) {
+  .jp-checklist {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.jp-check {
+  display: flex;
+  gap: 12px;
+  padding: 16px 16px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.jp-check__mark {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 154, 73, 0.12);
+  color: var(--jp-green);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.jp-check__body {
+  min-width: 0;
+}
+
+.jp-check__title {
+  margin: 0 0 4px;
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: var(--jp-ink);
+}
+
+.jp-check__desc {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: var(--jp-muted);
+}
+
+/* --- Numbered steps ------------------------------------------------------ */
+
+.jp-steps {
+  list-style: none;
+  counter-reset: jp-step;
+  margin: 18px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.jp-step {
+  counter-increment: jp-step;
+  position: relative;
+  padding: 18px 18px 18px 62px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+}
+
+.jp-step::before {
+  content: counter(jp-step);
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--jp-green);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.jp-step__title {
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--jp-ink);
+  line-height: 1.35;
+}
+
+.jp-step__body {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--jp-muted);
+}
+
+.jp-step__body + .jp-step__body {
+  margin-top: 8px;
+}
+
+/* --- Fact cards ---------------------------------------------------------- */
+
+.jp-facts {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+@media (min-width: 560px) {
+  .jp-facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .jp-facts--four {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.jp-fact {
+  margin: 0;
+  padding: 18px 16px;
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 154, 73, 0.24);
+  box-shadow: 0 6px 22px rgba(0, 154, 73, 0.07);
+}
+
+.jp-fact__label {
+  margin: 0 0 8px;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--jp-orange);
+}
+
+.jp-fact__value {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--jp-green);
+  letter-spacing: -0.02em;
+}
+
+.jp-fact__desc {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--jp-muted);
+}
+
+/* --- Table --------------------------------------------------------------- */
+
+.jp-table-wrap {
+  overflow-x: auto;
+  margin-top: 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 8px 28px rgba(15, 23, 42, 0.07);
+}
+
+.jp-table {
+  width: 100%;
+  min-width: 480px;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.92rem;
+}
+
+.jp-table th,
+.jp-table td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid rgba(226, 232, 240, 0.9);
+  color: var(--jp-muted);
+}
+
+.jp-table th {
+  background: rgba(0, 154, 73, 0.12);
+  color: var(--jp-ink);
+  font-weight: 800;
+}
+
+.jp-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* --- Do / Don't ---------------------------------------------------------- */
+
+.jp-split {
+  display: grid;
+  gap: 18px;
+  margin-top: 16px;
+}
+
+@media (min-width: 700px) {
+  .jp-split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.jp-split__col {
+  padding: 18px 16px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, 0.95);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.05);
+}
+
+.jp-split__col--do {
+  border-top: 3px solid var(--jp-green);
+}
+
+.jp-split__col--dont {
+  border-top: 3px solid var(--jp-orange);
+}
+
+.jp-split__heading {
+  margin: 0 0 10px;
+  font-size: 1rem;
+  font-weight: 800;
+  color: var(--jp-ink);
+}
+
+/* --- Outbound resource cards --------------------------------------------- */
+
+.jp-link-cards {
+  display: grid;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .jp-link-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.jp-link-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 16px;
+  border-radius: 14px;
+  background: #fff;
+  border: 1px solid rgba(0, 154, 73, 0.22);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.jp-link-card:hover {
+  border-color: var(--jp-orange);
+  box-shadow: 0 10px 28px rgba(255, 121, 0, 0.15);
+  transform: translateY(-2px);
+}
+
+.jp-link-card__title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--jp-green);
+  line-height: 1.4;
+}
+
+.jp-link-card__meta {
+  font-size: 0.75rem;
+  color: var(--jp-muted);
+  font-weight: 600;
+}
+
+/* --- CTA ----------------------------------------------------------------- */
+
+.jp-cta {
+  margin-top: 48px;
+  padding: 28px 22px;
+  border-radius: 18px;
+  background: linear-gradient(
+    120deg,
+    var(--jp-green) 0%,
+    #007a3d 55%,
+    var(--jp-orange) 160%
+  );
+  color: #fff;
+  text-align: center;
+  box-shadow: 0 16px 40px rgba(0, 154, 73, 0.25);
+}
+
+.jp-cta__text {
+  margin: 0 0 18px;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-weight: 700;
+  line-height: 1.45;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.jp-cta__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: #fff;
+  color: var(--jp-green) !important;
+  font-weight: 800;
+  font-size: 0.95rem;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
+}
+
+.jp-cta__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+  color: var(--jp-orange) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .jp-link-card,
+  .jp-cta__btn {
+    transition: none;
+  }
+  .jp-link-card:hover,
+  .jp-cta__btn:hover {
+    transform: none;
+  }
+}

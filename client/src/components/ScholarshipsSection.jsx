@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { FaAward, FaCalendarAlt, FaGraduationCap } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
 
-import kylemoreAbbey from "../assets/ireland/kylemore-abbey.webp";
+import lectureHall from "../assets/university/lecture-hall.webp";
+import { scholarshipImage } from "../utils/scholarshipImage";
 
 /**
  * Scholarships listing — sits directly under the partner-universities section.
@@ -55,17 +56,40 @@ export default function ScholarshipsSection({ limit = 6 }) {
             </p>
           </div>
 
-          {/* Decorative Ireland imagery — Kylemore Abbey. Presentational only,
-              hence a background-image on an aria-hidden div, not an <img>. */}
+          {/* Decorative university imagery. Presentational only, hence a
+              background-image on an aria-hidden div, not an <img>. */}
           <div className="schol-media" aria-hidden="true" />
         </div>
 
         <ul className="schol-grid">
           {visible.map((item) => (
             <li className="schol-card" key={item._id ?? item.name}>
+              {/* Full-bleed to the card's edges via the negative margin in
+                  .schol-card-media, so it reads as a photo header rather than
+                  an inset thumbnail. */}
+              <div className="schol-card-media">
+                <img
+                  src={scholarshipImage(item)}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
               <div className="schol-card-head">
-                <span className="schol-card-icon" aria-hidden="true">
-                  <FaAward />
+                {/* The provider's own logo where one has been uploaded; the
+                    award icon is the fallback so the row never collapses. */}
+                <span
+                  className={`schol-card-icon${
+                    item.logo ? " schol-card-icon--logo" : ""
+                  }`}
+                  aria-hidden="true"
+                >
+                  {item.logo ? (
+                    <img src={item.logo} alt="" loading="lazy" decoding="async" />
+                  ) : (
+                    <FaAward />
+                  )}
                 </span>
                 <div>
                   <h3 className="schol-card-name">{item.name}</h3>
@@ -147,10 +171,8 @@ export default function ScholarshipsSection({ limit = 6 }) {
         }
         .schol-media{
           min-height: 320px;
-          background-image: url(${kylemoreAbbey});
-          /* Portrait source in a landscape box: 42% keeps the abbey and its
-             reflection in frame and crops the empty sky instead. */
-          background-position: center 42%;
+          background-image: url(${lectureHall});
+          background-position: center center;
           background-size: cover;
           background-repeat: no-repeat;
           border-radius: var(--radius-card, 16px);
@@ -217,6 +239,25 @@ export default function ScholarshipsSection({ limit = 6 }) {
           box-shadow: var(--shadow-card-hover, 0 18px 38px rgba(15,23,42,0.12));
         }
 
+        .schol-card-media{
+          /* Cancels the card's 22px padding so the image meets its edges, and
+             rounds only the top corners to sit inside the card's radius. */
+          margin: -22px -22px 18px;
+          height: 148px;
+          overflow: hidden;
+          border-radius: calc(var(--radius-card, 16px) - 1px)
+            calc(var(--radius-card, 16px) - 1px) 0 0;
+          background: rgba(15, 23, 42, 0.05);
+        }
+        .schol-card-media img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          transition: transform 0.4s ease;
+        }
+        .schol-card:hover .schol-card-media img{ transform: scale(1.05); }
+
         .schol-card-head{
           display: flex;
           gap: 12px;
@@ -233,6 +274,18 @@ export default function ScholarshipsSection({ limit = 6 }) {
           color: var(--color-primary, #64c850);
           font-size: 0.95rem;
         }
+        .schol-card-icon--logo{
+          background: #fff;
+          border: 1px solid var(--color-border, #e2e8f0);
+          padding: 4px;
+        }
+        .schol-card-icon--logo img{
+          width: 100%;
+          height: 100%;
+          object-fit: contain;
+          display: block;
+        }
+
         .schol-card-name{
           font-size: 1.02rem;
           font-weight: var(--weight-bold, 700);
@@ -290,8 +343,10 @@ export default function ScholarshipsSection({ limit = 6 }) {
         .schol-card-link:hover{ text-decoration: underline; }
 
         @media (prefers-reduced-motion: reduce){
-          .schol-card{ transition: none; }
+          .schol-card,
+          .schol-card-media img{ transition: none; }
           .schol-card:hover{ transform: none; }
+          .schol-card:hover .schol-card-media img{ transform: none; }
         }
       `}</style>
     </section>

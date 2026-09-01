@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaAward, FaCalendarAlt, FaGraduationCap } from "react-icons/fa";
 import { API_BASE_URL } from "../config/api";
 import SEO from "../components/SEO";
+import { scholarshipImage } from "../utils/scholarshipImage";
 import "../styles/Scholarships.css";
 
 /**
@@ -104,9 +105,27 @@ export default function Scholarships() {
           <ul className="schp-grid">
             {scholarships.map((item) => (
               <li className="schp-card" key={item._id ?? item.name}>
+                <div className="schp-card-media">
+                  <img
+                    src={scholarshipImage(item)}
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+
                 <div className="schp-card-head">
-                  <span className="schp-card-icon" aria-hidden="true">
-                    <FaAward />
+                  <span
+                    className={`schp-card-icon${
+                      item.logo ? " schp-card-icon--logo" : ""
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {item.logo ? (
+                      <img src={item.logo} alt="" loading="lazy" decoding="async" />
+                    ) : (
+                      <FaAward />
+                    )}
                   </span>
                   <div>
                     <h2 className="schp-card-name">{item.name}</h2>

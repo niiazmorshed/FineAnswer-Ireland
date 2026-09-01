@@ -1,60 +1,72 @@
 import React from "react";
 import "./PartnerBank.css";
 
-// Import your logos
-import cityBank from "../assets/city-bank-logo.webp";
-import nrbcBank from "../assets/nrbc.webp";
-import premierBank from "../assets/pp.webp";
-import tcl from "../assets/british.png";
+import britishCouncil from "../assets/british.png";
 import bylc from "../assets/bylc.png";
-import studyGlobal from "../assets/studyp.png";
+import studyAndProtect from "../assets/studyp.png";
+import swisscare from "../assets/swisscare-logo.svg";
 
-const PartnerBank = () => {
-  const partners = [
-    { name: "City Bank", logo: cityBank },
-    { name: "NRBC Bank", logo: nrbcBank },
+/**
+ * Strategic partners.
+ *
+ * The Bangladeshi banks that used to sit here (City Bank, NRBC, Premier) have
+ * been removed; what remains is the education and student-insurance side of the
+ * partnership list, with Swisscare added.
+ *
+ * `wide` marks a logo whose artwork is a long wordmark rather than a squarish
+ * mark — those need more of the bubble's width to stay legible.
+ */
+const PARTNERS = [
+  { name: "British Council", logo: britishCouncil },
+  { name: "Swisscare", logo: swisscare, wide: true },
+  { name: "Study & Protect", logo: studyAndProtect },
+  { name: "BYLC", logo: bylc },
+];
 
-    { name: "TCL", logo: tcl },
-    { name: "Premier Bank", logo: premierBank },
-    { name: "BYLC", logo: bylc },
-    { name: "Study Global", logo: studyGlobal },
-  ];
-
-  return (
-    <section className="partner-bank-section">
-      <div className="partner-bank-container">
-        {/* Left Side: Content */}
-        <div className="partner-content">
-          <h4 className="partner-badge">STRATEGIC ALLIANCE</h4>
-          <h2 className="partner-title">
-            Our Strategic <span>Partners</span>
-          </h2>
-          <p className="partner-description">
-            We collaborate with world-class financial institutions and global 
-            educational aggregators to provide our students with a seamless, 
-            end-to-end study abroad experience.
-          </p>
-          <div className="partner-stats">
-            <div className="p-stat"><strong>10+</strong> Global Partners</div>
-            <div className="p-stat"><strong>100%</strong> Verified Support</div>
+const PartnerBank = () => (
+  <section className="partner-bank-section">
+    <div className="partner-bank-container">
+      {/* Left Side: Content */}
+      <div className="partner-content">
+        <h4 className="partner-badge">STRATEGIC ALLIANCE</h4>
+        <h2 className="partner-title">
+          Our Strategic <span>Partners</span>
+        </h2>
+        <p className="partner-description">
+          We work with education bodies, leadership organisations and student
+          insurance providers so that everything around your course — cover,
+          preparation and support — is arranged in one place rather than five.
+        </p>
+        <div className="partner-stats">
+          <div className="p-stat">
+            <strong>10+</strong> Global Partners
+          </div>
+          <div className="p-stat">
+            <strong>100%</strong> Verified Support
           </div>
         </div>
-
-        {/* Right Side: Organized Grid of Bubbles */}
-        {/* Right Side Floating Logos */}
-<div className="partner-visual">
-  <div className="bubbles-wrapper">
-    {partners.map((item, index) => (
-      <div key={index} className={`bank-bubble p${index + 1}`}>
-        <img src={item.logo} alt={item.name} />
       </div>
-    ))}
-  </div>
-</div>
 
+      {/* Right Side: floating logo bubbles.
+          Positions are a staggered two-column arrangement rather than scattered
+          offsets — the previous free placement was tuned for six logos and read
+          as random once there were four. */}
+      <div className="partner-visual">
+        <ul className="bubbles-wrapper">
+          {PARTNERS.map((item, index) => (
+            <li
+              key={item.name}
+              className={`bank-bubble p${index + 1}${
+                item.wide ? " bank-bubble--wide" : ""
+              }`}
+            >
+              <img src={item.logo} alt={item.name} loading="lazy" />
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default PartnerBank;

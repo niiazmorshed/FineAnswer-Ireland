@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import heroPerson from "../assets/student.jpg";
 import "./BentoHero.css";
@@ -6,27 +6,50 @@ import { ResponsiveGlobe } from "./Globe";
 
 const COUNTRY = "Ireland";
 
-/* Served from public/, so these are plain static files rather than bundled
-   modules — the browser streams the mp4 instead of it inflating the JS chunk. */
-const HERO_VIDEO_SRC = "/video/campus-hero.mp4";
-const HERO_VIDEO_POSTER = "/video/campus-hero-poster.jpg";
+/* Served from public/, so this is a plain static file rather than a bundled
+   module — the browser streams the mp4 instead of it inflating the JS chunk.
+
+   HeroBackdrop plays this as a playlist, so adding a second clip here is the
+   only change needed to bring one back. */
+const HERO_CLIPS = [
+  {
+    id: "university",
+    src: "/video/university-hero.mp4",
+    poster: "/video/university-hero-poster.jpg",
+  },
+];
+
+/* Painted as a CSS background before any video exists, so the hero is never
+   empty. It is the first clip's own first frame, which makes the handover to
+   video invisible. */
+const HERO_POSTER = HERO_CLIPS[0].poster;
 
 /**
  * Decorative hero background.
  *
- * The poster paints immediately as a CSS background; the <video> is only
- * created later, and only where it is worth the bytes. Nothing here blocks
- * first paint: the element does not exist until an idle callback fires, so
- * the mp4 is never in flight while the page is still laying out.
+ * The poster paints immediately as a CSS background; the <video> elements are
+ * only created later, and only where they are worth the bytes. Nothing here
+ * blocks first paint: no video element exists until an idle callback fires, so
+ * no mp4 is in flight while the page is still laying out.
  *
  * Skipped entirely on narrow viewports (phones pay the most and see the
  * least), when the viewer prefers reduced motion, and on metered or slow
  * connections. Those cases keep the poster still, which is a complete-looking
  * hero rather than a fallback.
+ *
+ * Clips run as a playlist: each one ends and the next fades up over it. A clip
+ * is not mounted until the one before it can actually play, so they never
+ * download against each other, and if one never arrives — 404, decode error,
+ * blocked autoplay — the playlist skips it. With a single clip the machinery is
+ * dormant and the element simply loops.
  */
 function HeroBackdrop() {
   const [mounted, setMounted] = useState(false);
   const [ready, setReady] = useState(false);
+  const [active, setActive] = useState(0);
+  // Clips that errored out; they are skipped when choosing what to play next.
+  const [broken, setBroken] = useState(() => new Set());
+  const videoRefs = useRef([]);
 
   useEffect(() => {
     const wideEnough = window.matchMedia("(min-width: 768px)").matches;
@@ -64,26 +87,75 @@ function HeroBackdrop() {
     };
   }, []);
 
+  const markBroken = (index) =>
+    setBroken((prev) => {
+      if (prev.has(index)) return prev;
+      const next = new Set(prev);
+      next.add(index);
+      return next;
+    });
+
+  /**
+   * Hand over to the next playable clip. Falls back to replaying the current
+   * one when there is nothing to hand over to — the second clip has not
+   * mounted yet, or it failed to load.
+   */
+  const advance = (from) => {
+    for (let step = 1; step <= HERO_CLIPS.length; step += 1) {
+      const candidate = (from + step) % HERO_CLIPS.length;
+      const el = videoRefs.current[candidate];
+      if (candidate === from || !el || broken.has(candidate)) continue;
+      el.currentTime = 0;
+      el.play()?.catch(() => markBroken(candidate));
+      setActive(candidate);
+      return;
+    }
+
+    const current = videoRefs.current[from];
+    if (current) {
+      current.currentTime = 0;
+      current.play()?.catch(() => {});
+    }
+  };
+
   return (
     <div className="hero-backdrop" aria-hidden="true">
       <div
         className="hero-backdrop__poster"
-        style={{ backgroundImage: `url(${HERO_VIDEO_POSTER})` }}
+        style={{ backgroundImage: `url(${HERO_POSTER})` }}
       />
-      {mounted && (
-        <video
-          className={`hero-backdrop__video${ready ? " is-ready" : ""}`}
-          src={HERO_VIDEO_SRC}
-          poster={HERO_VIDEO_POSTER}
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="none"
-          tabIndex={-1}
-          onCanPlay={() => setReady(true)}
-        />
-      )}
+      {mounted &&
+        HERO_CLIPS.map((clip, index) => {
+          // Clip 0 mounts on idle; the rest wait until it is actually playing,
+          // so they never compete with it for bandwidth.
+          if (index > 0 && !ready) return null;
+
+          return (
+            <video
+              key={clip.id}
+              ref={(el) => {
+                videoRefs.current[index] = el;
+              }}
+              className={`hero-backdrop__video${
+                index === active && ready ? " is-ready" : ""
+              }`}
+              src={clip.src}
+              poster={clip.poster}
+              autoPlay={index === 0}
+              /* Native looping is seamless; the onEnded handoff is not, so a
+                 lone clip loops itself rather than restarting through
+                 advance(). */
+              loop={HERO_CLIPS.length === 1}
+              muted
+              playsInline
+              preload={index === 0 ? "none" : "auto"}
+              tabIndex={-1}
+              onCanPlay={index === 0 ? () => setReady(true) : undefined}
+              onEnded={() => advance(index)}
+              onError={() => markBroken(index)}
+            />
+          );
+        })}
       <div className="hero-backdrop__scrim" />
     </div>
   );

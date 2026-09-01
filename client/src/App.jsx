@@ -46,12 +46,15 @@ import WhyIrelandHub from "./pages/why-ireland/WhyIrelandHub";
 import { StudyInIrelandRouteLayout } from "./pages/why-ireland/StudyInIrelandPage";
 import { PostStudyRouteLayout } from "./pages/PostStudyPage";
 import { PathwayRouteLayout } from "./pages/PathwayPage";
-import { Under18RouteLayout } from "./pages/Under18Page";
+import { AdmissionRouteLayout } from "./pages/AdmissionPage";
 import { EntryRequirementsRouteLayout } from "./pages/EntryRequirementsPage";
 import { HealthInsuranceRouteLayout } from "./pages/HealthInsurancePage";
 import { EnglishTestsRouteLayout } from "./pages/EnglishProficiency";
 import { StudyMedicineRouteLayout } from "./pages/StudyMedicinePage";
 import { DependentVisaRouteLayout } from "./pages/DependentVisaPage";
+import { PreDepartureRouteLayout } from "./pages/PreDeparturePage";
+import { PostArrivalRouteLayout } from "./pages/PostArrivalPage";
+import { Stamp1GRouteLayout } from "./pages/Stamp1GPage";
 import { forceNavigateScrollTop } from "./utils/documentScroll";
 
 import "./App.css";
@@ -153,12 +156,15 @@ function AppRoutes() {
       <Route path="/study" element={<StudyInIrelandRouteLayout />} />
       <Route path="/poststudy" element={<PostStudyRouteLayout />} />
       <Route path="/pathway" element={<PathwayRouteLayout />} />
-      <Route path="/under18" element={<Under18RouteLayout />} />
+      <Route path="/admission" element={<AdmissionRouteLayout />} />
       <Route path="/entry-requirements" element={<EntryRequirementsRouteLayout />} />
       <Route path="/health-insurance" element={<HealthInsuranceRouteLayout />} />
       <Route path="/english-tests" element={<EnglishTestsRouteLayout />} />
       <Route path="/study-medicine" element={<StudyMedicineRouteLayout />} />
       <Route path="/dependent-visa" element={<DependentVisaRouteLayout />} />
+      <Route path="/pre-departure" element={<PreDepartureRouteLayout />} />
+      <Route path="/post-arrival" element={<PostArrivalRouteLayout />} />
+      <Route path="/stamp-1g" element={<Stamp1GRouteLayout />} />
       <Route path="/why-ireland/*" element={<WhyIrelandHub />} />
       {/* /australia and /uk redirect to home — pages removed */}
       <Route path="/australia" element={<Navigate to="/" replace />} />
