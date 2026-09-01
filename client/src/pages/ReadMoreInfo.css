@@ -8,7 +8,7 @@
 
 /* ─── Hero Header ───────────────────────────────── */
 .read-more-header {
-  background: linear-gradient(135deg, var(--color-primary-dark, #0a5c4d) 0%, var(--color-primary, #00875a) 60%, #10b981 100%);
+  background: linear-gradient(135deg, var(--color-primary-dark, #52a63f) 0%, var(--color-primary, #64c850) 60%, #10b981 100%);
   padding: 2rem 1.5rem 3.5rem;
   text-align: center;
   position: relative;
@@ -66,7 +66,7 @@
 }
 .back-link:hover {
   background: rgba(255, 255, 255, 0.95);
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
   border-color: transparent;
 }
 
@@ -156,14 +156,14 @@
 .stat-number {
   font-size: 2rem;
   font-weight: 800;
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
   line-height: 1;
   letter-spacing: -0.03em;
 }
 
 .stat-label {
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
   font-weight: 500;
   margin-top: 0.35rem;
   line-height: 1.4;
@@ -181,7 +181,7 @@
   margin: 0 0 1.5rem;
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
   text-align: center;
   letter-spacing: -0.02em;
 }
@@ -191,7 +191,7 @@
   width: 48px;
   height: 3px;
   margin: 0.6rem auto 0;
-  background: linear-gradient(90deg, var(--color-primary, #00875a), #10b981);
+  background: linear-gradient(90deg, var(--color-primary, #64c850), #10b981);
   border-radius: 2px;
 }
 
@@ -247,8 +247,8 @@
 
 /* ─── Content Typography ────────────────────────── */
 .section-label {
-  background: var(--color-primary-light, #e6f7f0);
-  color: var(--color-primary, #00875a);
+  background: var(--color-primary-light, #eef8ec);
+  color: var(--color-primary, #64c850);
   padding: 0.35rem 0.85rem;
   border-radius: 50px;
   font-size: 0.72rem;
@@ -270,7 +270,7 @@
 }
 
 .info-content p {
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
   line-height: 1.75;
   margin: 0 0 1.25rem;
   font-size: 0.975rem;
@@ -312,8 +312,8 @@
   transform: translateY(-50%);
   width: 20px;
   height: 20px;
-  background: var(--color-primary-light, #e6f7f0);
-  color: var(--color-primary, #00875a);
+  background: var(--color-primary-light, #eef8ec);
+  color: var(--color-primary, #64c850);
   font-weight: 800;
   font-size: 0.7rem;
   border-radius: 50%;
@@ -327,7 +327,7 @@
 
 /* ─── Button ────────────────────────────────────── */
 .btn-modern {
-  background: var(--color-primary, #00875a);
+  background: var(--color-accent-strong, #4c54a2);
   color: #fff;
   border: none;
   padding: 0.8rem 1.75rem;
@@ -344,7 +344,7 @@
   font-family: var(--font-sans, inherit);
 }
 .btn-modern:hover {
-  background: var(--color-primary-dark, #0a5c4d);
+  background: var(--color-accent-hover, #3f4791);
   transform: translateY(-2px);
   box-shadow: 0 8px 22px rgba(0,135,90,0.35);
   color: #fff;

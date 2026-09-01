@@ -305,7 +305,7 @@
 .plan-cta--primary {
   border: none;
   color: #fff;
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(56, 189, 248, 0.95));
+  background: var(--color-accent-strong, #4c54a2);
   box-shadow: 0 10px 30px rgba(99, 102, 241, 0.22);
 }
 .plan-cta--primary:hover {

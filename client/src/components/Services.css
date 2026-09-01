@@ -68,13 +68,13 @@
   height: 40px;
   padding: 0 16px;
   border-radius: 10px;
-  border: 1px solid rgba(99, 102, 241, 0.35);
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(56, 189, 248, 0.90));
+  border: 1px solid var(--color-accent-strong, #4c54a2);
+  background: var(--color-accent-strong, #4c54a2);
   color: #fff;
   font-weight: 800;
   font-size: 0.9rem;
   cursor: pointer;
-  box-shadow: 0 12px 30px rgba(99, 102, 241, 0.22);
+  box-shadow: 0 12px 30px rgba(76, 84, 162, 0.24);
   transition: transform 160ms ease, box-shadow 200ms ease;
 }
 
@@ -112,7 +112,7 @@
   margin: 0;
   font-size: 0.7rem;
   line-height: 1.4;
-  color: var(--color-text-secondary, #94a3b8);
+  color: var(--color-text-secondary, #64748b);
   text-align: end;
   padding-right: 2px;
 }

@@ -227,7 +227,7 @@ export default function FeaturedCourses() {
           padding: 12px;
           border: none;
           border-radius: var(--radius-btn);
-          background: var(--color-gold);
+          background: var(--color-primary, #64c850);
           color: #fff;
           font-weight: 600;
           font-family: var(--font-sans);
@@ -236,7 +236,7 @@ export default function FeaturedCourses() {
           transition: background 0.2s, transform 0.2s;
         }
         .fc-apply-btn:hover {
-          background: var(--color-gold-hover);
+          background: var(--color-primary-dark, #52a63f);
           transform: translateY(-1px);
         }
 

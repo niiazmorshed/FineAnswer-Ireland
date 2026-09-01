@@ -249,7 +249,7 @@ export default function LoginPage() {
     <span
       className="signup-link"
       onClick={() => navigate("/register")}
-      style={{ color: "var(--color-primary, #00875a)", cursor: "pointer", textDecoration: "underline" }}
+      style={{ color: "var(--color-primary, #64c850)", cursor: "pointer", textDecoration: "underline" }}
     >
       Join now
     </span>

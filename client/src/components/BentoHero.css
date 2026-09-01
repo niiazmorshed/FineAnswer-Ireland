@@ -90,12 +90,12 @@
   margin-top: 26px;
   padding: 14px 36px;
   border-radius: 999px;
-  background: var(--hero-accent-green);
+  background: var(--color-accent-strong, #4c54a2);
   color: #fff;
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
-  box-shadow: 0 10px 28px rgba(100, 200, 80, 0.22);
+  box-shadow: 0 10px 28px rgba(76, 84, 162, 0.3);
   transition:
     background 0.2s ease,
     transform 0.2s ease,
@@ -106,10 +106,10 @@
 }
 
 .ireland-hero-cta:hover {
-  background: #ffda32;
-  color: var(--hero-ink);
+  background: var(--color-accent-hover, #3f4791);
+  color: #fff;
   transform: translateY(-1px);
-  box-shadow: 0 14px 32px rgba(255, 218, 50, 0.28);
+  box-shadow: 0 14px 32px rgba(63, 71, 145, 0.34);
 }
 
 /* ---- Travel-style layout ---- */
@@ -551,7 +551,7 @@
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
   background: rgba(0, 135, 90, 0.1);
   border: 1px solid rgba(0, 135, 90, 0.18);
 }
@@ -674,7 +674,7 @@
   height: 0;
   border-left: 4px solid transparent;
   border-right: 4px solid transparent;
-  border-top: 5px solid var(--hero-muted, #94a3b8);
+  border-top: 5px solid var(--hero-muted, #64748b);
   margin-top: 1px;
   transition: transform 0.2s ease;
 }
@@ -736,8 +736,8 @@
 }
 
 .bento-dropdown-item:hover {
-  background: var(--color-primary-light, #e6f7f0);
-  color: var(--color-primary, #00875a);
+  background: var(--color-primary-light, #eef8ec);
+  color: var(--color-primary, #64c850);
 }
 
 /* ---- Search button ---- */
@@ -750,7 +750,7 @@
   margin: 6px 8px 6px 4px;
   padding: 12px 22px;
   min-height: 44px;
-  background: var(--color-primary, #00875a);
+  background: var(--color-accent-strong, #4c54a2);
   color: #ffffff;
   border: none;
   border-radius: 10px;
@@ -767,7 +767,7 @@
 }
 
 .bento-search-btn:hover {
-  background: var(--color-primary-dark, #0a5c4d);
+  background: var(--color-accent-hover, #3f4791);
   transform: translateY(-1px);
 }
 
@@ -944,7 +944,7 @@
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--color-primary, #64c850);
+  color: var(--color-accent, #4c54a2);
 }
 .job-hero__eyebrowRule {
   width: 34px;
@@ -961,7 +961,7 @@
   letter-spacing: -0.02em;
 }
 .ireland-hero-title__accent {
-  color: var(--color-primary, #64c850);
+  color: var(--color-accent, #4c54a2);
 }
 
 .ireland-hero-bento--cinematic .ireland-hero-sub {
@@ -986,8 +986,8 @@
 }
 .ireland-hero-bento--cinematic .bento-search-badge {
   color: #fff;
-  background: rgba(100, 200, 80, 0.22);
-  border-color: rgba(100, 200, 80, 0.5);
+  background: rgba(76, 84, 162, 0.3);
+  border-color: rgba(76, 84, 162, 0.62);
 }
 
 @media (max-width: 900px) {

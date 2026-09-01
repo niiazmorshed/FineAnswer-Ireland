@@ -32,7 +32,7 @@
   width: 52px;
   height: 3px;
   margin: 12px auto 0;
-  background: linear-gradient(90deg, var(--color-primary, #00875a), var(--color-gold, #F5A623));
+  background: linear-gradient(90deg, var(--color-primary, #64c850), var(--color-gold, #F5A623));
   border-radius: 2px;
   opacity: 0;
   animation: fadeSlideUp 1s ease-out 0.4s forwards;

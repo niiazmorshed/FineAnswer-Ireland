@@ -209,8 +209,8 @@ export default function Footer() {
           transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
         }
         .footer-social-icon:hover {
-          background: var(--color-primary, #00875a);
-          border-color: var(--color-primary, #00875a);
+          background: var(--color-primary, #64c850);
+          border-color: var(--color-primary, #64c850);
           color: #fff;
           transform: translateY(-2px);
         }
@@ -236,7 +236,7 @@ export default function Footer() {
           font-size: 0.875rem;
           transition: color 0.2s;
         }
-        .footer-link:hover { color: var(--color-gold, #F5A623); }
+        .footer-link:hover { color: var(--color-primary, #64c850); }
 
         /* ── CTA / newsletter column ────────────────────── */
         .footer-cta-text {
@@ -265,11 +265,11 @@ export default function Footer() {
           transition: border-color 0.2s;
         }
         .footer-email-input::placeholder { color: rgba(255,255,255,0.35); }
-        .footer-email-input:focus { border-color: var(--color-primary, #00875a); }
+        .footer-email-input:focus { border-color: var(--color-primary, #64c850); }
 
         .footer-subscribe-btn {
           padding: 11px 20px;
-          background: var(--color-primary, #00875a);
+          background: var(--color-accent-strong, #4c54a2);
           color: #fff;
           border: none;
           border-radius: var(--radius-btn, 4px);
@@ -280,13 +280,13 @@ export default function Footer() {
           transition: background 0.2s;
           width: 100%;
         }
-        .footer-subscribe-btn:hover { background: var(--color-primary-dark, #0a5c4d); }
+        .footer-subscribe-btn:hover { background: var(--color-accent-hover, #3f4791); }
 
         .footer-apply-btn {
           display: inline-block;
           padding: 11px 20px;
-          border: 1px solid var(--color-gold, #F5A623);
-          color: var(--color-gold, #F5A623);
+          border: 1px solid var(--color-primary, #64c850);
+          color: var(--color-primary, #64c850);
           border-radius: var(--radius-btn, 4px);
           font-size: 0.875rem;
           font-weight: 600;
@@ -296,7 +296,7 @@ export default function Footer() {
           text-align: center;
         }
         .footer-apply-btn:hover {
-          background: var(--color-gold, #F5A623);
+          background: var(--color-primary, #64c850);
           color: #fff;
         }
 

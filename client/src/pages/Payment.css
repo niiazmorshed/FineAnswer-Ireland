@@ -24,8 +24,8 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: var(--color-primary-light, #e6f7f0);
-  color: var(--color-primary, #00875a);
+  background: var(--color-primary-light, #eef8ec);
+  color: var(--color-primary, #64c850);
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.06em;
@@ -45,7 +45,7 @@
 
 .payment-subtitle {
   font-size: 0.9375rem;
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
   margin-bottom: 24px;
   line-height: 1.6;
 }
@@ -86,14 +86,14 @@
 }
 
 .payment-option:hover:not(:disabled) {
-  border-color: var(--color-primary, #00875a);
+  border-color: var(--color-primary, #64c850);
   box-shadow: 0 4px 14px rgba(0, 135, 90, 0.12);
   transform: translateY(-1px);
 }
 
 .payment-option.selected {
-  border-color: var(--color-primary, #00875a);
-  background: var(--color-primary-light, #e6f7f0);
+  border-color: var(--color-primary, #64c850);
+  background: var(--color-primary-light, #eef8ec);
   box-shadow: 0 4px 16px rgba(0, 135, 90, 0.15);
 }
 
@@ -118,13 +118,13 @@
 .payment-option-amount {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
 }
 
 .payment-option-description {
   margin: 0;
   font-size: 0.8rem;
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
 }
 
 /* ── Other Amount Input ─────────────────────────── */
@@ -153,7 +153,7 @@
 }
 
 .payment-other-input-row:focus-within {
-  border-color: var(--color-primary, #00875a);
+  border-color: var(--color-primary, #64c850);
   box-shadow: 0 0 0 3px rgba(0, 135, 90, 0.1);
 }
 
@@ -161,8 +161,8 @@
   padding: 0 12px;
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--color-primary, #00875a);
-  background: var(--color-primary-light, #e6f7f0);
+  color: var(--color-primary, #64c850);
+  background: var(--color-primary-light, #eef8ec);
   height: 100%;
   display: flex;
   align-items: center;
@@ -194,13 +194,13 @@
 }
 
 .payment-summary-label {
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
 }
 
 .payment-summary-amount {
   font-size: 1rem;
   font-weight: 700;
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
 }
 
 /* ── Error ──────────────────────────────────────── */
@@ -222,9 +222,9 @@
   gap: 8px;
   margin-top: 16px;
   padding: 13px 28px;
-  background: var(--color-primary, #00875a);
+  background: var(--color-accent-strong, #4c54a2);
   color: #fff;
-  border: 2px solid var(--color-primary, #00875a);
+  border: 2px solid var(--color-primary, #64c850);
   border-radius: 8px;
   font-weight: 600;
   font-size: 0.9375rem;
@@ -235,8 +235,8 @@
 }
 
 .payment-btn:hover {
-  background: var(--color-primary-dark, #0a5c4d);
-  border-color: var(--color-primary-dark, #0a5c4d);
+  background: var(--color-accent-hover, #3f4791);
+  border-color: var(--color-accent-hover, #3f4791);
   color: #fff;
 }
 
@@ -248,13 +248,13 @@
 
 .payment-btn--outline {
   background: transparent;
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
 }
 
 .payment-btn--outline:hover {
-  background: var(--color-primary-light, #e6f7f0);
-  color: var(--color-primary-dark, #0a5c4d);
-  border-color: var(--color-primary, #00875a);
+  background: var(--color-primary-light, #eef8ec);
+  color: var(--color-primary-dark, #52a63f);
+  border-color: var(--color-primary, #64c850);
 }
 
 .payment-btn:disabled {
@@ -278,7 +278,7 @@
   height: 40px;
   border-width: 3px;
   border-color: rgba(0, 135, 90, 0.2);
-  border-top-color: var(--color-primary, #00875a);
+  border-top-color: var(--color-primary, #64c850);
 }
 
 @keyframes spin {
@@ -293,7 +293,7 @@
 }
 
 .payment-hint a {
-  color: var(--color-primary, #00875a);
+  color: var(--color-primary, #64c850);
   text-decoration: none;
 }
 
@@ -373,7 +373,7 @@
 }
 
 .payment-detail-row span {
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
 }
 
 .payment-detail-row strong {
@@ -389,7 +389,7 @@
 
 .payment-ref-note {
   font-size: 0.8125rem;
-  color: var(--color-text-secondary, #555);
+  color: var(--color-text-secondary, #64748b);
   margin: 12px 0;
 }
 
