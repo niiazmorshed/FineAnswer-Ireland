@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import { useNavigate, NavLink, useLocation } from "react-router-dom";
 import { AuthContext } from "../pages/Provider/ContextProvider";
 import { WHY_IRELAND_NAV } from "../pages/why-ireland/whyIrelandNav";
+import { smoothScrollPageTop } from "../utils/documentScroll";
 import "../css/navbar3.css";
 import logo from "../images/logo.png";
 
@@ -220,12 +221,16 @@ export default function Navbar({
               className={({ isActive }) =>
                 isActive && location.pathname === "/" && !hash ? "active" : undefined
               }
-              onClick={() => {
+              onClick={(e) => {
                 closeMenu();
-                if (location.pathname === "/" && hash) {
-                  navigate("/", { replace: true });
-                }
-                window.scrollTo({ top: 0, behavior: "smooth" });
+                if (location.pathname !== "/") return; // let the NavLink route home
+
+                // Already home: this is a scroll-to-top, not a navigation.
+                // Preventing default stops React Router re-rendering the route
+                // under the animation, which cancels it midway.
+                e.preventDefault();
+                if (hash) navigate("/", { replace: true });
+                smoothScrollPageTop();
               }}
             >
               Home
