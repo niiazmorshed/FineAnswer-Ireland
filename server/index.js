@@ -24,11 +24,24 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // ── CORS ────────────────────────────────────────────────────────────────────
+// The site is served from several hostnames (custom domain with and without
+// www, plus the Vercel deployment URL), so every one of them has to be allowed
+// or the browser blocks the API call. FRONTEND_URL accepts a comma-separated
+// list so extra origins can be added from the environment without a redeploy.
+const stripTrailingSlash = (url) => url.trim().replace(/\/$/, "");
+
 const ALLOWED_ORIGINS = [
   "http://localhost:5173",
   "http://localhost:5000",
-  // Production frontend — set FRONTEND_URL in server environment variables
-  ...(process.env.FRONTEND_URL ? [process.env.FRONTEND_URL.trim()] : []),
+  "https://fineanswer.ie",
+  "https://www.fineanswer.ie",
+  "https://fine-answer-ireland-plhp.vercel.app",
+  // Extra production frontends — set FRONTEND_URL (comma-separated) in the
+  // server environment variables
+  ...(process.env.FRONTEND_URL || "")
+    .split(",")
+    .map(stripTrailingSlash)
+    .filter(Boolean),
 ];
 
 app.use(
@@ -36,7 +49,9 @@ app.use(
     origin: (origin, callback) => {
       // Allow requests with no origin (e.g. mobile apps, curl, Postman)
       if (!origin) return callback(null, true);
-      if (ALLOWED_ORIGINS.includes(origin)) return callback(null, true);
+      if (ALLOWED_ORIGINS.includes(stripTrailingSlash(origin))) {
+        return callback(null, true);
+      }
       callback(new Error(`CORS: origin '${origin}' not allowed`));
     },
     credentials: true,
