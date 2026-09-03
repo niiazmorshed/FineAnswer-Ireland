@@ -248,10 +248,10 @@ export default function LandingPage() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "FineAnswer Ireland",
-          url: "https://www.fineanswer.net/",
+          url: "https://www.fineanswer.ie/",
           potentialAction: {
             "@type": "SearchAction",
-            target: "https://www.fineanswer.net/search-results?q={search_term_string}&country=Ireland",
+            target: "https://www.fineanswer.ie/search-results?q={search_term_string}&country=Ireland",
             "query-input": "required name=search_term_string",
           },
         }}
