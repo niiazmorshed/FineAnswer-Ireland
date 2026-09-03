@@ -2,8 +2,8 @@ import React from "react";
 import { Helmet } from "react-helmet-async";
 
 const DEFAULT_SITE_NAME = "FineAnswer Ireland";
-const DEFAULT_URL = "https://www.fineanswer.net/";
-const DEFAULT_IMAGE = "https://www.fineanswer.net/logo.svg";
+const DEFAULT_URL = "https://www.fineanswer.ie/";
+const DEFAULT_IMAGE = "https://www.fineanswer.ie/logo.svg";
 
 export default function SEO({
   title,
